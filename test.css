@@ -19,6 +19,9 @@
     width: 0.5vw;
     height: 50.3vh;
   }
+  .some-other-selector { 
+    height: 50.3vh;
+  }
 }
 
 @media only screen and (max-height: 400px) { 

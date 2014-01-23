@@ -80,38 +80,75 @@
 
   function getReplacedViewportUnits() {
     dimensions = getViewport();
-    return declarations.map(function(item) {
-      return overwriteDeclaration.apply(null, item);
-    }).join('\n');
+
+    var css = [];
+    var buffer = [];
+    var open;
+    var close;
+
+    declarations.forEach(function(item) {
+      var _item = overwriteDeclaration.apply(null, item);
+      var _open = _item.selector.length ? (_item.selector.join(' {\n') + ' {\n') : '';
+      var _close = new Array(_item.selector.length + 1).join('\n}');
+
+      if (!_open || _open !== open) {
+        if (buffer.length) {
+          css.push(open + buffer.join('\n') + close);
+          buffer.length = 0;
+        }
+
+        if (_open) {
+          open = _open;
+          close = _close;
+          buffer.push(_item.content);
+        } else {
+          css.push(_item.content);
+          open = null;
+          close = null;
+        }
+
+        return;
+      }
+
+      if (_open && !open) {
+        open = _open;
+        close = _close;
+      }
+
+      buffer.push(_item.content);
+    });
+
+    if (buffer.length) {
+      css.push(open + buffer.join('\n') + close);
+    }
+
+    return css.join('\n\n');
   }
 
   function overwriteDeclaration(rule, name, value) {
     var _value = value.replace(viewportUnitExpression, replaceValues);
+    var _selectors = [];
     if (name) {
-      _value = rule.selectorText + ' { ' + name + ': ' + _value + '; }';
+      _selectors.push(rule.selectorText);
+      _value = name + ': ' + _value + ';';
     }
 
-    var _rule = wrapMedia(rule, _value);
-    return _rule;
+    var _rule = rule.parentRule;
+    while (_rule) {
+      _selectors.unshift('@media ' + join.call(_rule.media, ', '));
+      _rule = _rule.parentRule;
+    }
+
+    return {
+      selector: _selectors,
+      content: _value
+    };
   }
 
   function replaceValues(match, number, unit) {
     var _base = dimensions[unit];
     var _number = parseFloat(number) / 100;
     return (_number * _base) + 'px';
-  }
-
-  function wrapMedia(rule, declaration) {
-    var stack = [];
-
-    var _rule = rule.parentRule;
-    while (_rule) {
-      stack.unshift('@media ' + join.call(_rule.media, ', ') + ' { ');
-      declaration += ' } ';
-      _rule = _rule.parentRule;
-    }
-
-    return stack.join('') + declaration;
   }
 
   function getViewport() {

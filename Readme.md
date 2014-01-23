@@ -46,31 +46,6 @@ var cssText = viewportUnitsBuggyfill.getCss();
 ```
 
 
-## The Calulated Styles Ain't Perfect
-
-```css
-.some-selector { 
-  padding: 20px 20vmin 20vmax 10px;
-  width: .2vw;
-  height: 20.3vh;
-  margin-top: -2vh;
-}
-
-```
-
-Will produce the following, rather verbose, output:
-
-```css
-.some-selector { padding-right: 174.20000000000002px; }
-.some-selector { padding-bottom: 211.60000000000002px; }
-.some-selector { width: 1.742px; }
-.some-selector { height: 214.774px; }
-.some-selector { margin-top: -21.16px; }
-```
-
-This is not a problem for my application at this point. If you feel this should be optimized: PR welcome!
-
-
 ## License
 
 viewport-unit-buggyfill is published under the [MIT License](http://opensource.org/licenses/mit-license).

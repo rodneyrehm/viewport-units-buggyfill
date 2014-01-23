@@ -14,6 +14,7 @@
   }
 }(this, function () {
   'use strict';
+  /*global document, window*/
   
   var viewportUnitExpression = /([0-9.-]+)(vh|vw|vmin|vmax)/g;
   var forEach = [].forEach;

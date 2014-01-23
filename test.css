@@ -1,0 +1,55 @@
+.some-selector { 
+  padding: 20px 20vmin 20vmax 10px;
+  width: .2vw;
+  height: 20.3vh;
+  margin-top: -2vh;
+}
+
+.calculating { 
+  width: calc(30vw - 20px);
+}
+
+.some-other-selector { 
+  margin-left: 20.3vh;
+}
+
+@media only screen and (max-height: 400px), (max-width: 400px) { 
+  .some-selector { 
+    padding: 20px 10vmin -10vmax 10px; 
+    width: 0.5vw;
+    height: 50.3vh;
+  }
+}
+
+@media only screen and (max-height: 400px) { 
+  @media only screen and (max-width: 400px) { 
+    .some-deeper-selector { 
+      width: 20px;
+      height: 60vh;
+    }
+  }
+}
+
+@-webkit-keyframes fadein {
+  0% { 
+    height: 20vh; 
+  }
+  50% {
+    width: 30px;
+  }
+  100% { 
+    height: 50vh; 
+  }
+}
+
+@keyframes fadein {
+  0% { 
+    height: 20vh; 
+  }
+  50% {
+    width: 30px;
+  }
+  100% { 
+    height: 50vh; 
+  }
+}

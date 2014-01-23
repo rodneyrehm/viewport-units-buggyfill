@@ -1,7 +1,19 @@
-// path CSS Declarations using viewport units for iOS
-// see
-(function(){
-'use strict';
+(function (root, factory) {
+  'use strict';
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like enviroments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    root.patchViewportUnits = factory();
+  }
+}(this, function () {
+  'use strict';
   
   var viewportUnitExpression = /([0-9.-]+)(vh|vw|vmin|vmax)/g;
   var forEach = [].forEach;
@@ -15,16 +27,16 @@
     styleNode.id = 'patched-viewport';
     document.head.appendChild(styleNode);
     
-    search();
-    updateStyle();
-    window.addEventListener('orientationchange', updateStyle, true);
+    findProperties();
+    refresh();
+    window.addEventListener('orientationchange', refresh, true);
   }
   
-  function updateStyle() {
+  function refresh() {
     styleNode.innerText = getReplacedViewportUnits();
   }
 
-  function search() {
+  function findProperties() {
     declarations = [];
     forEach.call(document.styleSheets, function(sheet) {
       if (sheet.ownerNode.id !== 'patched-viewport') {
@@ -106,9 +118,11 @@
     };
   }
   
-  window.patchViewport = {
-    search: search,
+  return {
+    version: '0.1.0',
+    findProperties: findProperties,
     getCss: getReplacedViewportUnits,
-    init: initialize
+    init: initialize,
+    refresh: refresh
   };
-})();
+}));

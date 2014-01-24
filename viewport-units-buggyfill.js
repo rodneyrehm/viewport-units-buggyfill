@@ -1,3 +1,8 @@
+/*! 
+ * viewort-units-buggyfill v0.2.0
+ * @web: https://github.com/rodneyrehm/viewort-units-buggyfill/
+ * @author: Rodney Rehm - http://rodneyrehm.de/en/
+ */
 (function (root, factory) {
   'use strict';
   if (typeof define === 'function' && define.amd) {

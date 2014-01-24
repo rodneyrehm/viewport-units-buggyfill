@@ -70,6 +70,9 @@
       }
       return;
     }
+    
+    if (rule.type === 2)
+      return;
 
     if (!rule.style) {
       forEach.call(rule.cssRules, function(_rule) {

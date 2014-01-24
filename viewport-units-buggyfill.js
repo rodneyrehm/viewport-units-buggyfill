@@ -24,7 +24,7 @@
   var styleNode;
 
   function initialize(force) {
-    if (!force && !/ip.+mobile.+safari/i.test(navigator.userAgent)) {
+    if (!force && !/ip.+mobile.+safari/i.test(window.navigator.userAgent)) {
       // this buggyfill only applies to mobile safari
       return;
     }

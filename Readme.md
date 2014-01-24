@@ -6,6 +6,7 @@ This is a *buggyfill* (fixing bad behavior), not a *polyfill* (adding missing be
 
 The buggyfill iterates through all defined styles the document knows and extracts those that uses a viewport unit. After resolving the relative units against the viewport's dimensions, CSS is put back together and injected into the document in a `<style>` element. Listening to the `orientationchange` event allows the buggyfill to update the calculated dimensions accordingly.
 
+> Note: This buggyfill only works on stylesheets! viewport units used in `style` attributes are *not* resolved.
 
 ## Using viewport-units-buggyfill
 
@@ -33,7 +34,10 @@ var viewportUnitsBuggyfill = require('viewport-units-buggyfill');
 // convert them to pixels,
 // inject style-element into document,
 // register orientationchange event to repeat when necessary
+// will only engage for Mobile Safari on iOS
 viewportUnitsBuggyfill.init();
+// ignore user agent force initialization
+viewportUnitsBuggyfill.init(true);
 
 // update internal declarations cache and recalculate pixel styles
 // this is handy when you add styles after .init() was run

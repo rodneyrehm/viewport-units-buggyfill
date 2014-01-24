@@ -23,7 +23,12 @@
   var declarations;
   var styleNode;
 
-  function initialize() {
+  function initialize(force) {
+    if (!force && !/ip.+mobile.+safari/i.test(navigator.userAgent)) {
+      // this buggyfill only applies to mobile safari
+      return;
+    }
+    
     styleNode = document.createElement('style');
     styleNode.id = 'patched-viewport';
     document.head.appendChild(styleNode);

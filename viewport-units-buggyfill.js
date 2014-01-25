@@ -1,5 +1,5 @@
 /*! 
- * viewort-units-buggyfill v0.2.0
+ * viewort-units-buggyfill v0.2.1
  * @web: https://github.com/rodneyrehm/viewort-units-buggyfill/
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
  */
@@ -177,7 +177,7 @@
   }
 
   return {
-    version: '0.2.0',
+    version: '0.2.1',
     findProperties: findProperties,
     getCss: getReplacedViewportUnits,
     init: initialize,

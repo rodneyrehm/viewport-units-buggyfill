@@ -72,6 +72,10 @@
     }
 
     if (!rule.style) {
+      if (!rule.cssRules) {
+        return;
+      }
+
       forEach.call(rule.cssRules, function(_rule) {
         findDeclarations(_rule);
       });

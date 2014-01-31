@@ -54,7 +54,7 @@
   function findProperties() {
     declarations = [];
     forEach.call(document.styleSheets, function(sheet) {
-      if (sheet.ownerNode.id !== 'patched-viewport') {
+      if (sheet.ownerNode.id !== 'patched-viewport' && sheet.cssRules) {
         forEach.call(sheet.cssRules, findDeclarations);
       }
     });

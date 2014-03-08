@@ -1,6 +1,6 @@
 /*! 
- * viewort-units-buggyfill v0.2.2
- * @web: https://github.com/rodneyrehm/viewort-units-buggyfill/
+ * viewport-units-buggyfill v0.2.2
+ * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
  */
 (function (root, factory) {

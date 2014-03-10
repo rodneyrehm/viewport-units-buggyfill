@@ -21,6 +21,7 @@
   'use strict';
   /*global document, window*/
 
+  var initialized = false;
   var viewportUnitExpression = /([0-9.-]+)(vh|vw|vmin|vmax)/g;
   var forEach = [].forEach;
   var join = [].join;
@@ -29,11 +30,12 @@
   var styleNode;
 
   function initialize(force) {
-    if (!force && !/ip.+mobile.+safari/i.test(window.navigator.userAgent)) {
+    if (initialized || (!force && !/ip.+mobile.+safari/i.test(window.navigator.userAgent))) {
       // this buggyfill only applies to mobile safari
       return;
     }
-    
+
+    initialized = true;
     styleNode = document.createElement('style');
     styleNode.id = 'patched-viewport';
     document.head.appendChild(styleNode);
@@ -50,6 +52,9 @@
   }
 
   function refresh() {
+    if (!initialized) {
+      return;
+    }
     findProperties();
     updateStyles();
   }

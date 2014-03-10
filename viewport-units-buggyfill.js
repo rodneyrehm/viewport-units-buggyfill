@@ -48,7 +48,7 @@
   }
 
   function updateStyles() {
-    styleNode.innerText = getReplacedViewportUnits();
+    styleNode.textContent = getReplacedViewportUnits();
   }
 
   function refresh() {

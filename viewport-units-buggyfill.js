@@ -38,7 +38,10 @@
     styleNode.id = 'patched-viewport';
     document.head.appendChild(styleNode);
 
-    window.addEventListener('orientationchange', updateStyles, true);
+    //window.addEventListener('orientationchange', updateStyles, true);
+    // doing a full refresh rather than updateStyles because an orientationchange
+    // could activate different stylesheets 
+    window.addEventListener('orientationchange', refresh, true);
     refresh();
   }
 
@@ -54,9 +57,15 @@
   function findProperties() {
     declarations = [];
     forEach.call(document.styleSheets, function(sheet) {
-      if (sheet.ownerNode.id !== 'patched-viewport' && sheet.cssRules) {
-        forEach.call(sheet.cssRules, findDeclarations);
+      if (sheet.ownerNode.id === 'patched-viewport' || !sheet.cssRules) {
+        // skip entire sheet because no rules ara present or it's the target-element of the buggyfill
+        return;
       }
+      if (sheet.media.mediaText && !window.matchMedia(sheet.media.mediaText).matches) {
+        // skip entire sheet because media attribute doesn't match
+        return;
+      }
+      forEach.call(sheet.cssRules, findDeclarations);
     });
     return declarations;
   }

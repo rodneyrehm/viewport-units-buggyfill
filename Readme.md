@@ -49,6 +49,36 @@ viewportUnitsBuggyfill.findProperties();
 var cssText = viewportUnitsBuggyfill.getCss();
 ```
 
+## Changelog
+
+### 0.3.0 (April 9th 2014) ###
+
+* fixing cross origin resource problem with CSSOM - Issue #6
+
+### 0.2.3 (March 10th 2014) ###
+
+* fixing multiple competing media-attribute-switched stylesheets - Issue #5
+* fixing double initialization and call of reresh() without being initialized - Issue #3
+* fixing `<br>`s caused by `innerText` by using `textContent` instead
+
+### 0.2.2 (January 31st 2014) ###
+
+* fixing unhandled empty <style> elements - Issue #2
+
+### 0.2.1 (January 25th 2014) ###
+
+* adding `force` option to `init()`
+* fixing the handling of non-iterable CSSRules - Issue #1
+
+### 0.2.0 (January 24th 2014) ###
+
+* optimizing generated CSS (by grouping selectors)
+* adding browser sniffing
+
+### 0.1.0 (January 23rd 2014) ###
+
+* Initial Version
+
 
 ## License
 

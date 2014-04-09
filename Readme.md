@@ -57,18 +57,18 @@ var cssText = viewportUnitsBuggyfill.getCss();
 
 ### 0.2.3 (March 10th 2014) ###
 
-* fixing multiple competing media-attribute-switched stylesheets - Issue #5
-* fixing double initialization and call of reresh() without being initialized - Issue #3
+* fixing multiple competing media-attribute-switched stylesheets - [Issue #5](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/5)
+* fixing double initialization and call of `reresh()` without being initialized - [Issue #3](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/3)
 * fixing `<br>`s caused by `innerText` by using `textContent` instead
 
 ### 0.2.2 (January 31st 2014) ###
 
-* fixing unhandled empty <style> elements - Issue #2
+* fixing unhandled empty `<style>` elements - [Issue #2](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/2)
 
 ### 0.2.1 (January 25th 2014) ###
 
 * adding `force` option to `init()`
-* fixing the handling of non-iterable CSSRules - Issue #1
+* fixing the handling of non-iterable CSSRules - [Issue #1](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/1)
 
 ### 0.2.0 (January 24th 2014) ###
 

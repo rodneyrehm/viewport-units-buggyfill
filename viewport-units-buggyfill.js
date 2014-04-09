@@ -19,7 +19,7 @@
   }
 }(this, function () {
   'use strict';
-  /*global document, window*/
+  /*global document, window, location, XMLHttpRequest, XDomainRequest*/
 
   var initialized = false;
   var viewportUnitExpression = /([0-9.-]+)(vh|vw|vmin|vmax)/g;
@@ -39,12 +39,16 @@
     styleNode = document.createElement('style');
     styleNode.id = 'patched-viewport';
     document.head.appendChild(styleNode);
-
-    //window.addEventListener('orientationchange', updateStyles, true);
-    // doing a full refresh rather than updateStyles because an orientationchange
-    // could activate different stylesheets 
-    window.addEventListener('orientationchange', refresh, true);
-    refresh();
+    
+    // Issue #6: Cross Origin Stylesheets are not accessible through CSSOM,
+    // therefore download and inject them as <style> to circumvent SOP.
+    importCrossOriginLinks(function() {
+      //window.addEventListener('orientationchange', updateStyles, true);
+      // doing a full refresh rather than updateStyles because an orientationchange
+      // could activate different stylesheets 
+      window.addEventListener('orientationchange', refresh, true);
+      refresh();
+    });
   }
 
   function updateStyles() {
@@ -188,6 +192,62 @@
       vmax: Math.max(vw, vh),
       vmin: Math.min(vw, vh)
     };
+  }
+
+  function importCrossOriginLinks(next) {
+    var _waiting = 0;
+    var decrease = function() {
+      _waiting--;
+      if (!_waiting) {
+        next();
+      }
+    };
+    
+    forEach.call(document.styleSheets, function(sheet) {
+      if (!sheet.href || origin(sheet.href) === origin(location.href) ) {
+        // skip <style> and <link> from same origin
+        return;
+      }
+      _waiting++;
+      convertLinkToStyle(sheet.ownerNode, decrease);
+    });
+    
+    if (!_waiting) {
+      next();
+    }
+  }
+
+  function origin(url) {
+    return url.slice(0, url.indexOf('/', url.indexOf('://') + 3));
+  }
+
+  function convertLinkToStyle(link, next) {
+    getCors(link.href, function() {
+      var style = document.createElement('style');
+      style.media = link.media;
+      style.textContent = this.responseText;
+      link.parentNode.replaceChild(style, link);
+      next();
+    }, next);
+  }
+  
+  function getCors(url, success, error) {
+    var xhr = new XMLHttpRequest();
+    if ('withCredentials' in xhr) {
+      // XHR for Chrome/Firefox/Opera/Safari.
+      xhr.open('GET', url, true);
+    } else if (typeof XDomainRequest !== 'undefined') {
+      // XDomainRequest for IE.
+      xhr = new XDomainRequest();
+      xhr.open('GET', url);
+    } else {
+      throw new Error('cross-domain XHR not supported');
+    }
+    
+    xhr.onload = success;
+    xhr.onerror = error;
+    xhr.send();
+    return xhr;
   }
 
   return {

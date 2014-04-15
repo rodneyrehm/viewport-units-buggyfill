@@ -30,7 +30,7 @@
   var styleNode;
 
   function initialize(force) {
-    if (initialized || (!force && !/ip.+mobile.+safari/i.test(window.navigator.userAgent))) {
+    if (initialized || (!force && !/ip.+mobile/i.test(window.navigator.userAgent))) {
       // this buggyfill only applies to mobile safari
       return;
     }

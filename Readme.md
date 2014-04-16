@@ -51,6 +51,10 @@ var cssText = viewportUnitsBuggyfill.getCss();
 
 ## Changelog
 
+### 0.3.1 (April 16th 2014) ###
+
+* fixing browser detection to include UIWebView - Issue #7, [tylerstalder](https://github.com/tylerstalder)
+
 ### 0.3.0 (April 9th 2014) ###
 
 * fixing cross origin resource problem with CSSOM - Issue #6

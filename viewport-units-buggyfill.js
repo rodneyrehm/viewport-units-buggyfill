@@ -28,9 +28,10 @@
   var dimensions;
   var declarations;
   var styleNode;
+  var is_safari_or_uiwebview = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
 
   function initialize(force) {
-    if (initialized || (!force && !/ip.+mobile/i.test(window.navigator.userAgent))) {
+    if (initialized || (!force && !is_safari_or_uiwebview)) {
       // this buggyfill only applies to mobile safari
       return;
     }

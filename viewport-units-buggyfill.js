@@ -226,6 +226,7 @@
     getCors(link.href, function() {
       var style = document.createElement('style');
       style.media = link.media;
+      style.setAttribute('data-href', link.href);
       style.textContent = this.responseText;
       link.parentNode.replaceChild(style, link);
       next();

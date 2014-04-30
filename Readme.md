@@ -49,6 +49,10 @@ viewportUnitsBuggyfill.findProperties();
 var cssText = viewportUnitsBuggyfill.getCss();
 ```
 
+## Cross Origin Stylesheets
+
+**Warning:** Including stylesheets from third party services, like Google WebFonts, requires those resources to be served with appropriate CORS headers. 
+
 ## Changelog
 
 ### 0.3.1 (April 16th 2014) ###

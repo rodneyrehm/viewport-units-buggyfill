@@ -98,6 +98,7 @@ var cssText = viewportUnitsBuggyfill.getCss();
 ```
 * Using the above 'vw-calc-hack' trick, one can also add support for vmax support in Safari for the older iOS6 
 * Adds support for viewport units inside of IE's `filter` property (a.k.a. Visual Filters).
+* Added debounce initialization parameter, if it is desirable to not have IE9+ fire the polyfill so many times on a resize event.
 
 
 ### 0.3.1 (April 16th 2014) ###

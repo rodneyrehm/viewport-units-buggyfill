@@ -94,8 +94,9 @@ var cssText = viewportUnitsBuggyfill.getCss();
    */
   content: 'vw-calc-hack: true; top: calc(50vh -  100px ); left: calc(50vw -  100px );';
 }
-* Using the above 'vw-calc-hack' trick, one can also add support for vmax support in IE9 and 10.  
 ```
+* Using the above 'vw-calc-hack' trick, one can also add support for vmax support in IE9 and 10.  
+
 
 ### 0.3.1 (April 16th 2014) ###
 

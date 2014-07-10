@@ -65,10 +65,10 @@ var cssText = viewportUnitsBuggyfill.getCss();
 
 ### 0.4 (July 10th 2014) ###
 
-* fixes IE9 and Safari native way of calculating viewport units differently inside of a frame. Without this buggyfill, IE9 will assume the 100vw and 100vh to be the width and height of the parent document’s viewport, while Safari for iOS will choose 1px (!!!!) for both.
+* fixes IE9 and Safari native way of calculating viewport units differently inside of a frame. Without this buggyfill, IE9 will assume the `100vw` and `100vh` to be the width and height of the parent document’s viewport, while Safari for iOS will choose 1px (!!!!) for both.
 * fixes a bug in Safari in iOS where it cannot do native viewport units in a lot of the more complicated CSS properties (e.g. text-shadow).
 * fixes IE9's issue when calculate viewport units correctly when changing media-query breakpoints.
-* adds vmin support for IE9 (instead of vm, IE9's equivalent to vmin) as well as max support in IE9 and 10.  This is done by hacking IE's behavior CSS property, like so: 
+* adds `vmin` support for IE9 (instead of `vm`, IE9's equivalent to vmin) 
 ```css
 .myLargeBlock {
     
@@ -94,8 +94,9 @@ var cssText = viewportUnitsBuggyfill.getCss();
    */
   content: 'vw-calc-hack: true; top: calc(50vh -  100px ); left: calc(50vw -  100px );';
 }
+* Using the above 'vw-calc-hack' trick, one can also add support for vmax support in IE9 and 10.  
 ```
-* IE9 and 10 does not support vmax
+
 ### 0.3.1 (April 16th 2014) ###
 
 * fixing browser detection to include UIWebView - Issue #7, [tylerstalder](https://github.com/tylerstalder)

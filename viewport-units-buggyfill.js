@@ -3,6 +3,7 @@
  * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
  */
+
 (function (root, factory) {
   'use strict';
   if (typeof define === 'function' && define.amd) {
@@ -22,35 +23,138 @@
   /*global document, window, location, XMLHttpRequest, XDomainRequest*/
 
   var initialized = false;
-  var viewportUnitExpression = /([0-9.-]+)(vh|vw|vmin|vmax)/g;
+  var options;
+  var refreshDebounce;
+  var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
+  var calcExpression = /calc\(/g;
+  var quoteExpression = /[\"\']/g;
+  var urlExpression = /url\([^\)]*\)/g;
   var forEach = [].forEach;
   var join = [].join;
   var dimensions;
   var declarations;
   var styleNode;
   var is_safari_or_uiwebview = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
+  var is_bad_IE = false;
+  var no_vm_for_font_height = false;
+  var no_vmin_vmax = false;
+  var no_vmin_in_calc = false;
+  
+  /*
+   * Do not remove this comment before.  It is used by IE to test what version
+   * we are running.  
+   */
+  
+  /*@cc_on
+ 
+  @if (@_jscript_version <= 10)
+    is_bad_IE = true;
+    no_vmin_in_calc = true;
+    no_vmin_vmax = true;
+  @end
+  
+  @*/
+  
+  
+  // Debounce function from http://davidwalsh.name/javascript-debounce-function
+  // Returns a function, that, as long as it continues to be invoked, will not
+  // be triggered. The function will be called after it stops being called for
+  // N milliseconds. If `immediate` is passed, trigger the function on the
+  // leading edge, instead of the trailing.
+  function debounce(func, wait, immediate) {
+  var timeout;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    }, wait);
+    if (immediate && !timeout) func.apply(context, args);
+  };
+  };
+  
+  
 
-  function initialize(force) {
-    if (initialized || (!force && !is_safari_or_uiwebview)) {
-      // this buggyfill only applies to mobile safari
+  function initialize(initOptions) {
+  	options = initOptions || {};
+    
+    if (initialized && !options.force) {
+    	return;
+    }
+    
+    
+    /*
+     * Test to see if viewport units can be used in calc() expressions
+     */
+    var div = document.createElement('div');
+    div.style.width = '1vmin';
+    
+    if (div.style.width === '') {
+    	no_vmin_vmax = true;
+    }
+    
+    // there is no accurate way to detect this programmatically.
+    no_vmin_in_calc = no_vmin_in_calc || is_safari_or_uiwebview;
+    
+    
+    
+    
+    if (!is_safari_or_uiwebview && !is_bad_IE && !no_vmin_vmax && !no_vmin_in_calc) {
+      // we don't need to use this buggyfill. Exit.
       return;
     }
+    
+    
 
     initialized = true;
     styleNode = document.createElement('style');
     styleNode.id = 'patched-viewport';
     document.head.appendChild(styleNode);
     
+    
     // Issue #6: Cross Origin Stylesheets are not accessible through CSSOM,
     // therefore download and inject them as <style> to circumvent SOP.
     importCrossOriginLinks(function() {
-      //window.addEventListener('orientationchange', updateStyles, true);
+      
       // doing a full refresh rather than updateStyles because an orientationchange
-      // could activate different stylesheets 
+      // could activate different stylesheets
       window.addEventListener('orientationchange', refresh, true);
+      
+      // we must add a pageShow event here, since a user could have gone to a
+      // different page, rotated the device, and then went back to the original
+      // page, which doesn't update the viewport units.
+      window.addEventListener('pageshow', refresh, true);
+      
+      if (is_bad_IE || inIframe()) {
+        if (options.useResizeDebounce) {
+          if (typeof(options.useResizeDebounce === 'number')) {
+            refreshDebounce = debounce(refresh, options.useResizeDebounce);
+          } else {
+            refreshDebounce = debounce(refresh, 250);
+          }
+          
+          window.addEventListener('resize', refreshDebounce, true);
+        } else {  
+          window.addEventListener('resize', refresh, true);
+        }
+      }
+      
       refresh();
     });
   }
+  
+  /*
+   * code to detect if document is in an iframe from 
+   * http://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t
+   */
+  function inIframe () {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+}
 
   function updateStyles() {
     styleNode.textContent = getReplacedViewportUnits();
@@ -60,23 +164,37 @@
     if (!initialized) {
       return;
     }
+    
     findProperties();
-    updateStyles();
+    
+    /*
+     * iOS Safari will report window.innerWidth and .innerHeight as 0
+     * unless a timeout is used here.
+     */
+    setTimeout(function () {
+    	updateStyles();
+    }, 1);
+    
   }
+  
+  
+  
 
   function findProperties() {
     declarations = [];
     forEach.call(document.styleSheets, function(sheet) {
+    
       if (sheet.ownerNode.id === 'patched-viewport' || !sheet.cssRules) {
         // skip entire sheet because no rules ara present or it's the target-element of the buggyfill
         return;
       }
-      if (sheet.media.mediaText && !window.matchMedia(sheet.media.mediaText).matches) {
+      if (sheet.media && sheet.media.mediaText && window.matchMedia && !window.matchMedia(sheet.media.mediaText).matches) {
         // skip entire sheet because media attribute doesn't match
         return;
       }
       forEach.call(sheet.cssRules, findDeclarations);
     });
+    
     return declarations;
   }
 
@@ -85,6 +203,7 @@
       var value = rule.cssText;
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
+        checkCalcHack(rule, name, value);
         declarations.push([rule, null, value]);
       }
       return;
@@ -106,9 +225,58 @@
       var value = rule.style.getPropertyValue(name);
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
+      	console.log(name, value);
+        checkCalcHack(rule, name, value);
         declarations.push([rule, name, value]);
       }
     });
+  }
+  
+  function checkCalcHack(rule, name, value) {
+    /*
+     * Special cases: 
+     * 
+     * 1) FOR iOS SAFARI AND IE9: if this the name is "content", we 
+     *    check to see if the value matches "vw-calc-hack".
+     *    If so, then we parse the properties after that 
+     *    and apply fixes to them.
+     * 
+     * 2) FOR IE9: if the name is "behavior", we check to
+     *    see if the value matches "vmin-vmax-hack".
+     *    If so, then we parse the properties after that and
+     *    apply fixes to them.
+     */
+    var needsCalcFix = no_vmin_in_calc && name === 'content' && value.indexOf('vw-calc-hack') >= 0,
+      needsVminVmaxFix = (no_vmin_vmax && name === 'behavior' && value.indexOf('vmin-vmax-hack') >= 0);
+    
+    if ( needsCalcFix || needsVminVmaxFix ) {
+      var fakeRules = value.replace(quoteExpression, '');
+      
+      if (needsVminVmaxFix) {
+        fakeRules = fakeRules.replace(urlExpression, '');
+      }
+      
+      fakeRules = fakeRules.split(';');
+      
+      for (var i = 0; i<fakeRules.length; i++) {
+      	
+        var fakeRule = fakeRules[i].split(':');
+        
+        if (fakeRule.length == 2) {
+          name = fakeRule[0].trim(),
+          value = fakeRule[1].trim();
+        
+          if (name !== 'vw-calc-hack' && name !== 'vmin-vmax-hack') {
+            declarations.push([rule, name, value]);
+          
+          	if (calcExpression.test(value)) {
+          		var webkitValue = value.replace(calcExpression, '-webkit-calc(');
+          		declarations.push([rule, name, webkitValue]);
+          	}
+          }
+        }
+      }
+    }
   }
 
   function getReplacedViewportUnits() {
@@ -160,7 +328,18 @@
 
   function overwriteDeclaration(rule, name, value) {
     var _value = value.replace(viewportUnitExpression, replaceValues);
-    var _selectors = [];
+    var  _selectors = [];
+    
+    /*
+     * If this is an IE visual filter, then we take out the px, since
+     * they all take pixel values without the px after the number.
+     * This is a little inefficient, but it is the only way I know
+     * how to do this.
+     */
+    if (is_bad_IE && name === 'filter') {
+    	 _value = _value.replace(/px/g, '');
+    	 
+    } 
     if (name) {
       _selectors.push(rule.selectorText);
       _value = name + ': ' + _value + ';';
@@ -168,7 +347,12 @@
 
     var _rule = rule.parentRule;
     while (_rule) {
-      _selectors.unshift('@media ' + join.call(_rule.media, ', '));
+      
+      // changed from
+      // _selectors.unshift('@media ' + join.call(_rule.media, ', '));
+      // because it wasn't working in IE9.
+      _selectors.unshift('@media ' + _rule.media.mediaText);
+      
       _rule = _rule.parentRule;
     }
 
@@ -179,14 +363,17 @@
   }
 
   function replaceValues(match, number, unit) {
+  	
     var _base = dimensions[unit];
     var _number = parseFloat(number) / 100;
+    
     return (_number * _base) + 'px';
   }
 
   function getViewport() {
     var vh = window.innerHeight;
     var vw = window.innerWidth;
+    
     return {
       vh: vh,
       vw: vw,

@@ -41,8 +41,10 @@ var viewportUnitsBuggyfill = require('viewport-units-buggyfill');
 // register orientationchange event (and resize events in IE9+) to repeat when necessary
 // will only engage for Mobile Safari on iOS and IE9+
 viewportUnitsBuggyfill.init();
+
 // ignore user agent force initialization
 viewportUnitsBuggyfill.init({force: true});
+
 // reduces the amount of times the buggyfill is reinitialized on window resize in IE
 // for performance reasons.
 viewportUnitsBuggyfill.init({useResizeDebounce: 250});
@@ -80,7 +82,7 @@ var cssText = viewportUnitsBuggyfill.getCss();
 
 }
 ```
-* adds the ability for viewport units to be used inside of calc() expressions in iOS Safari and IE9+.
+* adds the ability for viewport units to be used inside of calc() expressions in iOS Safari and IE9+, via the use of the `content` CSS property.  This seems like a good compromise since `content` is only valid inside `::before` and `::after` rules (as a result, it is not recommended use this hack inside of these rules)
 ```css
 .box {
   

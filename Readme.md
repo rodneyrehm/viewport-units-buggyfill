@@ -47,7 +47,11 @@ viewportUnitsBuggyfill.init({force: true});
 
 // reduces the amount of times the buggyfill is reinitialized on window resize in IE
 // for performance reasons.
-viewportUnitsBuggyfill.init({useResizeDebounce: 250});
+viewportUnitsBuggyfill.init({use_resize_debounce: 250});
+
+// allows the use of css hacks to implement vmax and vmin (IE9+ and iOS6 Safari) 
+// as well as viewport units in calc expressions (iOS Safari)
+viewportUnitsBuggyfill.init({use_css_hacks: 250});
 
 // update internal declarations cache and recalculate pixel styles
 // this is handy when you add styles after .init() was run

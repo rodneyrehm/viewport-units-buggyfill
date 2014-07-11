@@ -39,6 +39,7 @@
   var no_vm_for_font_height = false;
   var no_vmin_vmax = false;
   var no_vmin_in_calc = false;
+  var use_css_hacks = false;
   
   /*
    * Do not remove this comment before.  It is used by IE to test what version
@@ -79,8 +80,9 @@
   function initialize(initOptions) {
   	options = initOptions || {};
     
-    if (initialized && !options.force) {
-    	return;
+    if (initialized || (!options.force && !is_safari_or_uiwebview && !is_bad_IE)) {
+      // this buggyfill only applies to mobile safari
+      return;
     }
     
     
@@ -88,7 +90,7 @@
      * Test to see if viewport units can be used in calc() expressions
      */
     var div = document.createElement('div');
-    div.style.width = '1vmin';
+    div.style.width = '1vmax';
     
     if (div.style.width === '') {
     	no_vmin_vmax = true;
@@ -97,15 +99,7 @@
     // there is no accurate way to detect this programmatically.
     no_vmin_in_calc = no_vmin_in_calc || is_safari_or_uiwebview;
     
-    
-    
-    
-    if (!is_safari_or_uiwebview && !is_bad_IE && !no_vmin_vmax && !no_vmin_in_calc) {
-      // we don't need to use this buggyfill. Exit.
-      return;
-    }
-    
-    
+    use_css_hacks = !!options.use_css_hacks;
 
     initialized = true;
     styleNode = document.createElement('style');
@@ -127,9 +121,9 @@
       window.addEventListener('pageshow', refresh, true);
       
       if (is_bad_IE || inIframe()) {
-        if (options.useResizeDebounce) {
-          if (typeof(options.useResizeDebounce === 'number')) {
-            refreshDebounce = debounce(refresh, options.useResizeDebounce);
+        if (options.use_resize_debounce) {
+          if (typeof(options.use_resize_debounce === 'number')) {
+            refreshDebounce = debounce(refresh, options.use_resize_debounce);
           } else {
             refreshDebounce = debounce(refresh, 250);
           }
@@ -225,7 +219,6 @@
       var value = rule.style.getPropertyValue(name);
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
-      	console.log(name, value);
         checkCalcHack(rule, name, value);
         declarations.push([rule, name, value]);
       }
@@ -246,8 +239,8 @@
      *    If so, then we parse the properties after that and
      *    apply fixes to them.
      */
-    var needsCalcFix = no_vmin_in_calc && name === 'content' && value.indexOf('vw-calc-hack') >= 0,
-      needsVminVmaxFix = (no_vmin_vmax && name === 'behavior' && value.indexOf('vmin-vmax-hack') >= 0);
+    var needsCalcFix = (use_css_hacks && no_vmin_in_calc && name === 'content' && value.indexOf('vw-calc-hack') >= 0),
+      needsVminVmaxFix = (use_css_hacks && no_vmin_vmax && name === 'behavior' && value.indexOf('vmin-vmax-hack') >= 0);
     
     if ( needsCalcFix || needsVminVmaxFix ) {
       var fakeRules = value.replace(quoteExpression, '');

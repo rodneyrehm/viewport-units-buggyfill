@@ -1,0 +1,14 @@
+/* From https://coderwall.com/p/qac-og */
+@import url(fonts/fonts.css);
+/* line 6, ../sass/iframe.scss */
+div {
+  background-color: green;
+  border: solid 1px black;
+  color: white;
+}
+
+/* line 12, ../sass/iframe.scss */
+#iframe-test {
+  width: 50vw;
+  height: 50vh;
+}

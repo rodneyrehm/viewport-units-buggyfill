@@ -39,7 +39,8 @@
   var no_vm_for_font_height = false;
   var no_vmin_vmax = false;
   var no_vmin_in_calc = false;
-  var use_css_hacks = false;
+  var use_css_content_hack = false;
+  var use_css_behavior_hack = false;
   
   /*
    * Do not remove this comment before.  It is used by IE to test what version
@@ -99,7 +100,8 @@
     // there is no accurate way to detect this programmatically.
     no_vmin_in_calc = no_vmin_in_calc || is_safari_or_uiwebview;
     
-    use_css_hacks = !!options.use_css_hacks;
+    use_css_behavior_hack = !!options.use_css_behavior_hack;
+    use_css_content_hack = !!options.use_css_content_hack;
 
     initialized = true;
     styleNode = document.createElement('style');
@@ -120,7 +122,7 @@
       // page, which doesn't update the viewport units.
       window.addEventListener('pageshow', refresh, true);
       
-      if (is_bad_IE || inIframe()) {
+      if (is_bad_IE || inIframe() || options.force) {
         if (options.use_resize_debounce) {
           if (typeof(options.use_resize_debounce === 'number')) {
             refreshDebounce = debounce(refresh, options.use_resize_debounce);
@@ -197,7 +199,7 @@
       var value = rule.cssText;
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
-        checkCalcHack(rule, name, value);
+        checkHacks(rule, name, value);
         declarations.push([rule, null, value]);
       }
       return;
@@ -219,28 +221,28 @@
       var value = rule.style.getPropertyValue(name);
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
-        checkCalcHack(rule, name, value);
+        checkHacks(rule, name, value);
         declarations.push([rule, name, value]);
       }
     });
   }
   
-  function checkCalcHack(rule, name, value) {
+  function checkHacks(rule, name, value) {
     /*
      * Special cases: 
      * 
      * 1) FOR iOS SAFARI AND IE9: if this the name is "content", we 
-     *    check to see if the value matches "vw-calc-hack".
+     *    check to see if the value matches "use_css_content_hack".
      *    If so, then we parse the properties after that 
      *    and apply fixes to them.
      * 
      * 2) FOR IE9: if the name is "behavior", we check to
-     *    see if the value matches "vmin-vmax-hack".
+     *    see if the value matches "use_css_behavior_hack".
      *    If so, then we parse the properties after that and
      *    apply fixes to them.
      */
-    var needsCalcFix = (use_css_hacks && no_vmin_in_calc && name === 'content' && value.indexOf('vw-calc-hack') >= 0),
-      needsVminVmaxFix = (use_css_hacks && no_vmin_vmax && name === 'behavior' && value.indexOf('vmin-vmax-hack') >= 0);
+    var needsCalcFix = (use_css_content_hack && no_vmin_in_calc && name === 'content' && value.indexOf('use_css_content_hack') >= 0),
+      needsVminVmaxFix = (use_css_behavior_hack && no_vmin_vmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') >= 0);
     
     if ( needsCalcFix || needsVminVmaxFix ) {
       var fakeRules = value.replace(quoteExpression, '');
@@ -259,7 +261,7 @@
           name = fakeRule[0].trim(),
           value = fakeRule[1].trim();
         
-          if (name !== 'vw-calc-hack' && name !== 'vmin-vmax-hack') {
+          if (name !== 'use_css_content_hack' && name !== 'use_css_behavior_hack') {
             declarations.push([rule, name, value]);
           
           	if (calcExpression.test(value)) {

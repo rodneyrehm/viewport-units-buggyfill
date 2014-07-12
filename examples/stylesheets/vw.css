@@ -1,0 +1,20 @@
+/* From https://coderwall.com/p/qac-og */
+/* line 4, ../sass/vw.scss */
+.vw-demo {
+  background-color: red;
+  color: white;
+  font-family: "Arial", "Helvetica", sans-serif;
+  margin: 0 auto;
+  font-weight: bold;
+  /*
+   * Using border-box sizing, to ensure the box
+   * is exactly 80vw wide, no matter how much padding
+   * or border.
+   */
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 80vw;
+  height: 100%;
+  padding: 10px;
+}

@@ -1,0 +1,67 @@
+@import "_mixins.scss";
+@import "compass/css3";
+@import "compass/css3/shared";
+@import "fonts/trocchi/stylesheet.css";
+@import "fonts/scriptina/stylesheet.css";
+
+html, body {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  font-family: "Arial", "Helvetica", sans-serif;
+  margin: 0;
+  
+}
+
+
+  
+$size: 200px;
+$halfSize: $size / 2;
+
+
+.circle {
+  /* Let's make this a 200 x 200 circle */
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+  
+  background: red;
+  position: absolute;
+  
+  
+  /* 
+   * We set the top property to be half of the 
+   * viewport height minus half of the height 
+   * of the element height to center it vertically.
+   *   
+   * Similarly set the left property to be 
+   * half of the viewport width minus half 
+   * the element width to center it horizontally
+   */
+  top: unquote("calc(50vh - ") $halfSize unquote(")");
+  left: unquote("calc(50vw - ") $halfSize unquote(")");
+  
+  /*
+   * Here is the code for WebKit browsers that will allow 
+   * viewport-units-buggyfill to perform calc on viewport
+   * units.
+   */
+  content: unquote("'use_css_content_hack: true; top: calc(50vh - ")  $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
+
+  span {
+    color: white;
+    
+    padding: 10px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    width: $size - 20;
+    height: $size - 20;
+    font-size: 0.07 * $size;
+    
+  }
+
+  
+  
+  
+}

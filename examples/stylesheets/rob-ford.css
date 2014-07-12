@@ -1,0 +1,159 @@
+@charset "IBM437";
+/*
+ * I used compass to help me with my CSS.  I highly recommend it.
+ * http://compass-style.org/
+ */
+/* From https://coderwall.com/p/qac-og */
+@import url(fonts/american-captain/stylesheet.css);
+@import url(reset.css);
+/* line 14, ../sass/rob-ford.scss */
+body {
+  /*
+   * This puts Rob Ford photo always in the background, 
+   * centered and as heigh as the viewport.
+   */
+  background-image: url("../images/Rob_Ford_Mayoral_Candidates_Forum_June_2010.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 25%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* line 27, ../sass/rob-ford.scss */
+.copy {
+  font-family: "hinted-AmericanCaptain", "Impact", sans-serif;
+  text-align: center;
+  color: white;
+  width: 100%;
+  /*
+   * The first part of this text-shadow (1vh 1vh 0 #000)
+   * is the huge drop shadow on the bottom right of the
+   * text.  The other 1px shadows create the outline 
+   * around the text.
+   */
+  text-shadow: 1vh 1vh 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000;
+}
+/* line 44, ../sass/rob-ford.scss */
+body.ie9down .copy .date, body.ie9down .copy .say-no {
+  zoom: 1;
+  background: #000001;
+  /*
+   * This CSS is the IE9- equivalent of the text-shadow code above.  
+   * For more details, see my article "CSS3 Text-Shadow – Can It Be 
+   * Done in IE Without JavaScript?" at
+   * http://www.useragentman.com/blog/2011/04/14/css3-text-shadow-can-it-be-done-in-ie-without-javascript/ 
+   * 
+   * As you can see, the DropShadow Visual Filter uses 
+   * vh units. These are not supported natively by IE, 
+   * but the I refactored the viewport-units-buggyfill.js 
+   * script actually can replace them with pixel values.  
+   * It works well (yay!).
+   * 
+   * Note: the vh units used here will be replaced with the appropriate pixel values
+   * (sans the px suffix) by the buggyfill for IE9 and below.
+   */
+  filter: progid:DXImageTransform.Microsoft.Chroma(color=#000001) progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000) progid:DXImageTransform.Microsoft.DropShadow(OffX=-1, OffY=-1, Color=#000000) progid:DXImageTransform.Microsoft.DropShadow(OffX=1vh, OffY=1vh, Color=#000000);
+}
+/* line 71, ../sass/rob-ford.scss */
+.copy .date {
+  position: relative;
+  top: 2vh;
+  display: block;
+  font-size: 8vh;
+}
+/* line 79, ../sass/rob-ford.scss */
+.copy .say-no {
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
+  line-height: 0.8;
+  display: block;
+  font-size: 20vh;
+}
+/* line 90, ../sass/rob-ford.scss */
+.copy .say-no em {
+  font-size: 40vh;
+  display: inline-block;
+  font-style: normal;
+  /*
+   * Using font-style: italics looks awful in a lot of browsers
+   * when an italic variant of the font is unavailable 
+   * (they slant the font 15-20 deg), so I skew the font instead.
+   * I cover this off in my article "Giving Challenged 
+   * @font-face Fonts The Italics Makeover" at
+   * http://www.useragentman.com/blog/2010/09/07/giving-challenged-font-face-fonts-the-italics-makeover/.
+   */
+}
+/* line 103, ../sass/rob-ford.scss */
+body.modern .copy .say-no em {
+  /* 
+   * First, we skew the font using CSS transforms in 
+   * modern browsers 
+   */
+  -moz-transform: skewX(-10deg);
+  -ms-transform: skewX(-10deg);
+  -webkit-transform: skewX(-10deg);
+  transform: skewX(-10deg);
+}
+/* line 111, ../sass/rob-ford.scss */
+body.ie9down .copy .say-no em {
+  /*
+   * In IE9 only, we use the Matrix Visual Filter, even though it can
+   * use CSS transforms.  Why?  Because IE9 doesn't support 
+   * CSS3 transform, so I use IE's Drop Shadow Visual Filter 
+   * instead.  Since you can't mix CSS transforms with 
+   * Visual Filters in IE, I use the Matrix Filter to simulate
+   * transforms.
+   * 
+   * To see where I got the numbers for the Matrix Transform,
+   * go to http://www.useragentman.com/IETransformsTranslator/
+   */
+  position: relative;
+  zoom: 1;
+  filter: progid:DXImageTransform.Microsoft.Matrix(M11=1, M12=-0.1763269807084645, M21=0, M22=1, SizingMethod='auto expand') progid:DXImageTransform.Microsoft.DropShadow(OffX=1, OffY=1, Color=#000000) progid:DXImageTransform.Microsoft.DropShadow(OffX=1vh, OffY=1vh, Color=#000000);
+}
+
+/*
+ * Extra styles: when the aspect ratio of the browser gets 
+ * below 5/8, the above layout goes over Mr. Ford's face.
+ * This ajusts the text in that scenerio.  
+ */
+@media screen and (max-aspect-ratio: 5 / 8) {
+  /* line 149, ../sass/rob-ford.scss */
+  .copy .date {
+    font-size: 6vh;
+  }
+  /* line 153, ../sass/rob-ford.scss */
+  .copy .say-no {
+    font-size: 12vh;
+  }
+  /* line 157, ../sass/rob-ford.scss */
+  .copy .say-no em {
+    font-size: 24vh;
+  }
+}
+/*
+ * If the height of the viewport in 350px or less,
+ * then reduce the size of the work "NO", since it
+ * is covering Robbie's face.
+ */
+@media screen and (max-height: 350px) {
+  /* line 175, ../sass/rob-ford.scss */
+  .copy .say-no em {
+    font-size: 26vh;
+  }
+}
+/* line 182, ../sass/rob-ford.scss */
+aside {
+  position: absolute;
+  bottom: 1vh;
+  right: 1vh;
+  color: white;
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 10px;
+}
+/* line 190, ../sass/rob-ford.scss */
+aside a {
+  color: #ccccff;
+}

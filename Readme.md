@@ -1,6 +1,6 @@
 # Viewport Units Buggyfill™
 
-This is a fork of [Rodney Rehm's original Viewport Units Buggyfill™ script](https://github.com/rodneyrehm/viewport-units-buggyfill).  It adds a variety of fixes to support 
+It adds a variety of fixes to support 
 IE9+, iOS6 for Safari and viewport units inside CSS3 calc() expressions (see changelog for details).
 
 This script makes viewport units (vh|vw|vmin|vmax) work properly in Mobile Safari and IE9+.

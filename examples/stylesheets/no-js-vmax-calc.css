@@ -1,0 +1,47 @@
+/* From https://coderwall.com/p/qac-og */
+@import url(fonts/trocchi/stylesheet.css);
+@import url(fonts/scriptina/stylesheet.css);
+/* line 7, ../sass/no-js-vmax-calc.scss */
+html, body {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  font-family: "Arial", "Helvetica", sans-serif;
+  margin: 0;
+}
+
+/* line 22, ../sass/no-js-vmax-calc.scss */
+.circle {
+  /* Let's make this a 200 x 200 circle */
+  width: 20vmax;
+  height: 20vmax;
+  border-radius: 50%;
+  background: red;
+  position: absolute;
+  /* 
+   * We set the top property to be half of the 
+   * viewport height minus half of the height 
+   * of the element height to center it vertically.
+   *   
+   * Similarly set the left property to be 
+   * half of the viewport width minus half 
+   * the element width to center it horizontally
+   */
+  top: calc(50vh -  10vmax );
+  left: calc(50vw -  10vmax );
+  font-size: 1.66667vmax;
+}
+/* line 47, ../sass/no-js-vmax-calc.scss */
+.circle span {
+  color: white;
+  width: 20vmax;
+  height: 20vmax;
+  padding: 10px;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 1.4vmax;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}

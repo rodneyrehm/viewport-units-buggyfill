@@ -5,6 +5,7 @@
   width: .2vw;
   height: 20.3vh;
   margin-top: -2vh;
+  text-shadow: 3vw 5vh 6vmin blue;
 }
 
 .calculating { 

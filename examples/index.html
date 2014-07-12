@@ -27,12 +27,21 @@
 		<h1>Tests for viewport-units-buggyfill.js</h1>
 
 		<ul>
-		<li>vw test: <a href="vw.html">with buggyfill</a> and <a href="no-js-vw.html">without</a>.</li>
-		<li>vh test: <a href="vh.html">with buggyfill</a> and <a href="no-js-vh.html">without</a>.</li>
-		<li>vmin test: <a href="vmin.html">with buggyfill</a> and <a href="no-js-vmin.html">without</a>.</li>
-		<li>vmax test: <a href="vmax.html">with buggyfill</a> and <a href="no-js-vmax.html">without</a>.</li>
-		<li>viewport units in calc() statement: <a href="vunit-calc.html">with buggyfill</a> and <a href="no-js-vunit-calc.html">without</a>.</li>
-		<li>viewport units in IE Visual Filters: <a href="rob-ford.html">with buggyfill</a> and <a href="no-js-rob-ford.html">without</a>.</li>
+		<li>vw test: <a href="vw.html">with buggyfill</a> and <a href="no-js-vw.html">without</a>.  Without buggyfill, 
+			iOS Safari will fail when rotating the device.</li>
+		<li>vh test: <a href="vh.html">with buggyfill</a> and <a href="no-js-vh.html">without</a>.  Without buggyfill, 
+			iOS Safari will fail when rotating the device.</li>
+		<li>vmin test: <a href="vmin.html">with buggyfill</a> and <a href="no-js-vmin.html">without</a>. Without buggyfill, 
+			iOS Safari will fail when rotating the device and IE9 will just fail.</li>
+		<li>vmax test: <a href="vmax.html">with buggyfill</a> and <a href="no-js-vmax.html">without</a>. Without buggyfill, 
+			iOS Safari will fail when rotating the device and IE9 and 10 will just fail.</li>
+		<li>viewport units in calc() statement: <a href="vunit-calc.html">with buggyfill</a> and <a href="no-js-vunit-calc.html">without</a>.
+			Without buggyfill, fails in iOS Safari.</li>
+		<li>vmax units in calc() statement: <a href="vmax-calc.html">with buggyfill</a> and <a href="no-js-vmax-calc.html">without</a>.
+			Without buggyfill, fails in iOS Safari and IE9 and 10. </li>
+		
+		<li>viewport units in IE Visual Filters: <a href="rob-ford.html">with buggyfill</a> and <a href="no-js-rob-ford.html">without</a>.
+			Without buggyfill, text shadows do not grow with the viewport height in IE9.</li>
 		</ul>
 	</body>
 </html>
@@ -40,8 +49,7 @@
 <p>
 	<strong>Note: </strong> When testing examples without buggyfill in iOS Safari, 
 	you should rotate the device several times to see the
-	bugs.  Bugs that happen in IE10 involve vmin, vmax and calc().
-	The IE Visual Filters example does not call out a bug, just an 
+	bugs.  The IE Visual Filters example does not call out a bug, just an 
 	extra feature that some developers may find useful.
 </p>
 

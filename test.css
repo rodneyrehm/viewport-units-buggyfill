@@ -5,6 +5,7 @@
   width: .2vw;
   height: 20.3vh;
   margin-top: -2vh;
+  text-shadow: 3vw 5vh 6vmin blue;
 }
 
 .calculating { 
@@ -13,6 +14,18 @@
 
 .some-other-selector { 
   margin-left: 20.3vh;
+}
+
+.ie-only-test {
+	filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1vh, OffY=1vw, Color=#000000);
+}
+
+.use_css_content_hack-test {
+	content: 'use_css_content_hack: true; width: 80vmax; height: 80vmax;';
+}
+
+.use_css_behavior-test {
+  -ms-behavior: 'use_css_behavior_hack: true; width: 80vmax; height: 80vmax;';
 }
 
 @media only screen and (max-height: 400px), (max-width: 400px) { 

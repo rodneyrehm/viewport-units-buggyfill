@@ -54,27 +54,17 @@
 
   @*/
 
-  // Debounce function from http://davidwalsh.name/javascript-debounce-function
-  // Returns a function, that, as long as it continues to be invoked, will not
-  // be triggered. The function will be called after it stops being called for
-  // N milliseconds. If `immediate` is passed, trigger the function on the
-  // leading edge, instead of the trailing.
-  function debounce(func, wait, immediate) {
+  function debounce(func, wait) {
     var timeout;
     return function() {
       var context = this;
       var args = arguments;
-      clearTimeout(timeout);
-      timeout = setTimeout(function() {
-        timeout = null;
-        if (!immediate) {
-          func.apply(context, args);
-        }
-      }, wait);
-
-      if (immediate && !timeout) {
+      var callback = function() {
         func.apply(context, args);
-      }
+      };
+
+      clearTimeout(timeout);
+      timeout = setTimeout(callback, wait);
     };
   }
 
@@ -84,6 +74,9 @@
       // this buggyfill only applies to mobile safari
       return;
     }
+
+    // previous option names
+    !options.refreshDebounceWait && (options.refreshDebounceWait = options.use_resize_debounce);
 
     // Test viewport units support in calc() expressions
     var div = document.createElement('div');
@@ -104,25 +97,15 @@
     // Issue #6: Cross Origin Stylesheets are not accessible through CSSOM,
     // therefore download and inject them as <style> to circumvent SOP.
     importCrossOriginLinks(function() {
+      var _refresh = debounce(refresh, options.refreshDebounceWait || 100);
       // doing a full refresh rather than updateStyles because an orientationchange
       // could activate different stylesheets
-      window.addEventListener('orientationchange', refresh, true);
-      // we must add a pageShow event here, since a user could have gone to a
-      // different page, rotated the device, and then went back to the original
-      // page, which doesn't update the viewport units.
-      window.addEventListener('pageshow', refresh, true);
-      if (is_bad_IE || options.force || inIframe()) {
-        if (options.use_resize_debounce) {
-          if (typeof options.use_resize_debounce === 'number') {
-            refreshDebounce = debounce(refresh, options.use_resize_debounce);
-          } else {
-            refreshDebounce = debounce(refresh, 250);
-          }
+      window.addEventListener('orientationchange', _refresh, true);
+      // orientationchange might have happened while in a different window
+      window.addEventListener('pageshow', _refresh, true);
 
-          window.addEventListener('resize', refreshDebounce, true);
-        } else {
-          window.addEventListener('resize', refresh, true);
-        }
+      if (is_bad_IE || options.force || inIframe()) {
+        window.addEventListener('resize', _refresh, true);
       }
 
       refresh();

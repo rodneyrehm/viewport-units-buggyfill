@@ -97,8 +97,8 @@
 
     // there is no accurate way to detect this programmatically.
     no_vmin_in_calc = no_vmin_in_calc || is_safari_or_uiwebview;
-    use_css_behavior_hack = !! options.use_css_behavior_hack;
-    use_css_content_hack = !! options.use_css_content_hack;
+    use_css_behavior_hack = !!options.use_css_behavior_hack;
+    use_css_content_hack = !!options.use_css_content_hack;
     initialized = true;
     styleNode = document.createElement('style');
     styleNode.id = 'patched-viewport';
@@ -232,31 +232,35 @@
      *    If so, then we parse the properties after that and
      *    apply fixes to them.
      */
-    var needsCalcFix = (use_css_content_hack && no_vmin_in_calc && name === 'content' && value.indexOf('use_css_content_hack') >= 0);
-    var needsVminVmaxFix = (use_css_behavior_hack && no_vmin_vmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') >= 0);
-
-    if (needsCalcFix || needsVminVmaxFix) {
-      var fakeRules = value.replace(quoteExpression, '');
-      if (needsVminVmaxFix) {
-        fakeRules = fakeRules.replace(urlExpression, '');
-      }
-
-      fakeRules = fakeRules.split(';');
-      for (var i = 0; i < fakeRules.length; i++) {
-        var fakeRule = fakeRules[i].split(':');
-        if (fakeRule.length === 2) {
-          name = fakeRule[0].trim();
-          value = fakeRule[1].trim();
-          if (name !== 'use_css_content_hack' && name !== 'use_css_behavior_hack') {
-            declarations.push([rule, name, value]);
-            if (calcExpression.test(value)) {
-              var webkitValue = value.replace(calcExpression, '-webkit-calc(');
-              declarations.push([rule, name, webkitValue]);
-            }
-          }
-        }
-      }
+    var needsCalcFix = (use_css_content_hack && no_vmin_in_calc && name === 'content' && value.indexOf('use_css_content_hack') > -1);
+    var needsVminVmaxFix = (use_css_behavior_hack && no_vmin_vmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') > -1);
+    if (!needsCalcFix && !needsVminVmaxFix) {
+      return;
     }
+
+    var fakeRules = value.replace(quoteExpression, '');
+    if (needsVminVmaxFix) {
+      fakeRules = fakeRules.replace(urlExpression, '');
+    }
+
+    fakeRules.split(';').forEach(function(fakeRuleElement) {
+      var fakeRule = fakeRuleElement.split(':');
+      if (fakeRule.length !== 2) {
+        return;
+      }
+
+      var name = fakeRule[0].trim();
+      var value = fakeRule[1].trim();
+      if (name === 'use_css_content_hack' || name === 'use_css_behavior_hack') {
+        return;
+      }
+
+      declarations.push([rule, name, value]);
+      if (calcExpression.test(value)) {
+        var webkitValue = value.replace(calcExpression, '-webkit-calc(');
+        declarations.push([rule, name, webkitValue]);
+      }
+    });
   }
 
   function getReplacedViewportUnits() {

@@ -114,7 +114,7 @@
       // different page, rotated the device, and then went back to the original
       // page, which doesn't update the viewport units.
       window.addEventListener('pageshow', refresh, true);
-      if (is_bad_IE || inIframe() || options.force) {
+      if (is_bad_IE || options.force || inIframe()) {
         if (options.use_resize_debounce) {
           if (typeof options.use_resize_debounce === 'number') {
             refreshDebounce = debounce(refresh, options.use_resize_debounce);

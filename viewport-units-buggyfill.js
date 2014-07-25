@@ -116,7 +116,7 @@
       window.addEventListener('pageshow', refresh, true);
       if (is_bad_IE || inIframe() || options.force) {
         if (options.use_resize_debounce) {
-          if (typeof(options.use_resize_debounce === 'number')) {
+          if (typeof options.use_resize_debounce === 'number') {
             refreshDebounce = debounce(refresh, options.use_resize_debounce);
           } else {
             refreshDebounce = debounce(refresh, 250);

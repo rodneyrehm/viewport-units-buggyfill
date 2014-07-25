@@ -30,13 +30,11 @@
   var quoteExpression = /[\"\']/g;
   var urlExpression = /url\([^\)]*\)/g;
   var forEach = [].forEach;
-  var join = [].join;
   var dimensions;
   var declarations;
   var styleNode;
   var is_safari_or_uiwebview = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
   var is_bad_IE = false;
-  var no_vm_for_font_height = false;
   var no_vmin_vmax = false;
   var no_vmin_in_calc = false;
   var use_css_content_hack = false;
@@ -65,16 +63,21 @@
   function debounce(func, wait, immediate) {
     var timeout;
     return function() {
-      var context = this,
-          args = arguments;
+      var context = this;
+      var args = arguments;
       clearTimeout(timeout);
       timeout = setTimeout(function() {
         timeout = null;
-        if (!immediate) func.apply(context, args);
+        if (!immediate) {
+          func.apply(context, args);
+        }
       }, wait);
-      if (immediate && !timeout) func.apply(context, args);
+
+      if (immediate && !timeout) {
+        func.apply(context, args);
+      }
     };
-  };
+  }
 
   function initialize(initOptions) {
     options = initOptions || {};
@@ -185,7 +188,8 @@
       var value = rule.cssText;
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
-        checkHacks(rule, name, value);
+        // KeyframesRule does not have a CSS-PropertyName
+        // checkHacks(rule, null, value);
         declarations.push([rule, null, value]);
       }
 
@@ -228,8 +232,8 @@
      *    If so, then we parse the properties after that and
      *    apply fixes to them.
      */
-    var needsCalcFix = (use_css_content_hack && no_vmin_in_calc && name === 'content' && value.indexOf('use_css_content_hack') >= 0),
-      needsVminVmaxFix = (use_css_behavior_hack && no_vmin_vmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') >= 0);
+    var needsCalcFix = (use_css_content_hack && no_vmin_in_calc && name === 'content' && value.indexOf('use_css_content_hack') >= 0);
+    var needsVminVmaxFix = (use_css_behavior_hack && no_vmin_vmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') >= 0);
 
     if (needsCalcFix || needsVminVmaxFix) {
       var fakeRules = value.replace(quoteExpression, '');
@@ -240,8 +244,9 @@
       fakeRules = fakeRules.split(';');
       for (var i = 0; i < fakeRules.length; i++) {
         var fakeRule = fakeRules[i].split(':');
-        if (fakeRule.length == 2) {
-          name = fakeRule[0].trim(), value = fakeRule[1].trim();
+        if (fakeRule.length === 2) {
+          name = fakeRule[0].trim();
+          value = fakeRule[1].trim();
           if (name !== 'use_css_content_hack' && name !== 'use_css_behavior_hack') {
             declarations.push([rule, name, value]);
             if (calcExpression.test(value)) {

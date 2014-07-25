@@ -232,6 +232,15 @@
      *    If so, then we parse the properties after that and
      *    apply fixes to them.
      */
+
+    if (!use_css_content_hack && !use_css_behavior_hack) {
+      return;
+    }
+
+    if (name !== 'content' && name !== 'behavior') {
+      return;
+    }
+
     var needsCalcFix = (use_css_content_hack && no_vmin_in_calc && name === 'content' && value.indexOf('use_css_content_hack') > -1);
     var needsVminVmaxFix = (use_css_behavior_hack && no_vmin_vmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') > -1);
     if (!needsCalcFix && !needsVminVmaxFix) {

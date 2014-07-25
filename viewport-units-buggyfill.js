@@ -40,10 +40,9 @@
   var use_css_content_hack = false;
   var use_css_behavior_hack = false;
 
-  /*
-   * Do not remove this comment before.  It is used by IE to test what version
-   * we are running.
-   */
+  // WARNING!
+  // Do not remove the following conditional comment.
+  // It is required to identify the current version of IE
 
   /*@cc_on
 
@@ -86,9 +85,7 @@
       return;
     }
 
-    /*
-     * Test to see if viewport units can be used in calc() expressions
-     */
+    // Test viewport units support in calc() expressions
     var div = document.createElement('div');
     div.style.width = '1vmax';
     if (div.style.width === '') {
@@ -132,10 +129,7 @@
     });
   }
 
-  /*
-   * code to detect if document is in an iframe from
-   * http://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t
-   */
+  // from http://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t
   function inIframe() {
     try {
       return window.self !== window.top;
@@ -155,10 +149,10 @@
 
     findProperties();
 
-    /*
-     * iOS Safari will report window.innerWidth and .innerHeight as 0
-     * unless a timeout is used here.
-     */
+
+    // iOS Safari will report window.innerWidth and .innerHeight as 0
+    // unless a timeout is used here.
+    // TODO: figure out WHY innerWidth === 0
     setTimeout(function() {
       updateStyles();
     }, 1);
@@ -218,21 +212,9 @@
     });
   }
 
+  // iOS SAFARI, IE9: abuse "content" if "use_css_content_hack" specified
+  // IE9: abuse "behavior" if "use_css_behavior_hack" specified
   function checkHacks(rule, name, value) {
-    /*
-     * Special cases:
-     *
-     * 1) FOR iOS SAFARI AND IE9: if this the name is "content", we
-     *    check to see if the value matches "use_css_content_hack".
-     *    If so, then we parse the properties after that
-     *    and apply fixes to them.
-     *
-     * 2) FOR IE9: if the name is "behavior", we check to
-     *    see if the value matches "use_css_behavior_hack".
-     *    If so, then we parse the properties after that and
-     *    apply fixes to them.
-     */
-
     if (!use_css_content_hack && !use_css_behavior_hack) {
       return;
     }
@@ -323,26 +305,19 @@
     var _value = value.replace(viewportUnitExpression, replaceValues);
     var  _selectors = [];
 
-    /*
-     * If this is an IE visual filter, then we take out the px, since
-     * they all take pixel values without the px after the number.
-     * This is a little inefficient, but it is the only way I know
-     * how to do this.
-     */
     if (is_bad_IE && name === 'filter') {
-      _value = _value.replace(/px/g, '');
+      // remove unit "px"
+      _value = parseInt(_value, 10);
     }
 
     if (name) {
+      // skipping KeyframesRule
       _selectors.push(rule.selectorText);
       _value = name + ': ' + _value + ';';
     }
 
     var _rule = rule.parentRule;
     while (_rule) {
-      // changed from
-      // _selectors.unshift('@media ' + join.call(_rule.media, ', '));
-      // because it wasn't working in IE9.
       _selectors.unshift('@media ' + _rule.media.mediaText);
       _rule = _rule.parentRule;
     }

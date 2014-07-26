@@ -37,7 +37,7 @@
   var urlExpression = /url\([^\)]*\)/g;
   var isOldInternetExplorer = false;
   var supportsVminmax = true;
-  var no_vmin_in_calc = false;
+  var supportsVminmaxCalc = true;
   var use_css_content_hack = false;
   var use_css_behavior_hack = false;
 
@@ -49,7 +49,7 @@
 
   @if (@_jscript_version <= 10)
     isOldInternetExplorer = true;
-    no_vmin_in_calc = true;
+    supportsVminmaxCalc = false;
     supportsVminmax = false;
   @end
 
@@ -91,7 +91,10 @@
     supportsVminmax = div.style.width !== '';
 
     // there is no accurate way to detect this programmatically.
-    no_vmin_in_calc = no_vmin_in_calc || isMobileSafari;
+    if (isMobileSafari) {
+      supportsVminmaxCalc = false;
+    }
+
     use_css_behavior_hack = !!options.use_css_behavior_hack;
     use_css_content_hack = !!options.use_css_content_hack;
     initialized = true;
@@ -210,7 +213,7 @@
       return;
     }
 
-    var needsCalcFix = (use_css_content_hack && no_vmin_in_calc && name === 'content' && value.indexOf('use_css_content_hack') > -1);
+    var needsCalcFix = (use_css_content_hack && !supportsVminmaxCalc && name === 'content' && value.indexOf('use_css_content_hack') > -1);
     var needsVminVmaxFix = (use_css_behavior_hack && !supportsVminmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') > -1);
     if (!needsCalcFix && !needsVminVmaxFix) {
       return;

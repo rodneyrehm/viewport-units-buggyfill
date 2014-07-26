@@ -35,7 +35,7 @@
   var calcExpression = /calc\(/g;
   var quoteExpression = /[\"\']/g;
   var urlExpression = /url\([^\)]*\)/g;
-  var is_bad_IE = false;
+  var isOldInternetExplorer = false;
   var no_vmin_vmax = false;
   var no_vmin_in_calc = false;
   var use_css_content_hack = false;
@@ -48,7 +48,7 @@
   /*@cc_on
 
   @if (@_jscript_version <= 10)
-    is_bad_IE = true;
+    isOldInternetExplorer = true;
     no_vmin_in_calc = true;
     no_vmin_vmax = true;
   @end
@@ -77,7 +77,7 @@
     }
 
     options = initOptions || {};
-    if (initialized || (!options.force && !isMobileSafari && !is_bad_IE)) {
+    if (initialized || (!options.force && !isMobileSafari && !isOldInternetExplorer)) {
       // this buggyfill only applies to mobile safari
       return;
     }
@@ -111,7 +111,7 @@
       // orientationchange might have happened while in a different window
       window.addEventListener('pageshow', _refresh, true);
 
-      if (is_bad_IE || options.force || inIframe()) {
+      if (isOldInternetExplorer || options.force || inIframe()) {
         window.addEventListener('resize', _refresh, true);
       }
 
@@ -294,7 +294,7 @@
     var _value = value.replace(viewportUnitExpression, replaceValues);
     var  _selectors = [];
 
-    if (is_bad_IE && name === 'filter') {
+    if (isOldInternetExplorer && name === 'filter') {
       // remove unit "px"
       _value = parseInt(_value, 10);
     }

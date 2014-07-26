@@ -36,7 +36,7 @@
   var quoteExpression = /[\"\']/g;
   var urlExpression = /url\([^\)]*\)/g;
   var isOldInternetExplorer = false;
-  var no_vmin_vmax = false;
+  var supportsVminmax = true;
   var no_vmin_in_calc = false;
   var use_css_content_hack = false;
   var use_css_behavior_hack = false;
@@ -50,7 +50,7 @@
   @if (@_jscript_version <= 10)
     isOldInternetExplorer = true;
     no_vmin_in_calc = true;
-    no_vmin_vmax = true;
+    supportsVminmax = false;
   @end
 
   @*/
@@ -88,9 +88,7 @@
     // Test viewport units support in calc() expressions
     var div = document.createElement('div');
     div.style.width = '1vmax';
-    if (div.style.width === '') {
-      no_vmin_vmax = true;
-    }
+    supportsVminmax = div.style.width !== '';
 
     // there is no accurate way to detect this programmatically.
     no_vmin_in_calc = no_vmin_in_calc || isMobileSafari;
@@ -213,7 +211,7 @@
     }
 
     var needsCalcFix = (use_css_content_hack && no_vmin_in_calc && name === 'content' && value.indexOf('use_css_content_hack') > -1);
-    var needsVminVmaxFix = (use_css_behavior_hack && no_vmin_vmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') > -1);
+    var needsVminVmaxFix = (use_css_behavior_hack && !supportsVminmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') > -1);
     if (!needsCalcFix && !needsVminVmaxFix) {
       return;
     }

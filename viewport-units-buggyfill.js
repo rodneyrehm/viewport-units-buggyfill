@@ -38,8 +38,6 @@
   var isOldInternetExplorer = false;
   var supportsVminmax = true;
   var supportsVminmaxCalc = true;
-  var use_css_content_hack = false;
-  var use_css_behavior_hack = false;
 
   // WARNING!
   // Do not remove the following conditional comment.
@@ -83,7 +81,11 @@
     }
 
     // previous option names
+    /*jshint camelcase:false*/
     !options.refreshDebounceWait && (options.refreshDebounceWait = options.use_resize_debounce);
+    !options.behaviorHack && (options.behaviorHack = options.use_css_behavior_hack);
+    !options.contentHack && (options.contentHack = options.use_css_content_hack);
+    /*jshint camelcase:true*/
 
     // Test viewport units support in calc() expressions
     var div = document.createElement('div');
@@ -95,8 +97,6 @@
       supportsVminmaxCalc = false;
     }
 
-    use_css_behavior_hack = !!options.use_css_behavior_hack;
-    use_css_content_hack = !!options.use_css_content_hack;
     initialized = true;
     styleNode = document.createElement('style');
     styleNode.id = 'patched-viewport';
@@ -205,7 +205,7 @@
   // iOS SAFARI, IE9: abuse "content" if "use_css_content_hack" specified
   // IE9: abuse "behavior" if "use_css_behavior_hack" specified
   function checkHacks(rule, name, value) {
-    if (!use_css_content_hack && !use_css_behavior_hack) {
+    if (!options.contentHack && !options.behaviorHack) {
       return;
     }
 
@@ -213,8 +213,8 @@
       return;
     }
 
-    var needsCalcFix = (use_css_content_hack && !supportsVminmaxCalc && name === 'content' && value.indexOf('use_css_content_hack') > -1);
-    var needsVminVmaxFix = (use_css_behavior_hack && !supportsVminmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') > -1);
+    var needsCalcFix = (options.contentHack && !supportsVminmaxCalc && name === 'content' && value.indexOf('use_css_content_hack') > -1);
+    var needsVminVmaxFix = (options.behaviorHack && !supportsVminmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') > -1);
     if (!needsCalcFix && !needsVminVmaxFix) {
       return;
     }

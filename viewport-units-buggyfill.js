@@ -24,15 +24,17 @@
 
   var initialized = false;
   var options;
+  var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
   var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
-  var calcExpression = /calc\(/g;
-  var quoteExpression = /[\"\']/g;
-  var urlExpression = /url\([^\)]*\)/g;
   var forEach = [].forEach;
   var dimensions;
   var declarations;
   var styleNode;
-  var is_safari_or_uiwebview = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
+
+  // zoltan hacks
+  var calcExpression = /calc\(/g;
+  var quoteExpression = /[\"\']/g;
+  var urlExpression = /url\([^\)]*\)/g;
   var is_bad_IE = false;
   var no_vmin_vmax = false;
   var no_vmin_in_calc = false;
@@ -75,7 +77,7 @@
     }
 
     options = initOptions || {};
-    if (initialized || (!options.force && !is_safari_or_uiwebview && !is_bad_IE)) {
+    if (initialized || (!options.force && !isMobileSafari && !is_bad_IE)) {
       // this buggyfill only applies to mobile safari
       return;
     }
@@ -91,7 +93,7 @@
     }
 
     // there is no accurate way to detect this programmatically.
-    no_vmin_in_calc = no_vmin_in_calc || is_safari_or_uiwebview;
+    no_vmin_in_calc = no_vmin_in_calc || isMobileSafari;
     use_css_behavior_hack = !!options.use_css_behavior_hack;
     use_css_content_hack = !!options.use_css_content_hack;
     initialized = true;

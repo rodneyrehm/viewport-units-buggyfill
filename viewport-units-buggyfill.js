@@ -24,7 +24,6 @@
 
   var initialized = false;
   var options;
-  var refreshDebounce;
   var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
   var calcExpression = /calc\(/g;
   var quoteExpression = /[\"\']/g;
@@ -69,6 +68,12 @@
   }
 
   function initialize(initOptions) {
+    if (initOptions === true) {
+      initOptions = {
+        force: true
+      };
+    }
+
     options = initOptions || {};
     if (initialized || (!options.force && !is_safari_or_uiwebview && !is_bad_IE)) {
       // this buggyfill only applies to mobile safari
@@ -131,7 +136,6 @@
     }
 
     findProperties();
-
 
     // iOS Safari will report window.innerWidth and .innerHeight as 0
     // unless a timeout is used here.

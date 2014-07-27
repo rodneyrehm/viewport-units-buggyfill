@@ -24,34 +24,13 @@
 
   var initialized = false;
   var options;
+  // TODO: move to options
   var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
   var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
   var forEach = [].forEach;
   var dimensions;
   var declarations;
   var styleNode;
-
-  // zoltan hacks
-  var calcExpression = /calc\(/g;
-  var quoteExpression = /[\"\']/g;
-  var urlExpression = /url\([^\)]*\)/g;
-  var isOldInternetExplorer = false;
-  var supportsVminmax = true;
-  var supportsVminmaxCalc = true;
-
-  // WARNING!
-  // Do not remove the following conditional comment.
-  // It is required to identify the current version of IE
-
-  /*@cc_on
-
-  @if (@_jscript_version <= 10)
-    isOldInternetExplorer = true;
-    supportsVminmaxCalc = false;
-    supportsVminmax = false;
-  @end
-
-  @*/
 
   function debounce(func, wait) {
     var timeout;
@@ -87,15 +66,7 @@
     !options.contentHack && (options.contentHack = options.use_css_content_hack);
     /*jshint camelcase:true*/
 
-    // Test viewport units support in calc() expressions
-    var div = document.createElement('div');
-    div.style.width = '1vmax';
-    supportsVminmax = div.style.width !== '';
-
-    // there is no accurate way to detect this programmatically.
-    if (isMobileSafari) {
-      supportsVminmaxCalc = false;
-    }
+    options.hacks.initialize(options);
 
     initialized = true;
     styleNode = document.createElement('style');
@@ -112,21 +83,14 @@
       // orientationchange might have happened while in a different window
       window.addEventListener('pageshow', _refresh, true);
 
-      if (isOldInternetExplorer || options.force || inIframe()) {
+      if (options.force) {
         window.addEventListener('resize', _refresh, true);
       }
 
+      options.hacks.initializeEvents(options, refresh, _refresh);
+
       refresh();
     });
-  }
-
-  // from http://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t
-  function inIframe() {
-    try {
-      return window.self !== window.top;
-    } catch (e) {
-      return true;
-    }
   }
 
   function updateStyles() {
@@ -173,8 +137,8 @@
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
         // KeyframesRule does not have a CSS-PropertyName
-        // checkHacks(rule, null, value);
         declarations.push([rule, null, value]);
+        options.hacks.findDeclarations(declarations, rule, null, value);
       }
 
       return;
@@ -196,50 +160,8 @@
       var value = rule.style.getPropertyValue(name);
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
-        checkHacks(rule, name, value);
         declarations.push([rule, name, value]);
-      }
-    });
-  }
-
-  // iOS SAFARI, IE9: abuse "content" if "use_css_content_hack" specified
-  // IE9: abuse "behavior" if "use_css_behavior_hack" specified
-  function checkHacks(rule, name, value) {
-    if (!options.contentHack && !options.behaviorHack) {
-      return;
-    }
-
-    if (name !== 'content' && name !== 'behavior') {
-      return;
-    }
-
-    var needsCalcFix = (options.contentHack && !supportsVminmaxCalc && name === 'content' && value.indexOf('use_css_content_hack') > -1);
-    var needsVminVmaxFix = (options.behaviorHack && !supportsVminmax && name === 'behavior' && value.indexOf('use_css_behavior_hack') > -1);
-    if (!needsCalcFix && !needsVminVmaxFix) {
-      return;
-    }
-
-    var fakeRules = value.replace(quoteExpression, '');
-    if (needsVminVmaxFix) {
-      fakeRules = fakeRules.replace(urlExpression, '');
-    }
-
-    fakeRules.split(';').forEach(function(fakeRuleElement) {
-      var fakeRule = fakeRuleElement.split(':');
-      if (fakeRule.length !== 2) {
-        return;
-      }
-
-      var name = fakeRule[0].trim();
-      var value = fakeRule[1].trim();
-      if (name === 'use_css_content_hack' || name === 'use_css_behavior_hack') {
-        return;
-      }
-
-      declarations.push([rule, name, value]);
-      if (calcExpression.test(value)) {
-        var webkitValue = value.replace(calcExpression, '-webkit-calc(');
-        declarations.push([rule, name, webkitValue]);
+        options.hacks.findDeclarations(declarations, rule, name, value);
       }
     });
   }
@@ -295,10 +217,7 @@
     var _value = value.replace(viewportUnitExpression, replaceValues);
     var  _selectors = [];
 
-    if (isOldInternetExplorer && name === 'filter') {
-      // remove unit "px"
-      _value = parseInt(_value, 10);
-    }
+    _value = options.hacks.overwriteDeclaration(rule, name, _value);
 
     if (name) {
       // skipping KeyframesRule

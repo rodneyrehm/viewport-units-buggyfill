@@ -23,6 +23,7 @@
 </head>
 <body>
   <script src="src/viewport-units-buggyfill.js"></script>
+  <script src="src/viewport-units-buggyfill.hacks.js"></script>
   <script>window.viewportUnitsBuggyfill.init({
     // ignore browser capability, run this puppy everywhere
     force: true,
@@ -34,7 +35,9 @@
     behaviorHack: true,
     // IE9, IE10, iOS Safari workaround for viewport units in calc():
     // content: 'use_css_content_hack: true; top: calc(50vh -  100px ); left: calc(50vw -  100px );';
-    contentHack: true
+    contentHack: true,
+    // provide hacks plugin
+    hacks: viewportUnitsBuggyfillHacks
   });</script>
 </body>
 </html>

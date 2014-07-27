@@ -23,9 +23,9 @@
     "safari",
     "viewport"
   ],
-  "main": "./src/viewport-units-buggyfill.js",
+  "main": "./viewport-units-buggyfill.js",
   "files": [
-    "src/viewport-units-buggyfill.js"
+    "viewport-units-buggyfill.js"
   ],
   "scripts": {
     "lint": "grunt lint"

@@ -2,7 +2,7 @@
   "name": "viewport-units-buggyfill",
   "version": "0.3.1",
   "main": [
-    "./src/viewport-units-buggyfill.js"
+    "./viewport-units-buggyfill.js"
   ],
   "ignore": [
     "**/.*",

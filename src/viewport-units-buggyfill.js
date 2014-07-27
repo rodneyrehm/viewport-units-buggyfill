@@ -24,7 +24,6 @@
 
   var initialized = false;
   var options;
-  // TODO: move to options
   var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
   var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
   var forEach = [].forEach;
@@ -59,14 +58,8 @@
       return;
     }
 
-    // previous option names
-    /*jshint camelcase:false*/
-    !options.refreshDebounceWait && (options.refreshDebounceWait = options.use_resize_debounce);
-    !options.behaviorHack && (options.behaviorHack = options.use_css_behavior_hack);
-    !options.contentHack && (options.contentHack = options.use_css_content_hack);
-    /*jshint camelcase:true*/
-
-    options.hacks.initialize(options);
+    options.isMobileSafari = isMobileSafari;
+    options.hacks && options.hacks.initialize(options);
 
     initialized = true;
     styleNode = document.createElement('style');
@@ -87,7 +80,7 @@
         window.addEventListener('resize', _refresh, true);
       }
 
-      options.hacks.initializeEvents(options, refresh, _refresh);
+      options.hacks && options.hacks.initializeEvents(options, refresh, _refresh);
 
       refresh();
     });
@@ -138,7 +131,7 @@
       if (viewportUnitExpression.test(value)) {
         // KeyframesRule does not have a CSS-PropertyName
         declarations.push([rule, null, value]);
-        options.hacks.findDeclarations(declarations, rule, null, value);
+        options.hacks && options.hacks.findDeclarations(declarations, rule, null, value);
       }
 
       return;
@@ -161,7 +154,7 @@
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
         declarations.push([rule, name, value]);
-        options.hacks.findDeclarations(declarations, rule, name, value);
+        options.hacks && options.hacks.findDeclarations(declarations, rule, name, value);
       }
     });
   }
@@ -217,7 +210,9 @@
     var _value = value.replace(viewportUnitExpression, replaceValues);
     var  _selectors = [];
 
-    _value = options.hacks.overwriteDeclaration(rule, name, _value);
+    if (options.hacks) {
+      _value = options.hacks.overwriteDeclaration(rule, name, _value);
+    }
 
     if (name) {
       // skipping KeyframesRule

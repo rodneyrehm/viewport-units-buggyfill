@@ -20,7 +20,8 @@
   }
 }(this, function () {
   'use strict';
-  
+
+  var options;
   var calcExpression = /calc\(/g;
   var quoteExpression = /[\"\']/g;
   var urlExpression = /url\([^\)]*\)/g;
@@ -95,7 +96,9 @@
   }
 
   return {
-    initialize: function(options) {
+    initialize: function(initOptions) {
+      options = initOptions;
+
       // Test viewport units support in calc() expressions
       var div = document.createElement('div');
       div.style.width = '1vmax';

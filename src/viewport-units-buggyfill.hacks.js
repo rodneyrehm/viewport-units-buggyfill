@@ -109,7 +109,7 @@
       supportsVminmax = div.style.width !== '';
 
       // there is no accurate way to detect this programmatically.
-      if (isMobileSafari) {
+      if (options.isMobileSafari) {
         supportsVminmaxCalc = false;
       }
     },
@@ -133,13 +133,13 @@
       checkHacks(declarations, rule, name, value);
     },
 
-    overwriteDeclarations: function(rule, name, _value) {
+    overwriteDeclaration: function(rule, name, _value) {
       if (isOldInternetExplorer && name === 'filter') {
         // remove unit "px"
         return _value = parseInt(_value, 10);
       }
 
-      return value;
+      return _value;
     }
   };
 

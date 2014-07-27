@@ -46,6 +46,10 @@
   }
 
   function initialize(initOptions) {
+    if (initialized) {
+      return;
+    }
+
     if (initOptions === true) {
       initOptions = {
         force: true
@@ -53,12 +57,13 @@
     }
 
     options = initOptions || {};
-    if (initialized || (!options.force && !isMobileSafari && !isOldInternetExplorer)) {
+    options.isMobileSafari = isMobileSafari;
+
+    if (!options.force && !isMobileSafari && (!options.hacks || !options.hacks.required(options))) {
       // this buggyfill only applies to mobile safari
       return;
     }
 
-    options.isMobileSafari = isMobileSafari;
     options.hacks && options.hacks.initialize(options);
 
     initialized = true;

@@ -96,6 +96,10 @@
   }
 
   return {
+    required: function(options) {
+      return options.isMobileSafari || isOldInternetExplorer;
+    },
+
     initialize: function(initOptions) {
       options = initOptions;
 

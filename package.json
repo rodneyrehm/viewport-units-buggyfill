@@ -26,6 +26,7 @@
   "main": "./viewport-units-buggyfill.js",
   "files": [
     "viewport-units-buggyfill.js"
+    "viewport-units-buggyfill.hacks.js"
   ],
   "scripts": {
     "lint": "grunt lint"

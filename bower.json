@@ -3,9 +3,11 @@
   "version": "0.3.1",
   "main": [
     "./viewport-units-buggyfill.js"
+    "./viewport-units-buggyfill.hacks.js"
   ],
   "ignore": [
     "**/.*",
+    "examples",
     "*.html",
     "*.css",
     "*.md"

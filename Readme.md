@@ -24,7 +24,7 @@ require('viewport-units-buggyfill').init();
 If you're - for whatever reason - not using a package manager, include the script as follows:
 
 ```html
-<script src="viewport-units-buggyfill.js"></script>
+<script src="src/viewport-units-buggyfill.js"></script>
 <script>window.viewportUnitsBuggyfill.init();</script>
 ```
 

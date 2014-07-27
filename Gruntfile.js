@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       options: jshintOptions,
       target: [
         'Gruntfile.js',
-        'viewport-units-buggyfill.js'
+        'src/viewport-units-buggyfill.js'
       ]
     }
   });

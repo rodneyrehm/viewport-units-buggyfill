@@ -18,14 +18,14 @@
   <!--[if (gt IE 9) ]><body class="modern custom"> <![endif]-->
   <!--[!(IE)]><!--> <body class="notIE modern custom"> <!--<![endif]-->
     <div class="vmax-demo">
-      This container is 80vmin x 80vmin (80vmax == 80% of the width or height, whichever is smaller).  
-      For this reason, the box will be wider than the viewport if you make the 
-      viewport really narrow and tall, 
+      This container is 80vmin x 80vmin (80vmax == 80% of the width or height, whichever is smaller).
+      For this reason, the box will be wider than the viewport if you make the
+      viewport really narrow and tall,
     </div>
     <script src="../viewport-units-buggyfill.js"></script>
     <script src="../viewport-units-buggyfill.hacks.js"></script>
     <script>
-      // We set "use_css_content_hack" to true here since Safari for iOS6 cannot parse vmax on 
+      // We set "use_css_content_hack" to true here since Safari for iOS6 cannot parse vmax on
       // it's own. If you don't need to support this browser, you can leave this out
       window.viewportUnitsBuggyfill.init({
         refreshDebounceWait: 50,

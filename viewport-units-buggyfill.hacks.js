@@ -43,16 +43,6 @@
 
   @*/
 
-  // from http://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t
-  function inIframe() {
-    try {
-      return window.self !== window.top;
-    } catch (e) {
-      return true;
-    }
-  }
-
-  
   // iOS SAFARI, IE9: abuse "content" if "use_css_content_hack" specified
   // IE9: abuse "behavior" if "use_css_behavior_hack" specified
   function checkHacks(declarations, rule, name, value) {
@@ -119,8 +109,9 @@
         return;
       }
 
-      if (isOldInternetExplorer || inIframe()) {
+      if (isOldInternetExplorer && !options._listetingToResize) {
         window.addEventListener('resize', _refresh, true);
+        options._listetingToResize = true;
       }
     },
 

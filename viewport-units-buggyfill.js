@@ -86,11 +86,9 @@
 
     if (!options.force && !isMobileSafari && !is_bad_IE && (!options.hacks || !options.hacks.required(options))) {
       // this buggyfill only applies to mobile safari
-      console.log('hmmm')
       return;
     }
-    console.log('ha')
-
+    
     options.hacks && options.hacks.initialize(options);
 
     initialized = true;

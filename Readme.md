@@ -50,9 +50,12 @@ viewportUnitsBuggyfill.init({force: true});
 viewportUnitsBuggyfill.init({use_resize_debounce: 250});
 
 // This tells the browser where the 'contentHack' and 'behaviorHack'
-// code is.  This *must* be used in conjunction with the following code
+// code is (see the next two options below).  This *must* be used 
+// in conjunction with the following code
 // inside the HTML:
-// '<script src="/path/to/viewport-units-buggyfill.hacks.js"></script>'
+// 
+//   <script src="/path/to/viewport-units-buggyfill.hacks.js"></script>
+// 
 viewportUnitsBuggyfill.init({hacks: window.viewportUnitsBuggyfillHacks});
 
 // allows the use of css hacks inside the CSS content property

@@ -29,6 +29,8 @@
       // it's own. If you don't need to support this browser, you can leave this out
       window.viewportUnitsBuggyfill.init({
         refreshDebounceWait: 50,
+        
+        /* needed to support viewport units in visual filters */ 
         hacks: window.viewportUnitsBuggyfillHacks
       });
     </script>

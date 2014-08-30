@@ -1,8 +1,9 @@
-/*! 
+/*!
  * viewport-units-buggyfill v0.3.1
  * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
  */
+
 (function (root, factory) {
   'use strict';
   if (typeof define === 'function' && define.amd) {
@@ -22,32 +23,98 @@
   /*global document, window, location, XMLHttpRequest, XDomainRequest*/
 
   var initialized = false;
-  var viewportUnitExpression = /([0-9.-]+)(vh|vw|vmin|vmax)/g;
+  var options;
+  var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
+  var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
   var forEach = [].forEach;
-  var join = [].join;
   var dimensions;
   var declarations;
   var styleNode;
-  var is_safari_or_uiwebview = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
+  var is_bad_IE = false;
+  
+  /*
+   * Do not remove this comment before.  It is used by IE to test what version
+   * we are running.  
+   */
+  
+  /*@cc_on
+ 
+  @if (@_jscript_version <= 10)
+    is_bad_IE = true;
+    no_vmin_in_calc = true;
+    no_vmin_vmax = true;
+  @end
+  
+  @*/
 
-  function initialize(force) {
-    if (initialized || (!force && !is_safari_or_uiwebview)) {
-      // this buggyfill only applies to mobile safari
+  function debounce(func, wait) {
+    var timeout;
+    return function() {
+      var context = this;
+      var args = arguments;
+      var callback = function() {
+        func.apply(context, args);
+      };
+
+      clearTimeout(timeout);
+      timeout = setTimeout(callback, wait);
+    };
+  }
+
+  // from http://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t
+  function inIframe() {
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      return true;
+    }
+  }
+
+  function initialize(initOptions) {
+    if (initialized) {
       return;
     }
+
+    if (initOptions === true) {
+      initOptions = {
+        force: true
+      };
+    }
+
+    options = initOptions || {};
+    options.isMobileSafari = isMobileSafari;
+
+    if (!options.force && !isMobileSafari && !is_bad_IE && (!options.hacks || !options.hacks.required(options))) {
+      // this buggyfill only applies to mobile safari
+      console.log('hmmm')
+      return;
+    }
+    console.log('ha')
+
+    options.hacks && options.hacks.initialize(options);
 
     initialized = true;
     styleNode = document.createElement('style');
     styleNode.id = 'patched-viewport';
     document.head.appendChild(styleNode);
-    
+
     // Issue #6: Cross Origin Stylesheets are not accessible through CSSOM,
     // therefore download and inject them as <style> to circumvent SOP.
     importCrossOriginLinks(function() {
-      //window.addEventListener('orientationchange', updateStyles, true);
+      var _refresh = debounce(refresh, options.refreshDebounceWait || 100);
       // doing a full refresh rather than updateStyles because an orientationchange
-      // could activate different stylesheets 
-      window.addEventListener('orientationchange', refresh, true);
+      // could activate different stylesheets
+      window.addEventListener('orientationchange', _refresh, true);
+      // orientationchange might have happened while in a different window
+      window.addEventListener('pageshow', _refresh, true);
+
+      if (options.force || is_bad_IE || inIframe()) {
+        window.addEventListener('resize', _refresh, true);
+        options._listetingToResize = true;
+      }
+
+      options.hacks && options.hacks.initializeEvents(options, refresh, _refresh);
+
       refresh();
     });
   }
@@ -60,8 +127,15 @@
     if (!initialized) {
       return;
     }
+
     findProperties();
-    updateStyles();
+
+    // iOS Safari will report window.innerWidth and .innerHeight as 0
+    // unless a timeout is used here.
+    // TODO: figure out WHY innerWidth === 0
+    setTimeout(function() {
+      updateStyles();
+    }, 1);
   }
 
   function findProperties() {
@@ -71,12 +145,15 @@
         // skip entire sheet because no rules ara present or it's the target-element of the buggyfill
         return;
       }
-      if (sheet.media.mediaText && !window.matchMedia(sheet.media.mediaText).matches) {
+
+      if (sheet.media && sheet.media.mediaText && window.matchMedia && !window.matchMedia(sheet.media.mediaText).matches) {
         // skip entire sheet because media attribute doesn't match
         return;
       }
+
       forEach.call(sheet.cssRules, findDeclarations);
     });
+
     return declarations;
   }
 
@@ -85,8 +162,11 @@
       var value = rule.cssText;
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
+        // KeyframesRule does not have a CSS-PropertyName
         declarations.push([rule, null, value]);
+        options.hacks && options.hacks.findDeclarations(declarations, rule, null, value);
       }
+
       return;
     }
 
@@ -107,6 +187,7 @@
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
         declarations.push([rule, name, value]);
+        options.hacks && options.hacks.findDeclarations(declarations, rule, name, value);
       }
     });
   }
@@ -160,15 +241,21 @@
 
   function overwriteDeclaration(rule, name, value) {
     var _value = value.replace(viewportUnitExpression, replaceValues);
-    var _selectors = [];
+    var  _selectors = [];
+
+    if (options.hacks) {
+      _value = options.hacks.overwriteDeclaration(rule, name, _value);
+    }
+
     if (name) {
+      // skipping KeyframesRule
       _selectors.push(rule.selectorText);
       _value = name + ': ' + _value + ';';
     }
 
     var _rule = rule.parentRule;
     while (_rule) {
-      _selectors.unshift('@media ' + join.call(_rule.media, ', '));
+      _selectors.unshift('@media ' + _rule.media.mediaText);
       _rule = _rule.parentRule;
     }
 
@@ -187,6 +274,7 @@
   function getViewport() {
     var vh = window.innerHeight;
     var vw = window.innerWidth;
+
     return {
       vh: vh,
       vw: vw,
@@ -203,16 +291,17 @@
         next();
       }
     };
-    
+
     forEach.call(document.styleSheets, function(sheet) {
-      if (!sheet.href || origin(sheet.href) === origin(location.href) ) {
+      if (!sheet.href || origin(sheet.href) === origin(location.href)) {
         // skip <style> and <link> from same origin
         return;
       }
+
       _waiting++;
       convertLinkToStyle(sheet.ownerNode, decrease);
     });
-    
+
     if (!_waiting) {
       next();
     }
@@ -232,7 +321,7 @@
       next();
     }, next);
   }
-  
+
   function getCors(url, success, error) {
     var xhr = new XMLHttpRequest();
     if ('withCredentials' in xhr) {
@@ -245,7 +334,7 @@
     } else {
       throw new Error('cross-domain XHR not supported');
     }
-    
+
     xhr.onload = success;
     xhr.onerror = error;
     xhr.send();
@@ -259,4 +348,5 @@
     init: initialize,
     refresh: refresh
   };
+
 }));

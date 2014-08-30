@@ -1,0 +1,21 @@
+/* From https://coderwall.com/p/qac-og */
+/* line 4, ../sass/no-js-vmax.scss */
+.vmax-demo {
+  background-color: red;
+  color: white;
+  font-family: "Arial", "Helvetica", sans-serif;
+  margin: 0 auto;
+  font-weight: bold;
+  /*
+   * Using border-box sizing, to ensure the box
+   * is exactly 80vw wide, no matter how much padding
+   * or border.
+   */
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  /* Modern browsers */
+  width: 80vmax;
+  height: 80vmax;
+}

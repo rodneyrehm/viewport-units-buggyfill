@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+    Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Examples listing.</title>
+    <meta name="description" content="Examples for  viewport-units-buggyfill.js" />
+    <meta name="author" content="Zoltan Hawryluk" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+  </head>
+  <!--[if lt IE 7 ]> <body class="ie6 ie8down ie9down custom oldIE"> <![endif]-->
+  <!--[if IE 7 ]>    <body class="ie7 ie8down ie9down custom oldIE"> <![endif]-->
+  <!--[if IE 8 ]>    <body class="ie8 ie8down ie9down custom oldIE"> <![endif]-->
+  <!--[if IE 9 ]>    <body class="ie9 ie9down custom oldIE"> <![endif]-->
+  <!--[if (gt IE 9) ]><body class="modern custom"> <![endif]-->
+  <!--[!(IE)]><!--> <body class="notIE modern custom"> <!--<![endif]-->
+    <h1>Tests for viewport-units-buggyfill.js</h1>
+    <ul>
+      <li>
+        vw test: <a href="vw.html">with buggyfill</a> and <a href="no-js-vw.html">without</a>.
+        Without buggyfill, iOS Safari will fail when rotating the device.
+      </li>
+      <li>
+        vh test: <a href="vh.html">with buggyfill</a> and <a href="no-js-vh.html">without</a>.
+        Without buggyfill, iOS Safari will fail when rotating the device.
+      </li>
+      <li>
+        vmin test: <a href="vmin.html">with buggyfill</a> and <a href="no-js-vmin.html">without</a>.
+        Without buggyfill, iOS Safari will fail when rotating the device and IE9 will just fail.
+      </li>
+      <li>
+        vmax test: <a href="vmax.html">with buggyfill</a> and <a href="no-js-vmax.html">without</a>.
+        Without buggyfill, iOS Safari will fail when rotating the device and IE9 and 10 will just fail.
+      </li>
+      <li>
+        viewport units in calc() statement: <a href="vunit-calc.html">with buggyfill</a> and <a href="no-js-vunit-calc.html">without</a>.
+        Without buggyfill, fails in iOS Safari.
+      </li>
+      <li>
+        vmax units in calc() statement: <a href="vmax-calc.html">with buggyfill</a> and <a href="no-js-vmax-calc.html">without</a>.
+        Without buggyfill, fails in iOS Safari and IE9 and 10.
+      </li>
+      <li>
+        viewport units in IE Visual Filters: <a href="rob-ford.html">with buggyfill</a> and <a href="no-js-rob-ford.html">without</a>.
+        Without buggyfill, text shadows do not grow with the viewport height in IE9.
+      </li>
+      <li>
+      	viewport units used inside an iframe: <a href="vw-in-iframe.html">with buggyfill</a> and 
+      	<a href="no-js-vw-in-iframe.html">without</a>.
+		Without buggyfill, IE9 will assume the 100vw and 100vh to be the width and height of 
+		the parent document’s viewport, while Safari for iOS will choose 1px (!!!!) for both..</li>
+    </ul>
+    <p>
+      <strong>Note: </strong> When testing examples without buggyfill in iOS Safari,
+      you should rotate the device several times to see the
+      bugs.  The IE Visual Filters example does not call out a bug, just an
+      extra feature that some developers may find useful.
+    </p>
+  </body>
+</html>

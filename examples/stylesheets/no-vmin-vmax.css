@@ -1,0 +1,86 @@
+/* From https://coderwall.com/p/qac-og */
+@import url(fonts/fonts.css);
+/* line 6, ../sass/style-no-vmin-vmax.scss */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 10, ../sass/style-no-vmin-vmax.scss */
+div.viewport-test {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../images/stacey-hero.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+}
+/* line 18, ../sass/style-no-vmin-vmax.scss */
+div.viewport-test img {
+  width: 100%;
+}
+/* line 22, ../sass/style-no-vmin-vmax.scss */
+div.viewport-test a.cta {
+  /*
+   * This assumes width > height (i.e. portrait mode).
+   */
+  font-size: 3.3vw;
+  display: block;
+  width: 33vw;
+  height: 33vw;
+  line-height: 33vw;
+  top: -moz-calc(50vh - 33vw / 2) ;
+  top: -webkit-calc(50vh - 33vw / 2) ;
+  top: calc(50vh - 33vw / 2) ;
+  left: -moz-calc(50vw - 33vw / 2) ;
+  left: -webkit-calc(50vw - 33vw / 2) ;
+  left: calc(50vw - 33vw / 2) ;
+  border-radius: 33vw;
+  letter-spacing: 1.65vw;
+  background-color: rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  vertical-align: middle;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  font-family: "Univers Next W01 Light", "Helvetica", "Arial", sans-serif;
+  position: absolute;
+  -moz-transition: background-color 0.25s ease-in-out;
+  -o-transition: background-color 0.25s ease-in-out;
+  -webkit-transition: background-color 0.25s ease-in-out;
+  transition: background-color 0.25s ease-in-out;
+}
+/* line 53, ../sass/style-no-vmin-vmax.scss */
+div.viewport-test a.cta span {
+  position: relative;
+  left: 0.3em;
+}
+/* line 58, ../sass/style-no-vmin-vmax.scss */
+div.viewport-test a.cta:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+@media (orientation: portrait) {
+  /* line 66, ../sass/style-no-vmin-vmax.scss */
+  div.viewport-test {
+    /*
+     * This keeps Stacey's head inside of the viewport.
+     */
+    background-position: 25% 0;
+  }
+  /* line 73, ../sass/style-no-vmin-vmax.scss */
+  div.viewport-test a.cta {
+    font-size: 3.3vh !important;
+    width: 33vh !important;
+    height: 33vh !important;
+    line-height: 33vh !important;
+    border-radius: 33vh !important;
+    letter-spacing: 1.65vh !important;
+    top: -moz-calc(50vh - 33vh / 2) !important;
+    top: -webkit-calc(50vh - 33vh / 2) !important;
+    top: calc(50vh - 33vh / 2) !important;
+    left: -moz-calc(50vw - 33vh / 2) !important;
+    left: -webkit-calc(50vw - 33vh / 2) !important;
+    left: calc(50vw - 33vh / 2) !important;
+  }
+}

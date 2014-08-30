@@ -1,0 +1,9 @@
+/* From https://coderwall.com/p/qac-og */
+@import url(fonts/fonts.css);
+/* line 6, ../sass/no-js-vw-in-iframe.scss */
+iframe {
+  width: 50%;
+  height: 90vh;
+  display: block;
+  margin: 0 auto;
+}

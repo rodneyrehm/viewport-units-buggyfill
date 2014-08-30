@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+    Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>viewport units in calc statement - no javascript test.</title>
+    <meta name="description" content="Example of viewport units used with CSS calc" />
+    <meta name="author" content="Zoltan Hawryluk" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+    <link href="stylesheets/no-js-vunit-calc.css" type="text/css" rel="stylesheet" />
+  </head>
+  <!--[if lt IE 7 ]> <body class="ie6 ie8down ie9down custom oldIE"> <![endif]-->
+  <!--[if IE 7 ]>    <body class="ie7 ie8down ie9down custom oldIE"> <![endif]-->
+  <!--[if IE 8 ]>    <body class="ie8 ie8down ie9down custom oldIE"> <![endif]-->
+  <!--[if IE 9 ]>    <body class="ie9 ie9down custom oldIE"> <![endif]-->
+  <!--[if (gt IE 9) ]><body class="modern custom"> <![endif]-->
+  <!--[!(IE)]><!--> <body class="notIE modern custom"> <!--<![endif]-->
+    <div class="circle">
+      <span>
+        This circle is always centered vertically and horizontally to the viewport,
+        thanks to the <code>calc()</code> CSS property in conjuction with viewport-units.
+      </span>
+    </div>
+  </body>
+</html>

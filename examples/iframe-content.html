@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+    Remove this if you use the .htaccess -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>content of iframe</title>
+    <meta name="description" content="iframe for iframe test with viewport-unit-buggyfill.js of viewport units." />
+    <meta name="author" content="Zoltan Hawryluk" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+    <link href="stylesheets/iframe.css" type="text/css" rel="stylesheet" />
+  </head>
+  <!--[if lt IE 7 ]> <body class="ie6 ie8down ie9down custom oldIE"> <![endif]-->
+  <!--[if IE 7 ]>    <body class="ie7 ie8down ie9down custom oldIE"> <![endif]-->
+  <!--[if IE 8 ]>    <body class="ie8 ie8down ie9down custom oldIE"> <![endif]-->
+  <!--[if IE 9 ]>    <body class="ie9 ie9down custom oldIE"> <![endif]-->
+  <!--[if (gt IE 9) ]><body class="modern custom"> <![endif]-->
+  <!--[!(IE)]><!--> <body class="notIE modern custom"> <!--<![endif]-->
+    <div id="iframe-test">
+      This is a test of vw units in an iframe.  If successful, this should take up half of the iframe.
+    </div>
+    <script src="../viewport-units-buggyfill.js"></script>
+    <script>
+      window.viewportUnitsBuggyfill.init({
+        refreshDebounceWait: 50
+      });
+    </script>
+  </body>
+</html>

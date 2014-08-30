@@ -47,7 +47,7 @@ viewportUnitsBuggyfill.init({force: true});
 
 // reduces the amount of times the buggyfill is reinitialized on window resize in IE
 // for performance reasons.
-viewportUnitsBuggyfill.init({use_resize_debounce: 250});
+viewportUnitsBuggyfill.init({refreshDebounceWait: 250});
 
 // This tells the browser where the 'contentHack' and 'behaviorHack'
 // code is (see the next two options below).  This *must* be used 

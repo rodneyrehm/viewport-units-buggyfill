@@ -1,5 +1,5 @@
 /*!
- * viewport-units-buggyfill.hacks v0.4
+ * viewport-units-buggyfill.hacks v0.4.0
  * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Zoltan Hawryluk - http://www.useragentman.com/
  */

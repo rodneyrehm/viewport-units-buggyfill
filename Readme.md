@@ -61,14 +61,14 @@ viewportUnitsBuggyfill.init({hacks: window.viewportUnitsBuggyfillHacks});
 // allows the use of css hacks inside the CSS content property
 // for iOS Safari. This includes vmax (iOS6 Safari)
 // as well as viewport units in calc expressions (iOS Safari).
-// See changelog for version 0.4 to see details on how this works.
+// See changelog for version 0.4.0 to see details on how this works.
 viewportUnitsBuggyfill.init({contentHack: true});
 
 // allows the use of css hacks inside the CSS behavior property
 // for IE9+. This includes vmax units
 // as well as viewport units in calc expressions involving vmin
 // and vmax.
-// See changelog for version 0.4 to see details on how this works.
+// See changelog for version 0.4.0 to see details on how this works.
 viewportUnitsBuggyfill.init({behaviorHack: true});
 
 // update internal declarations cache and recalculate pixel styles
@@ -87,7 +87,7 @@ var cssText = viewportUnitsBuggyfill.getCss();
 
 ## Changelog
 
-### 0.4 (July 10th 2014) ###
+### 0.4.0 (July 10th 2014) ###
 
 * fixes IE9 and Safari native way of calculating viewport units differently inside of a frame. Without this buggyfill, IE9 will assume the `100vw` and `100vh` to be the width and height of the parent document’s viewport, while Safari for iOS will choose 1px (!!!!) for both.
 * fixes IE9's issue when calculate viewport units correctly when changing media-query breakpoints.

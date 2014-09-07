@@ -1,6 +1,6 @@
 {
   "name": "viewport-units-buggyfill",
-  "version": "0.4",
+  "version": "0.4.0",
   "title": "Viewport Units Buggyfill for Mobile Safari",
   "description": "Making viewport units (vh|vw|vmin|vmax) work properly in Mobile Safari",
   "homepage": "http://github.com/rodneyrehm/viewport-units-buggyfill/",
@@ -25,7 +25,7 @@
   ],
   "main": "./viewport-units-buggyfill.js",
   "files": [
-    "viewport-units-buggyfill.js"
+    "viewport-units-buggyfill.js",
     "viewport-units-buggyfill.hacks.js"
   ],
   "scripts": {

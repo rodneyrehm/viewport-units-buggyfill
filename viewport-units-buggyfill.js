@@ -1,5 +1,5 @@
 /*!
- * viewport-units-buggyfill v0.4
+ * viewport-units-buggyfill v0.4.0
  * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
  */

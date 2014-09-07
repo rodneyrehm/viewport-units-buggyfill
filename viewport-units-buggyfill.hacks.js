@@ -109,9 +109,9 @@
         return;
       }
 
-      if (isOldInternetExplorer && !options._listetingToResize) {
+      if (isOldInternetExplorer && !options._listeningToResize) {
         window.addEventListener('resize', _refresh, true);
-        options._listetingToResize = true;
+        options._listeningToResize = true;
       }
     },
 

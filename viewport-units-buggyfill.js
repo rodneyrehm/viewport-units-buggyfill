@@ -108,7 +108,7 @@
 
       if (options.force || isOldInternetExplorer || inIframe()) {
         window.addEventListener('resize', _refresh, true);
-        options._listetingToResize = true;
+        options._listeningToResize = true;
       }
 
       options.hacks && options.hacks.initializeEvents(options, refresh, _refresh);

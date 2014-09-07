@@ -30,7 +30,7 @@
   var dimensions;
   var declarations;
   var styleNode;
-  var is_bad_IE = false;
+  var isOldInternetExplorer = false;
 
   /*
    * Do not remove this comment before.  It is used by IE to test what version
@@ -40,7 +40,7 @@
   /*@cc_on
 
   @if (@_jscript_version <= 10)
-    is_bad_IE = true;
+    isOldInternetExplorer = true;
     no_vmin_in_calc = true;
     no_vmin_vmax = true;
   @end
@@ -84,7 +84,7 @@
     options = initOptions || {};
     options.isMobileSafari = isMobileSafari;
 
-    if (!options.force && !isMobileSafari && !is_bad_IE && (!options.hacks || !options.hacks.required(options))) {
+    if (!options.force && !isMobileSafari && !isOldInternetExplorer && (!options.hacks || !options.hacks.required(options))) {
       // this buggyfill only applies to mobile safari
       return;
     }
@@ -106,7 +106,7 @@
       // orientationchange might have happened while in a different window
       window.addEventListener('pageshow', _refresh, true);
 
-      if (options.force || is_bad_IE || inIframe()) {
+      if (options.force || isOldInternetExplorer || inIframe()) {
         window.addEventListener('resize', _refresh, true);
         options._listetingToResize = true;
       }

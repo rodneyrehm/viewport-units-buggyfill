@@ -9,7 +9,7 @@
 /* line 14, ../sass/no-js-rob-ford.scss */
 body {
   /*
-   * This puts Rob Ford photo always in the background, 
+   * This puts Rob Ford photo always in the background,
    * centered and as heigh as the viewport.
    */
   background-image: url("../images/Rob_Ford_Mayoral_Candidates_Forum_June_2010.jpg");
@@ -29,7 +29,7 @@ body {
   /*
    * The first part of this text-shadow (1vh 1vh 0 #000)
    * is the huge drop shadow on the bottom right of the
-   * text.  The other 1px shadows create the outline 
+   * text.  The other 1px shadows create the outline
    * around the text.
    */
   text-shadow: 1vh 1vh 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000;
@@ -39,17 +39,17 @@ body.ie9down .copy .date, body.ie9down .copy .say-no {
   zoom: 1;
   background: #000001;
   /*
-   * This CSS is the IE9- equivalent of the text-shadow code above.  
-   * For more details, see my article "CSS3 Text-Shadow – Can It Be 
+   * This CSS is the IE9- equivalent of the text-shadow code above.
+   * For more details, see my article "CSS3 Text-Shadow – Can It Be
    * Done in IE Without JavaScript?" at
-   * http://www.useragentman.com/blog/2011/04/14/css3-text-shadow-can-it-be-done-in-ie-without-javascript/ 
-   * 
-   * As you can see, the DropShadow Visual Filter uses 
-   * vh units. These are not supported natively by IE, 
-   * but the I refactored the viewport-units-buggyfill.js 
-   * script actually can replace them with pixel values.  
+   * http://www.useragentman.com/blog/2011/04/14/css3-text-shadow-can-it-be-done-in-ie-without-javascript/
+   *
+   * As you can see, the DropShadow Visual Filter uses
+   * vh units. These are not supported natively by IE,
+   * but the I refactored the viewport-units-buggyfill.js
+   * script actually can replace them with pixel values.
    * It works well (yay!).
-   * 
+   *
    * Note: the vh units used here will be replaced with the appropriate pixel values
    * (sans the px suffix) by the buggyfill for IE9 and below.
    */
@@ -78,18 +78,18 @@ body.ie9down .copy .date, body.ie9down .copy .say-no {
   font-style: normal;
   /*
    * Using font-style: italics looks awful in a lot of browsers
-   * when an italic variant of the font is unavailable 
+   * when an italic variant of the font is unavailable
    * (they slant the font 15-20 deg), so I skew the font instead.
-   * I cover this off in my article "Giving Challenged 
+   * I cover this off in my article "Giving Challenged
    * @font-face Fonts The Italics Makeover" at
    * http://www.useragentman.com/blog/2010/09/07/giving-challenged-font-face-fonts-the-italics-makeover/.
    */
 }
 /* line 103, ../sass/no-js-rob-ford.scss */
 body.modern .copy .say-no em {
-  /* 
-   * First, we skew the font using CSS transforms in 
-   * modern browsers 
+  /*
+   * First, we skew the font using CSS transforms in
+   * modern browsers
    */
   -moz-transform: skewX(-10deg);
   -ms-transform: skewX(-10deg);
@@ -100,12 +100,12 @@ body.modern .copy .say-no em {
 body.ie9down .copy .say-no em {
   /*
    * In IE9 only, we use the Matrix Visual Filter, even though it can
-   * use CSS transforms.  Why?  Because IE9 doesn't support 
-   * CSS3 transform, so I use IE's Drop Shadow Visual Filter 
-   * instead.  Since you can't mix CSS transforms with 
+   * use CSS transforms.  Why?  Because IE9 doesn't support
+   * CSS3 transform, so I use IE's Drop Shadow Visual Filter
+   * instead.  Since you can't mix CSS transforms with
    * Visual Filters in IE, I use the Matrix Filter to simulate
    * transforms.
-   * 
+   *
    * To see where I got the numbers for the Matrix Transform,
    * go to http://www.useragentman.com/IETransformsTranslator/
    */
@@ -115,9 +115,9 @@ body.ie9down .copy .say-no em {
 }
 
 /*
- * Extra styles: when the aspect ratio of the browser gets 
+ * Extra styles: when the aspect ratio of the browser gets
  * below 5/8, the above layout goes over Mr. Ford's face.
- * This ajusts the text in that scenerio.  
+ * This ajusts the text in that scenerio.
  */
 @media screen and (max-aspect-ratio: 5 / 8) {
   /* line 149, ../sass/no-js-rob-ford.scss */

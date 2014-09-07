@@ -18,8 +18,8 @@
   /* Modern browsers */
   width: 80vmax;
   height: 80vmax;
-  /* 
-   * This is need by iDS 6.0 version of Safari, which doesn't 
+  /*
+   * This is need by iDS 6.0 version of Safari, which doesn't
    * support the vmax keyword, so JavaScript cannot see it
    */
   content: 'use_css_content_hack: true; width: 80vmax; height: 80vmax;';

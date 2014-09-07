@@ -18,22 +18,22 @@ html, body {
   border-radius: 50%;
   background: red;
   position: absolute;
-  /* 
-   * We set the top property to be half of the 
-   * viewport height minus half of the height 
+  /*
+   * We set the top property to be half of the
+   * viewport height minus half of the height
    * of the element height to center it vertically.
-   *   
-   * Similarly set the left property to be 
-   * half of the viewport width minus half 
+   *
+   * Similarly set the left property to be
+   * half of the viewport width minus half
    * the element width to center it horizontally
    */
   top: calc(50vh -  10vmax );
   left: calc(50vw -  10vmax );
   font-size: 1.66667vmax;
   /*
-   * Here is the code for WebKit browsers that will allow 
-   * viewport-units-buggyfill to use vmax units to work in Safari for iOS6 
-   * and perform calc on viewport units on all iOS devices .... 
+   * Here is the code for WebKit browsers that will allow
+   * viewport-units-buggyfill to use vmax units to work in Safari for iOS6
+   * and perform calc on viewport units on all iOS devices ....
    */
   content: 'use_css_content_hack: true; width: 20vmax ; height:  20vmax ; font-size: 1.66667vmax ;top: calc(50vh -  10vmax ); left: calc(50vw -  10vmax );';
   /*

@@ -32,17 +32,14 @@
   var styleNode;
   var isOldInternetExplorer = false;
 
-  /*
-   * Do not remove this comment before.  It is used by IE to test what version
-   * we are running.
-   */
+  // Do not remove the following comment!
+  // It is a conditional comment used to
+  // identify old Internet Explorer versions
 
   /*@cc_on
 
   @if (@_jscript_version <= 10)
     isOldInternetExplorer = true;
-    no_vmin_in_calc = true;
-    no_vmin_vmax = true;
   @end
 
   @*/

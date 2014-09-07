@@ -1,5 +1,5 @@
 /*!
- * viewport-units-buggyfill v0.3.1
+ * viewport-units-buggyfill.hacks v0.4
  * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Zoltan Hawryluk - http://www.useragentman.com/
  */
@@ -127,7 +127,9 @@
     overwriteDeclaration: function(rule, name, _value) {
       if (isOldInternetExplorer && name === 'filter') {
         // remove unit "px"
-        return _value = parseInt(_value, 10);
+        _value = _value.replace(/px/g, '');
+        // zoltan: not entirely sure why using replace is better than parseInt
+        // return parseInt(_value, 10);
       }
 
       return _value;

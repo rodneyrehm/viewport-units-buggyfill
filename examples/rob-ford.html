@@ -23,8 +23,15 @@
     </div>
     <aside>Image Credit: <a href="http://commons.wikimedia.org/wiki/File:Rob_Ford_Mayoral_Candidates_Forum_June_2010.jpg">Wikimedia Commons</a>.</aside>
     <script src="../viewport-units-buggyfill.js"></script>
+    <script src="../viewport-units-buggyfill.hacks.js"></script>
     <script>
-      window.viewportUnitsBuggyfill.init();
+      // We activate the hack properties here since iOS6 Safari and IE9 cannot parse vmax on
+      // their own. If you don't need to support these browsers, you can omit the hacks
+      window.viewportUnitsBuggyfill.init({
+        refreshDebounceWait: 50,
+        // support viewport units in visual filters
+        hacks: window.viewportUnitsBuggyfillHacks
+      });
     </script>
   </body>
 </html>

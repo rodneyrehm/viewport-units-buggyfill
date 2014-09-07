@@ -1,5 +1,5 @@
 /*!
- * viewport-units-buggyfill v0.3.1
+ * viewport-units-buggyfill v0.4
  * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
  */
@@ -30,6 +30,22 @@
   var dimensions;
   var declarations;
   var styleNode;
+  var is_bad_IE = false;
+
+  /*
+   * Do not remove this comment before.  It is used by IE to test what version
+   * we are running.
+   */
+
+  /*@cc_on
+
+  @if (@_jscript_version <= 10)
+    is_bad_IE = true;
+    no_vmin_in_calc = true;
+    no_vmin_vmax = true;
+  @end
+
+  @*/
 
   function debounce(func, wait) {
     var timeout;
@@ -68,7 +84,7 @@
     options = initOptions || {};
     options.isMobileSafari = isMobileSafari;
 
-    if (!options.force && !isMobileSafari && (!options.hacks || !options.hacks.required(options))) {
+    if (!options.force && !isMobileSafari && !is_bad_IE && (!options.hacks || !options.hacks.required(options))) {
       // this buggyfill only applies to mobile safari
       return;
     }
@@ -90,7 +106,7 @@
       // orientationchange might have happened while in a different window
       window.addEventListener('pageshow', _refresh, true);
 
-      if (options.force || inIframe()) {
+      if (options.force || is_bad_IE || inIframe()) {
         window.addEventListener('resize', _refresh, true);
         options._listetingToResize = true;
       }

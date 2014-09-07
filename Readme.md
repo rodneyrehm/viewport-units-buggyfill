@@ -47,20 +47,29 @@ viewportUnitsBuggyfill.init({force: true});
 
 // reduces the amount of times the buggyfill is reinitialized on window resize in IE
 // for performance reasons.
-viewportUnitsBuggyfill.init({use_resize_debounce: 250});
+viewportUnitsBuggyfill.init({refreshDebounceWait: 250});
+
+// This tells the browser where the 'contentHack' and 'behaviorHack'
+// code is (see the next two options below). This *must* be used
+// in conjunction with the following code
+// inside the HTML:
+//
+//   <script src="/path/to/viewport-units-buggyfill.hacks.js"></script>
+//
+viewportUnitsBuggyfill.init({hacks: window.viewportUnitsBuggyfillHacks});
 
 // allows the use of css hacks inside the CSS content property
 // for iOS Safari. This includes vmax (iOS6 Safari)
 // as well as viewport units in calc expressions (iOS Safari).
 // See changelog for version 0.4 to see details on how this works.
-viewportUnitsBuggyfill.init({use_css_content_hack: true});
+viewportUnitsBuggyfill.init({contentHack: true});
 
 // allows the use of css hacks inside the CSS behavior property
 // for IE9+. This includes vmax units
 // as well as viewport units in calc expressions involving vmin
 // and vmax.
 // See changelog for version 0.4 to see details on how this works.
-viewportUnitsBuggyfill.init({use_css_content_hack: true});
+viewportUnitsBuggyfill.init({behaviorHack: true});
 
 // update internal declarations cache and recalculate pixel styles
 // this is handy when you add styles after .init() was run
@@ -82,34 +91,35 @@ var cssText = viewportUnitsBuggyfill.getCss();
 
 * fixes IE9 and Safari native way of calculating viewport units differently inside of a frame. Without this buggyfill, IE9 will assume the `100vw` and `100vh` to be the width and height of the parent document’s viewport, while Safari for iOS will choose 1px (!!!!) for both.
 * fixes IE9's issue when calculate viewport units correctly when changing media-query breakpoints.
-* adds `vmin` support for IE9 (instead of `vm`, IE9's equivalent to vmin)  and `vmax` support to IE9 and 10. (Note that this will only work when initializing with `viewportUnitsBuggyfill.init({use_css_behavior_hack: true});`)
+* adds `vmin` support for IE9 (instead of `vm`, IE9's equivalent to vmin)  and `vmax` support to IE9 and 10. (Note that this will only work when initializing with `viewportUnitsBuggyfill.init({hacks: window.viewportUnitsBuggyfillHacks, behaviorHack: true});`) and adding the `viewport-units-buggyfill.hacks.js` to the page after `viewport-units-buggyfill.js`.
+
 ```css
 .myLargeBlock {
-
   /* Non-IE browsers */
   width: 50vmin;
   height: 50vmax;
 
   /* IE9 and 10 */
   behavior: 'use_css_behavior_hack: true; width: 50vmin; height: 50vmax;';
-
 }
 ```
-* adds the ability for viewport units to be used inside of calc() expressions in iOS Safari and IE9+, via the use of the `content` CSS property.  This seems like a good compromise since `content` is only valid inside `::before` and `::after` rules (as a result, it is not recommended use this hack inside of these rules).  (Note that this will only work when initializing with `viewportUnitsBuggyfill.init({use_css_content_hack: true});`)
+* adds the ability for viewport units to be used inside of calc() expressions in iOS Safari and IE9+, via the use of the `content` CSS property.  This seems like a good compromise since `content` is only valid inside `::before` and `::after` rules (as a result, it is not recommended use this hack inside of these rules).  (Note that this will only work when initializing with `viewportUnitsBuggyfill.init({hacks: window.viewportUnitsBuggyfillHacks, contentHack: true});`) and adding the `viewport-units-buggyfill.hacks.js` to the page after `viewport-units-buggyfill.js`.
+
 ```css
 .box {
+  top: calc(50vh - 100px);
+  left: calc(50vw - 100px);
 
-  top: calc(50vh -  100px );
-  left: calc(50vw -  100px );
   /*
    * Here is the code for WebKit browsers that will allow
    * viewport-units-buggyfill.js to perform calc on viewport
    * units.
    */
-  content: 'use_css_content_hack: true; top: calc(50vh -  100px ); left: calc(50vw -  100px );';
+  content: 'use_css_content_hack: true; top: calc(50vh -  100px); left: calc(50vw -  100px);';
 }
 ```
-* Using the above 'use_css_content_hack' trick, one can also add support for vmax support in Safari for the older iOS6
+
+* Using the above 'contentHack' trick, one can also add support for vmax support in Safari for the older iOS6
 * Adds support for viewport units inside of IE's `filter` property (a.k.a. Visual Filters).
 * Added debounce initialization parameter, if it is desirable to not have IE9+ fire the polyfill so many times on a resize event.
 

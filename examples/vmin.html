@@ -26,6 +26,9 @@
     <script>
       window.viewportUnitsBuggyfill.init({
         refreshDebounceWait: 50,
+        // We need the behavior hack if we are using vmin in IE9.
+        // It is not needed if you include vm fallback, which is
+        // the same as vmin for IE only
         behaviorHack: true,
         hacks: window.viewportUnitsBuggyfillHacks
       });

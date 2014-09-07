@@ -1,8 +1,11 @@
 @import "_mixins.scss";
 @import "compass/css3";
 @import "compass/css3/shared";
+<<<<<<< HEAD
 @import "fonts/trocchi/stylesheet.css";
 @import "fonts/scriptina/stylesheet.css";
+=======
+>>>>>>> pr/16
 
 html, body {
   height: 100vh;
@@ -10,11 +13,11 @@ html, body {
   overflow: hidden;
   font-family: "Arial", "Helvetica", sans-serif;
   margin: 0;
-  
+
 }
 
 
-  
+
 $size: 200px;
 $halfSize: $size / 2;
 
@@ -24,25 +27,25 @@ $halfSize: $size / 2;
   width: $size;
   height: $size;
   border-radius: 50%;
-  
+
   background: red;
   position: absolute;
-  
-  
-  /* 
-   * We set the top property to be half of the 
-   * viewport height minus half of the height 
+
+
+  /*
+   * We set the top property to be half of the
+   * viewport height minus half of the height
    * of the element height to center it vertically.
-   *   
-   * Similarly set the left property to be 
-   * half of the viewport width minus half 
+   *
+   * Similarly set the left property to be
+   * half of the viewport width minus half
    * the element width to center it horizontally
    */
   top: unquote("calc(50vh - ") $halfSize unquote(")");
   left: unquote("calc(50vw - ") $halfSize unquote(")");
-  
+
   /*
-   * Here is the code for WebKit browsers that will allow 
+   * Here is the code for WebKit browsers that will allow
    * viewport-units-buggyfill to perform calc on viewport
    * units.
    */
@@ -50,7 +53,7 @@ $halfSize: $size / 2;
 
   span {
     color: white;
-    
+
     padding: 10px;
     text-align: center;
     display: table-cell;
@@ -58,10 +61,10 @@ $halfSize: $size / 2;
     width: $size - 20;
     height: $size - 20;
     font-size: 0.07 * $size;
-    
+
   }
 
-  
-  
-  
+
+
+
 }

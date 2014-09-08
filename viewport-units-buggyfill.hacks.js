@@ -126,10 +126,9 @@
 
     overwriteDeclaration: function(rule, name, _value) {
       if (isOldInternetExplorer && name === 'filter') {
-        // remove unit "px"
+        // remove unit "px" from complex value, e.g.:
+        // filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=5.4px, OffY=3.9px, Color=#000000);
         _value = _value.replace(/px/g, '');
-        // zoltan: not entirely sure why using replace is better than parseInt
-        // return parseInt(_value, 10);
       }
 
       return _value;

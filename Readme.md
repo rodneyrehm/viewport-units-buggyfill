@@ -97,7 +97,7 @@ var cssText = viewportUnitsBuggyfill.getCss();
 
 ## Changelog
 
-### 0.4.0 (July 10th 2014) ###
+### 0.4.0 (September 8th 2014) ###
 
 * fixes IE9 and Safari native way of calculating viewport units differently inside of a frame. Without this buggyfill, IE9 will assume the `100vw` and `100vh` to be the width and height of the parent document’s viewport, while Safari for iOS will choose 1px (!!!!) for both.
 * fixes IE9's issue when calculate viewport units correctly when changing media-query breakpoints.

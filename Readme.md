@@ -1,17 +1,18 @@
 # Viewport Units Buggyfill™
 
-It adds a variety of fixes to support
-IE9+, iOS6 for Safari and viewport units inside CSS3 calc() expressions (see changelog for details).
-
-This script makes viewport units (vh|vw|vmin|vmax) work properly in Mobile Safari and IE9+.
-
-This is a *buggyfill* (fixing bad behavior), not a *polyfill* (adding missing behavior). If the browser doesn't know how to deal with the [viewport units](http://www.w3.org/TR/css3-values/#viewport-relative-lengths) - `vw`, `vh`, `vmin` and `vmax` - it won't gain the capability through this script, because this buggyfill uses the [CSSOM](http://dev.w3.org/csswg/cssom/) to access the defined styles.
+This is a *buggyfill* (fixing bad behavior), not a *polyfill* (adding missing behavior). That said, it provides hacks for you to get viewport units working in old IE as well. If the browser doesn't know how to deal with the [viewport units](http://www.w3.org/TR/css3-values/#viewport-relative-lengths) - `vw`, `vh`, `vmin` and `vmax` - it won't gain the capability through this script, because this buggyfill uses the [CSSOM](http://dev.w3.org/csswg/cssom/) to access the defined styles. The hacks abuse CSS properties like `filter` and `content` to get the values across.
 
 It does, however, accomodate browsers that have partial, but not full support for vmin/vmax units.
 
 The buggyfill iterates through all defined styles the document knows and extracts those that uses a viewport unit. After resolving the relative units against the viewport's dimensions, CSS is put back together and injected into the document in a `<style>` element. Listening to the `orientationchange` event allows the buggyfill to update the calculated dimensions accordingly.
 
 > Note: This buggyfill only works on stylesheets! viewport units used in `style` attributes are *not* resolved.
+
+Amongst other things, the buggyfill helps with the following problems:
+
+* viewport units inside `calc()` expressions in Mobile Safari and IE9+
+* viewport units (vh|vw|vmin|vmax) in Mobile Safari and IE9+
+
 
 ## Using viewport-units-buggyfill
 
@@ -26,6 +27,15 @@ If you're - for whatever reason - not using a package manager, include the scrip
 ```html
 <script src="viewport-units-buggyfill.js"></script>
 <script>window.viewportUnitsBuggyfill.init();</script>
+```
+
+To engage the buggyfill with hacks, pass them in at initialization:
+
+```js
+var hacks = require('viewport-units-buggyfill.hacks');
+require('viewport-units-buggyfill').init({
+  hacks: hacks
+});
 ```
 
 ## API

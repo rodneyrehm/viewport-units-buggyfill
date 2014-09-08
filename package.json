@@ -8,6 +8,10 @@
     "name": "Rodney Rehm",
     "url": "http://rodneyrehm.de"
   },
+  "contributors": [{
+    "name": "Zoltan Hawryluk",
+    "url": "http://www.useragentman.com"
+  }],
   "repository": {
     "type": "git",
     "url": "https://github.com/rodneyrehm/viewport-units-buggyfill.git"

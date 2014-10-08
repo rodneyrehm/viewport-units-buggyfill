@@ -25,6 +25,7 @@
   var initialized = false;
   var options;
   var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
+  var iOSwithNotSupport = /Version\/(4|5|6|7)/i.test(window.navigator.userAgent);
   var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
   var forEach = [].forEach;
   var dimensions;
@@ -81,7 +82,7 @@
     options = initOptions || {};
     options.isMobileSafari = isMobileSafari;
 
-    if (!options.force && !isMobileSafari && !isOldInternetExplorer && (!options.hacks || !options.hacks.required(options))) {
+    if (!options.force && !isMobileSafari && !iOSwithNotSupport && !isOldInternetExplorer && (!options.hacks || !options.hacks.required(options))) {
       // this buggyfill only applies to mobile safari
       return;
     }

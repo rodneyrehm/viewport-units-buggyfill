@@ -1,5 +1,12 @@
 /* From https://coderwall.com/p/qac-og */
 /* line 4, ../sass/vw.scss */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* line 10, ../sass/vw.scss */
 .vw-demo {
   background-color: red;
   color: white;
@@ -15,6 +22,7 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   width: 80vw;
-  height: 100%;
+  height: 50%;
   padding: 10px;
+  content: 'viewport-units-buggyfill; width: 80vw;';
 }

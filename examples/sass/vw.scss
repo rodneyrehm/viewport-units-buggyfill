@@ -1,21 +1,29 @@
 @import "_mixins.scss";
 @import "compass/css3";
 
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .vw-demo {
   background-color: red;
   color: white;
   font-family: "Arial", "Helvetica", sans-serif;
   margin: 0 auto;
   font-weight: bold;
-  
+
   /*
    * Using border-box sizing, to ensure the box
    * is exactly 80vw wide, no matter how much padding
    * or border.
    */
   @include box-sizing(border-box);
-  
+
   width: 80vw;
-  height: 100%;
+  height: 50%;
   padding: 10px;
+  
+  content: 'viewport-units-buggyfill; width: 80vw;';
 }

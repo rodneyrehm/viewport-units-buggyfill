@@ -8,7 +8,7 @@
     <title>vmin units test</title>
     <meta name="description" content="Example of vmin units" />
     <meta name="author" content="Zoltan Hawryluk" />
-    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link href="stylesheets/vmin.css" type="text/css" rel="stylesheet" />
   </head>
   <!--[if lt IE 7 ]> <body class="ie6 ie8down ie9down custom oldIE"> <![endif]-->
@@ -26,13 +26,6 @@
     <script>
       window.viewportUnitsBuggyfill.init({
         refreshDebounceWait: 50,
-        
-        /* 
-         * We need the behavior hack if we are using vmin in IE9. 
-         * It is not needed if you include vm fallback, which is 
-         * the same as vmin for IE only
-         */
-        behaviorHack: true,
         hacks: window.viewportUnitsBuggyfillHacks
       });
     </script>

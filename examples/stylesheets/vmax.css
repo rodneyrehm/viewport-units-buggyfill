@@ -1,5 +1,5 @@
 /* From https://coderwall.com/p/qac-og */
-/* line 4, ../sass/vmax.scss */
+/* line 6, ../sass/vmax.scss */
 .vmax-demo {
   background-color: red;
   color: white;
@@ -18,11 +18,9 @@
   /* Modern browsers */
   width: 80vmax;
   height: 80vmax;
-  /* 
-   * This is need by iDS 6.0 version of Safari, which doesn't 
+  /*
+   * This is need by iDS 6.0 version of Safari, which doesn't
    * support the vmax keyword, so JavaScript cannot see it
    */
-  content: 'use_css_content_hack: true; width: 80vmax; height: 80vmax;';
-  /* IE9 and 10 */
-  -ms-behavior: 'use_css_behavior_hack: true; width: 80vmax; height: 80vmax;';
+  content: 'viewport-units-buggyfill; width: 80vmax; height: 80vmax;';
 }

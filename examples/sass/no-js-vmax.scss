@@ -7,7 +7,7 @@
   font-family: "Arial", "Helvetica", sans-serif;
   margin: 0 auto;
   font-weight: bold;
-  
+
   /*
    * Using border-box sizing, to ensure the box
    * is exactly 80vw wide, no matter how much padding
@@ -15,13 +15,13 @@
    */
   @include box-sizing(border-box);
   padding: 10px;
-  
-  
+
+
   /* Modern browsers */
   width: 80vmax;
   height: 80vmax;
-  
-  
 
-  
+
+
+
 }

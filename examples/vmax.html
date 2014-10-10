@@ -8,7 +8,7 @@
     <title>vmax test</title>
     <meta name="description" content="Example of vmin units" />
     <meta name="author" content="Zoltan Hawryluk" />
-    <meta name="viewport" content="width=device-width; initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link href="stylesheets/vmax.css" type="text/css" rel="stylesheet" />
   </head>
   <!--[if lt IE 7 ]> <body class="ie6 ie8down ie9down custom oldIE"> <![endif]-->
@@ -25,21 +25,11 @@
     <script src="../viewport-units-buggyfill.js"></script>
     <script src="../viewport-units-buggyfill.hacks.js"></script>
     <script>
-      // We set "use_css_content_hack" to true here since Safari for iOS6 cannot parse vmax on
-      // it's own. If you don't need to support this browser, you can leave this out
+      // We activate the hack properties here since iOS6 Safari and IE9 cannot parse vmax on
+      // their own. If you don't need to support these browsers, you can omit the hacks
       window.viewportUnitsBuggyfill.init({
         refreshDebounceWait: 50,
-        
-        /* 
-         * Content hack is needed since vmax is not 
-         * understood in IE9 and 10.
-         */
-        contentHack: true,
-        
-        /*
-         * Behavior hack is needed for iOS on rotate.
-         */
-        behaviorHack: true,
+        //  vmax is not understood in IE9 and 10.
         hacks: window.viewportUnitsBuggyfillHacks
       });
     </script>

@@ -18,13 +18,13 @@ html, body {
   border-radius: 50%;
   background: red;
   position: absolute;
-  /* 
-   * We set the top property to be half of the 
-   * viewport height minus half of the height 
+  /*
+   * We set the top property to be half of the
+   * viewport height minus half of the height
    * of the element height to center it vertically.
-   *   
-   * Similarly set the left property to be 
-   * half of the viewport width minus half 
+   *
+   * Similarly set the left property to be
+   * half of the viewport width minus half
    * the element width to center it horizontally
    */
   top: calc(50vh -  100px );

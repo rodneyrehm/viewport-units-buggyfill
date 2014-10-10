@@ -8,71 +8,66 @@ html, body {
   overflow: hidden;
   font-family: "Arial", "Helvetica", sans-serif;
   margin: 0;
-  
+
 }
 
 
-  
+
 $size: 20vmax;
 $halfSize: $size / 2;
 $fontSize: $size / 12;
 
 .circle {
   /* Let's make this a 200 x 200 circle */
-  
+
   width: $size;
   height: $size;
   border-radius: 50%;
-  
+
   background: red;
   position: absolute;
-  
-  
-  /* 
-   * We set the top property to be half of the 
-   * viewport height minus half of the height 
+
+
+  /*
+   * We set the top property to be half of the
+   * viewport height minus half of the height
    * of the element height to center it vertically.
-   *   
-   * Similarly set the left property to be 
-   * half of the viewport width minus half 
+   *
+   * Similarly set the left property to be
+   * half of the viewport width minus half
    * the element width to center it horizontally
    */
   top: unquote("calc(50vh - ") $halfSize unquote(")");
   left: unquote("calc(50vw - ") $halfSize unquote(")");
   font-size: $fontSize;
-  
-  /*
-   * Here is the code for WebKit browsers that will allow 
-   * viewport-units-buggyfill to use vmax units to work in Safari for iOS6 
-   * and perform calc on viewport units on all iOS devices .... 
-   */
-  content: unquote("'use_css_content_hack: true; width:") $size unquote("; height: ") $size unquote("; font-size:") $fontSize unquote(";top: calc(50vh - ")  $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
-  
-  /*
-   * ... and the similar code for IE9+.
-   */
-  -ms-behavior: unquote("'use_css_behavior_hack: true; width:") $size unquote("; height: ") $size unquote("; font-size:") $fontSize unquote("; top: calc(50vh - ") $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
 
+  /*
+   * Here is the code for WebKit browsers that will allow
+   * viewport-units-buggyfill to use vmax units to work in Safari for iOS6
+   * and perform calc on viewport units on all iOS devices and IE9
+   */
+  content: unquote("'viewport-units-buggyfill; width:") $size unquote("; height: ") $size unquote("; font-size:") $fontSize unquote(";top: calc(50vh - ")  $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
+
+  
   span {
     color: white;
     width: $size;
     height: $size;
-   
+
     padding: 10px;
     text-align: center;
     display: table-cell;
     vertical-align: middle;
     font-size: 0.07 * $size;
-   
-    
+
+
     @include box-sizing(border-box);
-    
-    content: unquote("'use_css_content_hack: true; width:") $size unquote("; height: ") $size unquote("; '");
-    -ms-behavior: unquote("'use_css_behavior_hack: true; width:") $size unquote("; height: ") $size unquote("; '");
+
+    content: unquote("'viewport-units-buggyfill; width:") $size unquote("; height: ") $size unquote("; '");
     
   }
 
-  
-  
-  
+
+
+
 }

@@ -1,4 +1,4 @@
-	@charset "utf-8";
+  @charset "utf-8";
 
 .some-selector {
   padding: 20px 20vmin 20vmax 10px;
@@ -17,11 +17,11 @@
 }
 
 .ie-only-test {
-	filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1vh, OffY=1vw, Color=#000000);
+  filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1vh, OffY=1vw, Color=#000000);
 }
 
 .use_css_content_hack-test {
-	content: 'use_css_content_hack: true; width: 80vmax; height: 80vmax;';
+  content: 'use_css_content_hack: true; width: 80vmax; height: 80vmax;';
 }
 
 .use_css_behavior-test {

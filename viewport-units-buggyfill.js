@@ -1,5 +1,5 @@
 /*!
- * viewport-units-buggyfill v0.4
+ * viewport-units-buggyfill v0.4.1
  * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
  */
@@ -24,27 +24,26 @@
 
   var initialized = false;
   var options;
-  var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
+  var userAgent = window.navigator.userAgent;
+  var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(userAgent);
+  var isBadStockAndroid = false;
   var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
   var forEach = [].forEach;
   var dimensions;
   var declarations;
   var styleNode;
-  var is_bad_IE = false;
-  
-  /*
-   * Do not remove this comment before.  It is used by IE to test what version
-   * we are running.  
-   */
-  
+  var isOldInternetExplorer = false;
+
+  // Do not remove the following comment!
+  // It is a conditional comment used to
+  // identify old Internet Explorer versions
+
   /*@cc_on
- 
+
   @if (@_jscript_version <= 10)
-    is_bad_IE = true;
-    no_vmin_in_calc = true;
-    no_vmin_vmax = true;
+    isOldInternetExplorer = true;
   @end
-  
+
   @*/
 
   function debounce(func, wait) {
@@ -83,12 +82,27 @@
 
     options = initOptions || {};
     options.isMobileSafari = isMobileSafari;
-
-    if (!options.force && !isMobileSafari && !is_bad_IE && (!options.hacks || !options.hacks.required(options))) {
-      // this buggyfill only applies to mobile safari
+    
+    
+    // Android stock browser test from 
+    // http://stackoverflow.com/questions/24926221/distinguish-android-chrome-from-stock-browser-stock-browsers-user-agent-contai
+    var isAndroid = (userAgent.indexOf(' Android ') > -1);
+    if (isAndroid) {
+    	var isStockAndroid = (userAgent.indexOf('Version/') > - 1);
+    	if (isStockAndroid) {
+    		var versionNumber = parseFloat(userAgent.match('Android [0-9.]*').toString().split(' ')[1]);
+    		if (versionNumber <= 4.4) {
+    			isBadStockAndroid = true;
+    		}
+    	} 
+    } 
+    options.isBadStockAndroid = isBadStockAndroid;
+    
+    if (!options.force && !isMobileSafari && !isOldInternetExplorer && !isBadStockAndroid && (!options.hacks || !options.hacks.required(options))) {
+      // this buggyfill only applies to mobile safari, IE9-10 and the Stock Android Browser.
       return;
     }
-    
+
     options.hacks && options.hacks.initialize(options);
 
     initialized = true;
@@ -106,9 +120,9 @@
       // orientationchange might have happened while in a different window
       window.addEventListener('pageshow', _refresh, true);
 
-      if (options.force || is_bad_IE || inIframe()) {
+      if (options.force || isOldInternetExplorer || inIframe()) {
         window.addEventListener('resize', _refresh, true);
-        options._listetingToResize = true;
+        options._listeningToResize = true;
       }
 
       options.hacks && options.hacks.initializeEvents(options, refresh, _refresh);
@@ -340,7 +354,7 @@
   }
 
   return {
-    version: '0.3.1',
+    version: '0.4.1',
     findProperties: findProperties,
     getCss: getReplacedViewportUnits,
     init: initialize,

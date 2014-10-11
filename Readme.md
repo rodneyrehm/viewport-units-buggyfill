@@ -14,6 +14,7 @@ Amongst other things, the buggyfill helps with the following problems:
 * viewport units (vh|vw|vmin|vmax) in Mobile Safari and IE9+
 
 
+
 ## Using viewport-units-buggyfill
 
 After loading the buggyfill from npm (`npm install viewport-units-buggyfill`) or bower (`bower install viewport-units-buggyfill`), it has to be required and initialized:

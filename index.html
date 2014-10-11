@@ -30,13 +30,6 @@
     // milliseconds to delay between updates of viewport-units
     // caused by orientationchange, pageshow, resize events
     refreshDebounceWait: 250,
-    // IE9, IE10 workaround for viewport units allowing vmin/vmax:
-    // behavior: 'use_css_behavior_hack: true; width: 50vmin; height: 50vmax;';
-    behaviorHack: true,
-    // IE9, IE10, iOS Safari workaround for viewport units in calc():
-    // content: 'use_css_content_hack: true; top: calc(50vh -  100px ); left: calc(50vw -  100px );';
-    contentHack: true,
-    // provide hacks plugin
     hacks: window.viewportUnitsBuggyfillHacks
   });</script>
 </body>

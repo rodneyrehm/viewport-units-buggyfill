@@ -21,11 +21,7 @@
 }
 
 .use_css_content_hack-test {
-  content: 'use_css_content_hack: true; width: 80vmax; height: 80vmax;';
-}
-
-.use_css_behavior-test {
-  -ms-behavior: 'use_css_behavior_hack: true; width: 80vmax; height: 80vmax;';
+  content: 'viewport-units-buggyfill; width: 80vmax; height: 80vmax;';
 }
 
 @media only screen and (max-height: 400px), (max-width: 400px) {

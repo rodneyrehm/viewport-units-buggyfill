@@ -47,7 +47,6 @@
   function checkHacks(declarations, rule, name, value) {
     
     var needsHack = (name === 'content' && value.indexOf('viewport-units-buggyfill') > -1);
-    
     if (!needsHack) {
       return;
     }

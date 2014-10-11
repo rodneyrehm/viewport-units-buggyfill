@@ -94,6 +94,7 @@ var cssText = viewportUnitsBuggyfill.getCss();
 * fix stock Android browser behavior of vh units when changing breakpoints
 * remove separate CSS content and behavior hacks and merge them into one.
 * autmatically have buggyfill allow hacks when initializated with 'hacks: window.viewportUnitsBuggyfillHacks' and nothing else (i.e. no 'behaviorHack: true' or 'contentHack: true' is needed anymore).
+* fix bug in Opera Mini that messes up nodes using CSS content hack.
 
 ### 0.4.1 (September 8th 2014) ###
 

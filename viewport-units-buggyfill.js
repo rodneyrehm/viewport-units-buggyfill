@@ -32,6 +32,15 @@
   var styleNode;
   var isOldInternetExplorer = false;
 
+  var isOldMobileSafari = false;
+
+  if (isMobileSafari) {
+    var versions = /Version\/(\d+)/.exec(window.navigator.userAgent)
+    if (versions.length > 1 && parseInt(versions[1]) < 8) {
+      isOldMobileSafari = true;
+    }
+  }
+
   // Do not remove the following comment!
   // It is a conditional comment used to
   // identify old Internet Explorer versions
@@ -81,7 +90,7 @@
     options = initOptions || {};
     options.isMobileSafari = isMobileSafari;
 
-    if (!options.force && !isMobileSafari && !isOldInternetExplorer && (!options.hacks || !options.hacks.required(options))) {
+    if (!options.force && !isOldMobileSafari && !isOldInternetExplorer && (!options.hacks || !options.hacks.required(options))) {
       // this buggyfill only applies to mobile safari
       return;
     }

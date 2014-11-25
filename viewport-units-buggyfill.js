@@ -51,8 +51,9 @@
     }
 
     var versionNumber = parseFloat((userAgent.match('Android ([0-9.]+)') || [])[1]);
-    // anything below 4.4 uses WebKit without *any* viewport support
-    return versionNumber < 4.4;
+    // anything below 4.4 uses WebKit without *any* viewport support,
+    // 4.4 has issues with viewport units within calc()
+    return versionNumber <= 4.4;
   })();
 
   // Do not remove the following comment!

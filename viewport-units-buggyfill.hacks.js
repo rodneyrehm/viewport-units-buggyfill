@@ -45,15 +45,12 @@
 
   // iOS SAFARI, IE9, or Stock Android: abuse "content" if "viewport-units-buggyfill" specified
   function checkHacks(declarations, rule, name, value) {
-    
-    var needsHack = (name === 'content' && value.indexOf('viewport-units-buggyfill') > -1);
+    var needsHack = name === 'content' && value.indexOf('viewport-units-buggyfill') > -1;
     if (!needsHack) {
       return;
     }
 
     var fakeRules = value.replace(quoteExpression, '');
-    
-
     fakeRules.split(';').forEach(function(fakeRuleElement) {
       var fakeRule = fakeRuleElement.split(':');
       if (fakeRule.length !== 2) {
@@ -64,9 +61,8 @@
       if (name === 'viewport-units-buggyfill') {
         return;
       }
-      var value = fakeRule[1].trim();
-      
 
+      var value = fakeRule[1].trim();
       declarations.push([rule, name, value]);
       if (calcExpression.test(value)) {
         var webkitValue = value.replace(calcExpression, '-webkit-calc(');
@@ -92,7 +88,7 @@
       if (options.isMobileSafari || options.isBadStockAndroid) {
         supportsVminmaxCalc = false;
       }
-       
+
     },
 
     initializeEvents: function(options, refresh, _refresh) {

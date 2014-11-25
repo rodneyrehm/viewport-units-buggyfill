@@ -18,8 +18,8 @@ html, body {
    * is exactly 80vw wide, no matter how much padding
    * or border.
    */
-  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   width: 80vw;
   height: 50%;

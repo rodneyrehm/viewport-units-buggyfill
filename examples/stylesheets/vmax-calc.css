@@ -1,7 +1,5 @@
 /* From https://coderwall.com/p/qac-og */
-@import url(fonts/trocchi/stylesheet.css);
-@import url(fonts/scriptina/stylesheet.css);
-/* line 7, ../sass/vmax-calc.scss */
+/* line 5, ../sass/vmax-calc.scss */
 html, body {
   height: 100vh;
   width: 100%;
@@ -10,7 +8,7 @@ html, body {
   margin: 0;
 }
 
-/* line 22, ../sass/vmax-calc.scss */
+/* line 20, ../sass/vmax-calc.scss */
 .circle {
   /* Let's make this a 200 x 200 circle */
   width: 20vmax;
@@ -33,15 +31,11 @@ html, body {
   /*
    * Here is the code for WebKit browsers that will allow
    * viewport-units-buggyfill to use vmax units to work in Safari for iOS6
-   * and perform calc on viewport units on all iOS devices ....
+   * and perform calc on viewport units on all iOS devices and IE9
    */
-  content: 'use_css_content_hack: true; width: 20vmax ; height:  20vmax ; font-size: 1.66667vmax ;top: calc(50vh -  10vmax ); left: calc(50vw -  10vmax );';
-  /*
-   * ... and the similar code for IE9+.
-   */
-  -ms-behavior: 'use_css_behavior_hack: true; width: 20vmax ; height:  20vmax ; font-size: 1.66667vmax ; top: calc(50vh -  10vmax ); left: calc(50vw -  10vmax );';
+  content: 'viewport-units-buggyfill; width: 20vmax ; height:  20vmax ; font-size: 1.66667vmax ;top: calc(50vh -  10vmax ); left: calc(50vw -  10vmax );';
 }
-/* line 58, ../sass/vmax-calc.scss */
+/* line 52, ../sass/vmax-calc.scss */
 .circle span {
   color: white;
   width: 20vmax;
@@ -54,6 +48,5 @@ html, body {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  content: 'use_css_content_hack: true; width: 20vmax ; height:  20vmax ; ';
-  -ms-behavior: 'use_css_behavior_hack: true; width: 20vmax ; height:  20vmax ; ';
+  content: 'viewport-units-buggyfill; width: 20vmax ; height:  20vmax ; ';
 }

@@ -4,4 +4,6 @@
   line-height: 90vh;
   height: 90vh;
   overflow: hidden;
+  /* IE9 and 10  */
+  content: 'viewport-units-buggyfill;'  'font-size: 90vh;' 'line-height: 90vh;' 'height: 90vh;';
 }

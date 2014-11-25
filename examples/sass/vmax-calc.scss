@@ -44,14 +44,10 @@ $fontSize: $size / 12;
   /*
    * Here is the code for WebKit browsers that will allow
    * viewport-units-buggyfill to use vmax units to work in Safari for iOS6
-   * and perform calc on viewport units on all iOS devices ....
+   * and perform calc on viewport units on all iOS devices and IE9
    */
-  content: unquote("'use_css_content_hack: true; width:") $size unquote("; height: ") $size unquote("; font-size:") $fontSize unquote(";top: calc(50vh - ")  $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
+  content: unquote("'viewport-units-buggyfill; width:") $size unquote("; height: ") $size unquote("; font-size:") $fontSize unquote(";top: calc(50vh - ")  $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
 
-  /*
-   * ... and the similar code for IE9+.
-   */
-  -ms-behavior: unquote("'use_css_behavior_hack: true; width:") $size unquote("; height: ") $size unquote("; font-size:") $fontSize unquote("; top: calc(50vh - ") $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
 
   span {
     color: white;
@@ -67,9 +63,7 @@ $fontSize: $size / 12;
 
     @include box-sizing(border-box);
 
-    content: unquote("'use_css_content_hack: true; width:") $size unquote("; height: ") $size unquote("; '");
-    -ms-behavior: unquote("'use_css_behavior_hack: true; width:") $size unquote("; height: ") $size unquote("; '");
-
+    content: unquote("'viewport-units-buggyfill; width:") $size unquote("; height: ") $size unquote("; '");
   }
 
 

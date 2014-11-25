@@ -12,7 +12,7 @@ body {
    * This puts Rob Ford photo always in the background,
    * centered and as heigh as the viewport.
    */
-  background-image: url("../images/Rob_Ford_Mayoral_Candidates_Forum_June_2010.jpg");
+  background-image: url("../images/Fords.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 25%;
@@ -73,7 +73,7 @@ body.ie9down .copy .date, body.ie9down .copy .say-no {
 }
 /* line 90, ../sass/rob-ford.scss */
 .copy .say-no em {
-  font-size: 40vh;
+  font-size: 30vh;
   display: inline-block;
   font-style: normal;
   /*
@@ -120,15 +120,20 @@ body.ie9down .copy .say-no em {
  * This ajusts the text in that scenerio.
  */
 @media screen and (max-aspect-ratio: 5 / 8) {
-  /* line 149, ../sass/rob-ford.scss */
+  /* line 147, ../sass/rob-ford.scss */
+  body {
+    background-position: 47% 25%;
+  }
+
+  /* line 154, ../sass/rob-ford.scss */
   .copy .date {
     font-size: 6vh;
   }
-  /* line 153, ../sass/rob-ford.scss */
+  /* line 158, ../sass/rob-ford.scss */
   .copy .say-no {
     font-size: 12vh;
   }
-  /* line 157, ../sass/rob-ford.scss */
+  /* line 162, ../sass/rob-ford.scss */
   .copy .say-no em {
     font-size: 24vh;
   }
@@ -139,12 +144,17 @@ body.ie9down .copy .say-no em {
  * is covering Robbie's face.
  */
 @media screen and (max-height: 350px) {
-  /* line 175, ../sass/rob-ford.scss */
+  /* line 178, ../sass/rob-ford.scss */
+  body {
+    background-position: 47% 25%;
+  }
+
+  /* line 183, ../sass/rob-ford.scss */
   .copy .say-no em {
     font-size: 26vh;
   }
 }
-/* line 182, ../sass/rob-ford.scss */
+/* line 190, ../sass/rob-ford.scss */
 aside {
   position: absolute;
   bottom: 1vh;
@@ -153,7 +163,7 @@ aside {
   font-family: "Helvetica", "Arial", sans-serif;
   font-size: 10px;
 }
-/* line 190, ../sass/rob-ford.scss */
+/* line 198, ../sass/rob-ford.scss */
 aside a {
   color: #ccccff;
 }

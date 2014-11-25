@@ -1,11 +1,6 @@
 @import "_mixins.scss";
 @import "compass/css3";
 @import "compass/css3/shared";
-<<<<<<< HEAD
-@import "fonts/trocchi/stylesheet.css";
-@import "fonts/scriptina/stylesheet.css";
-=======
->>>>>>> pr/16
 
 html, body {
   height: 100vh;
@@ -49,7 +44,7 @@ $halfSize: $size / 2;
    * viewport-units-buggyfill to perform calc on viewport
    * units.
    */
-  content: unquote("'use_css_content_hack: true; top: calc(50vh - ")  $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
+  content: unquote("'viewport-units-buggyfill; top: calc(50vh - ")  $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
 
   span {
     color: white;

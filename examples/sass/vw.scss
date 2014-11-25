@@ -1,6 +1,12 @@
 @import "_mixins.scss";
 @import "compass/css3";
 
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .vw-demo {
   background-color: red;
   color: white;
@@ -16,6 +22,8 @@
   @include box-sizing(border-box);
 
   width: 80vw;
-  height: 100%;
+  height: 50%;
   padding: 10px;
+  
+  content: 'viewport-units-buggyfill; width: 80vw;';
 }

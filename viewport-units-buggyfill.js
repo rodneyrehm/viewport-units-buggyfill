@@ -1,5 +1,5 @@
 /*!
- * viewport-units-buggyfill v0.4.1
+ * viewport-units-buggyfill v0.4.2
  * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
  */
@@ -24,13 +24,16 @@
 
   var initialized = false;
   var options;
-  var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(window.navigator.userAgent);
+  var userAgent = window.navigator.userAgent;
+  var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(userAgent);
+  var isBadStockAndroid = false;
   var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
   var forEach = [].forEach;
   var dimensions;
   var declarations;
   var styleNode;
   var isOldInternetExplorer = false;
+  var isOperaMini = (userAgent.indexOf('Opera Mini') > -1);
 
   // Do not remove the following comment!
   // It is a conditional comment used to
@@ -81,8 +84,23 @@
     options = initOptions || {};
     options.isMobileSafari = isMobileSafari;
 
-    if (!options.force && !isMobileSafari && !isOldInternetExplorer && (!options.hacks || !options.hacks.required(options))) {
-      // this buggyfill only applies to mobile safari
+    // Android stock browser test from 
+    // http://stackoverflow.com/questions/24926221/distinguish-android-chrome-from-stock-browser-stock-browsers-user-agent-contai
+    var isAndroid = (userAgent.indexOf(' Android ') > -1);
+    if (isAndroid) {
+    	var isStockAndroid = (userAgent.indexOf('Version/') > - 1);
+    	if (isStockAndroid) {
+    		var versionNumber = parseFloat(userAgent.match('Android [0-9.]*').toString().split(' ')[1]);
+    		if (versionNumber <= 4.4) {
+    			isBadStockAndroid = true;
+    		}
+    	} 
+    } 
+
+    options.isBadStockAndroid = isBadStockAndroid;
+
+    if (!options.force && !isMobileSafari && !isOldInternetExplorer && !isBadStockAndroid && !isOperaMini && (!options.hacks || !options.hacks.required(options))) {
+      // this buggyfill only applies to mobile safari, IE9-10 and the Stock Android Browser.
       return;
     }
 
@@ -196,6 +214,8 @@
     var close;
 
     declarations.forEach(function(item) {
+      
+      
       var _item = overwriteDeclaration.apply(null, item);
       var _open = _item.selector.length ? (_item.selector.join(' {\n') + ' {\n') : '';
       var _close = new Array(_item.selector.length + 1).join('\n}');
@@ -230,18 +250,33 @@
     if (buffer.length) {
       css.push(open + buffer.join('\n') + close);
     }
+    
+    /*
+     * Opera Mini messes up on the content hack (it replaces the DOM node's
+     * innerHTML with the value).  This fixes it.  We test for Opera Mini
+     * only since it is the most expensive CSS selector in terms of 
+     * webpage performance, as mentioned at 
+     * https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors
+     */
+    if (isOperaMini) {
+    	css.push('* { content: normal !important; }');
+    }
 
     return css.join('\n\n');
   }
 
   function overwriteDeclaration(rule, name, value) {
-    var _value = value.replace(viewportUnitExpression, replaceValues);
-    var  _selectors = [];
-
+  	var _value;
+  	var  _selectors = [];
+  	
+    _value = value.replace(viewportUnitExpression, replaceValues);
+    
     if (options.hacks) {
       _value = options.hacks.overwriteDeclaration(rule, name, _value);
     }
 
+    
+    
     if (name) {
       // skipping KeyframesRule
       _selectors.push(rule.selectorText);
@@ -337,7 +372,7 @@
   }
 
   return {
-    version: '0.4.1',
+    version: '0.4.2',
     findProperties: findProperties,
     getCss: getReplacedViewportUnits,
     init: initialize,

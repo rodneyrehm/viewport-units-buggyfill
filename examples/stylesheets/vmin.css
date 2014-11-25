@@ -22,5 +22,5 @@
   height: 80vmin;
   font-size: 6vmin;
   /* IE9 and 10 */
-  -ms-behavior: 'use_css_behavior_hack: true; width: 80vmin; height: 80vmin; font-size: 6vmin;';
+  content: 'viewport-units-buggyfill;'  'width: 80vmin;' 'height: 80vmin;' 'font-size: 6vmin;';
 }

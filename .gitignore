@@ -2,5 +2,6 @@
 .project
 node_modules
 **/.sass-cache
-**/.sass-cache/*
-
+fonts.css
+linotype*
+stacey*

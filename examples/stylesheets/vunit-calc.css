@@ -1,7 +1,5 @@
 /* From https://coderwall.com/p/qac-og */
-@import url(fonts/trocchi/stylesheet.css);
-@import url(fonts/scriptina/stylesheet.css);
-/* line 7, ../sass/vunit-calc.scss */
+/* line 5, ../sass/vunit-calc.scss */
 html, body {
   height: 100vh;
   width: 100%;
@@ -10,7 +8,7 @@ html, body {
   margin: 0;
 }
 
-/* line 22, ../sass/vunit-calc.scss */
+/* line 20, ../sass/vunit-calc.scss */
 .circle {
   /* Let's make this a 200 x 200 circle */
   width: 200px;
@@ -34,9 +32,9 @@ html, body {
    * viewport-units-buggyfill to perform calc on viewport
    * units.
    */
-  content: 'use_css_content_hack: true; top: calc(50vh -  100px ); left: calc(50vw -  100px );';
+  content: 'viewport-units-buggyfill; top: calc(50vh -  100px ); left: calc(50vw -  100px );';
 }
-/* line 51, ../sass/vunit-calc.scss */
+/* line 49, ../sass/vunit-calc.scss */
 .circle span {
   color: white;
   padding: 10px;

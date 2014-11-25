@@ -32,7 +32,11 @@
   var styleNode;
   var isOldInternetExplorer = false;
   var isOperaMini = userAgent.indexOf('Opera Mini') > -1;
-  var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(userAgent);
+  var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(userAgent) && (function() {
+    // viewport units work fine in mobile Safari on iOS 8+
+    var versions = /Version\/(\d+)/.exec(window.navigator.userAgent)
+    return versions.length > 1 && parseInt(versions[1]) < 8;
+  })();
   var isBadStockAndroid = (function() {
     // Android stock browser test derived from
     // http://stackoverflow.com/questions/24926221/distinguish-android-chrome-from-stock-browser-stock-browsers-user-agent-contai

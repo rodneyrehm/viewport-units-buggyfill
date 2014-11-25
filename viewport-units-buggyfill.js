@@ -34,7 +34,7 @@
   var isOperaMini = userAgent.indexOf('Opera Mini') > -1;
   var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(userAgent) && (function() {
     // viewport units work fine in mobile Safari on iOS 8+
-    var versions = /Version\/(\d+)/.exec(window.navigator.userAgent)
+    var versions = /Version\/(\d+)/.exec(window.navigator.userAgent);
     return versions.length > 1 && parseInt(versions[1]) < 8;
   })();
   var isBadStockAndroid = (function() {
@@ -178,7 +178,19 @@
 
   function findDeclarations(rule) {
     if (rule.type === 7) {
-      var value = rule.cssText;
+      var value;
+
+      // there may be a case where accessing cssText throws an error.
+      // I could not reproduce this issue, but the worst that can happen
+      // this way is an animation not running properly.
+      // not awesome, but probably better than a script error
+      // see https://github.com/rodneyrehm/viewport-units-buggyfill/issues/21
+      try {
+        value = rule.cssText;
+      } catch(e) {
+        return;
+      }
+
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
         // KeyframesRule does not have a CSS-PropertyName

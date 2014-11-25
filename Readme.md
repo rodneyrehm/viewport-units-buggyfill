@@ -110,6 +110,7 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 * not engaging the buggyfill on iOS8+ anymore ([#19](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/19), [#23](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/23), [#27](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/27))
 * fixing stock Android browser behavior of viewport units when changing breakpoints
 * fixing `content` hack breaking in Opera Mini (because it actually inlines the content everywhere)
+* fixing `rule.cssText` throwing an Error in IE (not reproducible, whatever) [#21](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/21))
 * remove separate CSS content and behavior hacks and merge them into one. **This is a backward compatibility breaking change!** The only acceptable way to specify viewport-unit rules to a non-supporting browser now is `content: "viewport-units-buggyfill; width: 20vw;"` ([#20](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/20), [#25](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/25))
 * removing need for initialization options `behaviorHack` and `contentHack`, passing `hacks` will suffice ([#20](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/20), [#25](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/25))
 

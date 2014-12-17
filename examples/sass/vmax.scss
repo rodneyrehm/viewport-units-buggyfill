@@ -1,8 +1,6 @@
 @import "_mixins.scss";
 @import "compass/css3";
 
-
-
 .vmax-demo {
   background-color: red;
   color: white;
@@ -28,6 +26,4 @@
    * support the vmax keyword, so JavaScript cannot see it
    */
   content: 'viewport-units-buggyfill; width: 80vmax; height: 80vmax;';
-
-
 }

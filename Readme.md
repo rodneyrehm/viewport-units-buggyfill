@@ -60,15 +60,14 @@ viewportUnitsBuggyfill.init({force: true});
 // for performance reasons.
 viewportUnitsBuggyfill.init({refreshDebounceWait: 250});
 
-// This enables the browser to abuse the CSS 'content' property to allow viewport
-// units for:
+// This enables abusing the CSS property 'content' to allow transporting
+// viewport unit values for browsers with spotty support:
+//   * vmin in IE9
+//   * vmax in IE9, iOS <= 6
+//   * calc(vh/vmin) in iOS < 8 and Android Stock Browser <= 4.4
+//   * all of viewport units in Android Stock Browser <= 4.3
 //
-// 1) IE9 to use vmin
-// 2) iOS Safari <= 6 and IE9 to use vmax
-// 3) calc expressions in iOS Safari and Android's stock browser.
-// code is (see below). This *must* be used
-// in conjunction with the following code
-// inside the HTML:
+// To engage these hacks, you need to load the hacks file as well:
 //
 //   <script src="/path/to/viewport-units-buggyfill.hacks.js"></script>
 //
@@ -84,17 +83,36 @@ viewportUnitsBuggyfill.findProperties();
 var cssText = viewportUnitsBuggyfill.getCss();
 ```
 
+In CSS you can declare fallbacks to be used by the buggyfill's hacks:
+
+```css
+.my-viewport-units-using-thingie {
+  width: 50vmin;
+  height: 50vmax;
+  top: calc(50vh - 100px);
+  left: calc(50vw - 100px);
+
+  /* hack to engage viewport-units-buggyfill */
+  content: 'viewport-units-buggyfill; width: 50vmin; height: 50vmax; top: calc(50vh - 100px); left: calc(50vw - 100px);';
+}
+```
+
 ## Cross Origin Stylesheets
 
 **Warning:** Including stylesheets from third party services, like Google WebFonts, requires those resources to be served with appropriate CORS headers.
 
 ## Changelog
 
-### 0.4.2 (October 10th, 2014) ###
-* fix stock Android browser behavior of vh units when changing breakpoints
-* remove separate CSS content and behavior hacks and merge them into one.
-* autmatically have buggyfill allow hacks when initializated with 'hacks: window.viewportUnitsBuggyfillHacks' and nothing else (i.e. no 'behaviorHack: true' or 'contentHack: true' is needed anymore).
-* fix bug in Opera Mini that messes up nodes using CSS content hack.
+### master (will become 0.5.0) ###
+
+**WARNING: Breaking Changes**
+
+* not engaging the buggyfill on iOS8+ anymore ([#19](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/19), [#23](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/23), [#27](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/27))
+* fixing stock Android browser behavior of viewport units when changing breakpoints
+* fixing `content` hack breaking in Opera Mini (because it actually inlines the content everywhere)
+* fixing `rule.cssText` throwing an Error in IE (not reproducible, whatever) [#21](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/21))
+* remove separate CSS content and behavior hacks and merge them into one. **This is a backward compatibility breaking change!** The only acceptable way to specify viewport-unit rules to a non-supporting browser now is `content: "viewport-units-buggyfill; width: 20vw;"` ([#20](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/20), [#25](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/25))
+* removing need for initialization options `behaviorHack` and `contentHack`, passing `hacks` will suffice ([#20](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/20), [#25](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/25))
 
 ### 0.4.1 (September 8th 2014) ###
 
@@ -113,7 +131,8 @@ var cssText = viewportUnitsBuggyfill.getCss();
   height: 50vmax;
 
   /* IE9 and 10 */
-  content: 'viewport-units-buggyfill; width: 50vmin; height: 50vmax;';
+  behavior: 'use_css_behavior_hack: true; width: 50vmin; height: 50vmax;';
+  /* WARNING: this syntax has been changed in v0.5.0 */
 }
 ```
 * adds the ability for viewport units to be used inside of calc() expressions in iOS Safari and IE9+, via the use of the `content` CSS property.  This seems like a good compromise since `content` is only valid inside `::before` and `::after` rules (as a result, it is not recommended use this hack inside of these rules).  (Note that this will only work when initializing with `viewportUnitsBuggyfill.init({hacks: window.viewportUnitsBuggyfillHacks});`) and adding the `viewport-units-buggyfill.hacks.js` to the page after `viewport-units-buggyfill.js`.
@@ -128,7 +147,8 @@ var cssText = viewportUnitsBuggyfill.getCss();
    * viewport-units-buggyfill.js to perform calc on viewport
    * units.
    */
-  content: 'viewport-units-buggyfill; top: calc(50vh -  100px); left: calc(50vw -  100px);';
+   content: 'use_css_content_hack: true; top: calc(50vh -  100px); left: calc(50vw -  100px);';
+  /* WARNING: this syntax has been changed in v0.5.0 */
 }
 ```
 

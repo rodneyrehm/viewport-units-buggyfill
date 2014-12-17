@@ -44,7 +44,7 @@ $halfSize: $size / 2;
    * viewport-units-buggyfill to perform calc on viewport
    * units.
    */
-  content:  unquote("'viewport-units-buggyfill; top: calc(50vh - ")  $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
+  content: unquote("'viewport-units-buggyfill; top: calc(50vh - ")  $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
 
   span {
     color: white;

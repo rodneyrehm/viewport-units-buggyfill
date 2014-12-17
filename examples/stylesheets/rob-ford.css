@@ -1,4 +1,4 @@
-@charset "IBM437";
+@charset "UTF-8";
 /*
  * I used compass to help me with my CSS.  I highly recommend it.
  * http://compass-style.org/
@@ -34,7 +34,7 @@ body {
    */
   text-shadow: 1vh 1vh 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000;
 }
-/* line 44, ../sass/rob-ford.scss */
+/* line 45, ../sass/rob-ford.scss */
 body.ie9down .copy .date, body.ie9down .copy .say-no {
   zoom: 1;
   background: #000001;
@@ -91,9 +91,10 @@ body.modern .copy .say-no em {
    * First, we skew the font using CSS transforms in
    * modern browsers
    */
+  -webkit-transform: skewX(-10deg);
   -moz-transform: skewX(-10deg);
   -ms-transform: skewX(-10deg);
-  -webkit-transform: skewX(-10deg);
+  -o-transform: skewX(-10deg);
   transform: skewX(-10deg);
 }
 /* line 111, ../sass/rob-ford.scss */
@@ -125,15 +126,15 @@ body.ie9down .copy .say-no em {
     background-position: 47% 25%;
   }
 
-  /* line 154, ../sass/rob-ford.scss */
+  /* line 153, ../sass/rob-ford.scss */
   .copy .date {
     font-size: 6vh;
   }
-  /* line 158, ../sass/rob-ford.scss */
+  /* line 157, ../sass/rob-ford.scss */
   .copy .say-no {
     font-size: 12vh;
   }
-  /* line 162, ../sass/rob-ford.scss */
+  /* line 161, ../sass/rob-ford.scss */
   .copy .say-no em {
     font-size: 24vh;
   }
@@ -144,7 +145,7 @@ body.ie9down .copy .say-no em {
  * is covering Robbie's face.
  */
 @media screen and (max-height: 350px) {
-  /* line 178, ../sass/rob-ford.scss */
+  /* line 177, ../sass/rob-ford.scss */
   body {
     background-position: 47% 25%;
   }

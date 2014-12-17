@@ -1,4 +1,4 @@
-@charset "IBM437";
+@charset "UTF-8";
 /*
  * I used compass to help me with my CSS.  I highly recommend it.
  * http://compass-style.org/
@@ -34,7 +34,7 @@ body {
    */
   text-shadow: 1vh 1vh 0 #000, 1px 0 0 #000, -1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000;
 }
-/* line 44, ../sass/no-js-rob-ford.scss */
+/* line 45, ../sass/no-js-rob-ford.scss */
 body.ie9down .copy .date, body.ie9down .copy .say-no {
   zoom: 1;
   background: #000001;
@@ -91,9 +91,10 @@ body.modern .copy .say-no em {
    * First, we skew the font using CSS transforms in
    * modern browsers
    */
+  -webkit-transform: skewX(-10deg);
   -moz-transform: skewX(-10deg);
   -ms-transform: skewX(-10deg);
-  -webkit-transform: skewX(-10deg);
+  -o-transform: skewX(-10deg);
   transform: skewX(-10deg);
 }
 /* line 111, ../sass/no-js-rob-ford.scss */

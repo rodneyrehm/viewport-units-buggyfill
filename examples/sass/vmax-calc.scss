@@ -48,7 +48,7 @@ $fontSize: $size / 12;
    */
   content: unquote("'viewport-units-buggyfill; width:") $size unquote("; height: ") $size unquote("; font-size:") $fontSize unquote(";top: calc(50vh - ")  $halfSize unquote("); left: calc(50vw - ") $halfSize unquote(");'");
 
-  
+
   span {
     color: white;
     width: $size;
@@ -64,7 +64,6 @@ $fontSize: $size / 12;
     @include box-sizing(border-box);
 
     content: unquote("'viewport-units-buggyfill; width:") $size unquote("; height: ") $size unquote("; '");
-    
   }
 
 

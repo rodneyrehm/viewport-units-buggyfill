@@ -1,5 +1,5 @@
 /* From https://coderwall.com/p/qac-og */
-/* line 6, ../sass/vmax.scss */
+/* line 4, ../sass/vmax.scss */
 .vmax-demo {
   background-color: red;
   color: white;
@@ -11,8 +11,8 @@
    * is exactly 80vw wide, no matter how much padding
    * or border.
    */
-  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 10px;
   /* Modern browsers */

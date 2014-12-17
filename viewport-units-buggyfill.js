@@ -34,8 +34,8 @@
   var isOperaMini = userAgent.indexOf('Opera Mini') > -1;
   var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(userAgent) && (function() {
     // viewport units work fine in mobile Safari on iOS 8+
-    var versions = /Version\/(\d+)/.exec(window.navigator.userAgent);
-    return versions.length > 1 && parseInt(versions[1]) < 8;
+    var versions = /OS (\d+)/i.exec(window.navigator.userAgent);
+    return versions === null || (versions.length > 1 && parseInt(versions[1]) < 8);
   })();
   var isBadStockAndroid = (function() {
     // Android stock browser test derived from

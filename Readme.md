@@ -117,9 +117,9 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 
 ## Changelog
 
-### master (will become 0.5.0) ###
+### 0.5.0 (December 23rd 2014) ###
 
-**WARNING: Breaking Changes**
+**WARNING: Breaking Changes** (and a Merry Christmas to you, too :)
 
 * not engaging the buggyfill on iOS8+ anymore ([#19](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/19), [#23](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/23), [#27](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/27))
 * also engaging buggyfill for WebViews in <iOS8 ([#30](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/30))
@@ -130,8 +130,6 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 * removing need for initialization options `behaviorHack` and `contentHack`, passing `hacks` will suffice ([#20](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/20), [#25](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/25))
 * adding IE11 to the list to fix its `vmax` support ([#31](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/31))
 * adding `<link rel="…" data-viewport-units-buggyfill="ignore">` to prevent specific style sheets from being processed (suggested in [#11](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/11))
-
-
 
 ### 0.4.1 (September 8th 2014) ###
 

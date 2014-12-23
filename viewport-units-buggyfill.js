@@ -20,7 +20,7 @@
   }
 }(this, function () {
   'use strict';
-  /*global document, window, location, XMLHttpRequest, XDomainRequest*/
+  /*global document, window, navigator, location, XMLHttpRequest, XDomainRequest*/
 
   var initialized = false;
   var options;
@@ -85,7 +85,7 @@
  
   // added check for IE11, since it *still* doesn't understand vmax!!!
   if (!isOldInternetExplorer) {
-      isOldInternetExplorer = !!navigator.userAgent.match(/Trident.*rv[ :]*11\./);
+    isOldInternetExplorer = !!navigator.userAgent.match(/Trident.*rv[ :]*11\./);
   }
   function debounce(func, wait) {
     var timeout;

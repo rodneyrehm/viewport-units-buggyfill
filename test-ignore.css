@@ -1,0 +1,6 @@
+@charset "utf-8";
+
+.some-ignored-selector {
+  width: 20px;
+  width: .2vw;
+}

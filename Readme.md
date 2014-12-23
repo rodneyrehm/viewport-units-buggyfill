@@ -21,7 +21,9 @@ The hacks use the `content` property to transport viewport-unit styles that need
 content: 'viewport-units-buggyfill; width: 50vmin; height: 50vmax; top: calc(50vh - 100px); left: calc(50vw - 100px);';
 ```
 
-> Note: This buggyfill only works on stylesheets! viewport units used in `style` attributes are *not* resolved.
+> **Note:** This buggyfill only works on stylesheets! viewport units used in `style` attributes are *not* resolved.
+
+> **Note:** The buggyfill can easily trip over files host on different origins (requiring CORS) and relative URLs to images/fonts/… within style sheets. [#11](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/11)
 
 
 ## Using viewport-units-buggyfill
@@ -47,6 +49,7 @@ require('viewport-units-buggyfill').init({
   hacks: hacks
 });
 ```
+
 
 ## API
 
@@ -106,9 +109,11 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 }
 ```
 
+
 ## Cross Origin Stylesheets
 
-**Warning:** Including stylesheets from third party services, like Google WebFonts, requires those resources to be served with appropriate CORS headers.
+**Warning:** Including stylesheets from third party services, like Google WebFonts, requires those resources to be served with appropriate CORS headers. You may also need to be aware of the fact that relative URLs within those style sheets are NOT resolved, possibly leading to missing fonts and images.
+
 
 ## Changelog
 

@@ -32,24 +32,18 @@
   var styleNode;
   var isOldInternetExplorer = false;
   var isOperaMini = userAgent.indexOf('Opera Mini') > -1;
-  
+
   var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(userAgent) && (function() {
+    // Regexp for iOS-version tested against the following userAgent strings:
+    // Example WebView UserAgents:
+    // * iOS Chrome on iOS8: "Mozilla/5.0 (iPad; CPU OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) CriOS/39.0.2171.50 Mobile/12B410 Safari/600.1.4"
+    // * iOS Facebook on iOS7: "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D201 [FBAN/FBIOS;FBAV/12.1.0.24.20; FBBV/3214247; FBDV/iPhone6,1;FBMD/iPhone; FBSN/iPhone OS;FBSV/7.1.1; FBSS/2; FBCR/AT&T;FBID/phone;FBLC/en_US;FBOP/5]"
+    // Example Safari UserAgents:
+    // * Safari iOS8: "Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4"
+    // * Safari iOS7: "Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A4449d Safari/9537.53"
     var iOSversion = userAgent.match(/OS (\d)/);
-    
-    /**
-     * Regexp for iOS-version tested against the following userAgent strings:
-     * WebView examples:
-     * iOS Chrome on iOS8: Mozilla/5.0 (iPad; CPU OS 8_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) CriOS/39.0.2171.50 Mobile/12B410 Safari/600.1.4
-     * iOS Facebook on iOS7: Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_1 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D201 [FBAN/FBIOS;FBAV/12.1.0.24.20; FBBV/3214247; FBDV/iPhone6,1;FBMD/iPhone; FBSN/iPhone OS;FBSV/7.1.1; FBSS/2; FBCR/AT&T;FBID/phone;FBLC/en_US;FBOP/5]
-     * 
-     * Safari examples:
-     * Safari iOS8: Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/600.1.3 (KHTML, like Gecko) Version/8.0 Mobile/12A4345d Safari/600.1.4
-     * Safari iOS7: Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A4449d Safari/9537.53
-     * 
-     **/
-    
-     // viewport units work fine in mobile Safari and webView on iOS 8+
-    return iOSversion && iOSversion.length>1 && parseInt(iOSversion[1]) < 8; 
+    // viewport units work fine in mobile Safari and webView on iOS 8+
+    return iOSversion && iOSversion.length>1 && parseInt(iOSversion[1]) < 8;
   })();
 
   var isBadStockAndroid = (function() {
@@ -82,7 +76,7 @@
   @end
 
   @*/
- 
+
   // added check for IE11, since it *still* doesn't understand vmax!!!
   if (!isOldInternetExplorer) {
     isOldInternetExplorer = !!navigator.userAgent.match(/Trident.*rv[ :]*11\./);

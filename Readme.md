@@ -1,18 +1,27 @@
 # Viewport Units Buggyfill™
 
-This is a *buggyfill* (fixing bad behavior), not a *polyfill* (adding missing behavior). That said, it provides hacks for you to get viewport units working in old IE as well. If the browser doesn't know how to deal with the [viewport units](http://www.w3.org/TR/css3-values/#viewport-relative-lengths) - `vw`, `vh`, `vmin` and `vmax` - it won't gain the capability through this script, because this buggyfill uses the [CSSOM](http://dev.w3.org/csswg/cssom/) to access the defined styles. The hacks abuse CSS properties like `filter` and `content` to get the values across.
+This is a *buggyfill* (fixing bad behavior), not a *polyfill* (adding missing behavior). That said, it provides hacks for you to get viewport units working in old IE and Android Stock Browser as well. If the browser doesn't know how to deal with the [viewport units](http://www.w3.org/TR/css3-values/#viewport-relative-lengths) - `vw`, `vh`, `vmin` and `vmax` - this library will not improve the situation unless you're using the hacks detailed below. The buggyfill uses the [CSSOM](http://dev.w3.org/csswg/cssom/) to access the defined styles rather than ship its own CSS parser, that'S why the hacks abuse the CSS property `content` to get the values across.
 
-It does, however, accomodate browsers that have partial, but not full support for vmin/vmax units.
-
-The buggyfill iterates through all defined styles the document knows and extracts those that uses a viewport unit. After resolving the relative units against the viewport's dimensions, CSS is put back together and injected into the document in a `<style>` element. Listening to the `orientationchange` event allows the buggyfill to update the calculated dimensions accordingly.
-
-> Note: This buggyfill only works on stylesheets! viewport units used in `style` attributes are *not* resolved.
+---
 
 Amongst other things, the buggyfill helps with the following problems:
 
-* viewport units inside `calc()` expressions in Mobile Safari and IE9+
-* viewport units (vh|vw|vmin|vmax) in Mobile Safari and IE9+
+* viewport units (vh|vw|vmin|vmax) in Mobile Safari
+* viewport units inside `calc()` expressions in Mobile Safari and IE9+ (hack)
+* `vmin`, `vmax` in IE9+ (hack)
+* viewport units in old Android Stock Browser (hack)
 
+---
+
+The buggyfill iterates through all defined styles the document knows and extracts those that uses a viewport unit. After resolving the relative units against the viewport's dimensions, CSS is put back together and injected into the document in a `<style>` element. Listening to the `orientationchange` event allows the buggyfill to update the calculated dimensions accordingly.
+
+The hacks use the `content` property to transport viewport-unit styles that need to be calculated by script, this is done because unsupporting browsers do not expose original declarations such as `height: calc(100vh - 10px)`:
+
+```css
+content: 'viewport-units-buggyfill; width: 50vmin; height: 50vmax; top: calc(50vh - 100px); left: calc(50vw - 100px);';
+```
+
+> Note: This buggyfill only works on stylesheets! viewport units used in `style` attributes are *not* resolved.
 
 
 ## Using viewport-units-buggyfill

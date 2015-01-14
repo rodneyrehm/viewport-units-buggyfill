@@ -154,6 +154,8 @@
 
   function updateStyles() {
     styleNode.textContent = getReplacedViewportUnits();
+    // move to the end in case inline <style>s were added dynamically
+    styleNode.parentNode.appendChild(styleNode);
   }
 
   function refresh() {

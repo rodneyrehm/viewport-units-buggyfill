@@ -26,7 +26,6 @@
   var options;
   var userAgent = window.navigator.userAgent;
   var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
-  var forEach = [].forEach;
   var dimensions;
   var declarations;
   var styleNode;
@@ -93,6 +92,14 @@
       clearTimeout(timeout);
       timeout = setTimeout(callback, wait);
     };
+  }
+  
+  function forEachSafe(list, iterator) {
+    for (var i = 0; i < list.length; i++) {
+      try {
+        iterator(list[i]);
+      } catch (err) { }
+    }
   }
 
   // from http://stackoverflow.com/questions/326069/how-to-identify-if-a-webpage-is-being-loaded-inside-an-iframe-or-directly-into-t
@@ -171,10 +178,19 @@
       updateStyles();
     }, 1);
   }
+  
+  function getStyleSheets() {
+    try {
+      return document.styleSheets;
+    } catch (err) {
+      // might happen in restrictive environments
+      return [];
+    }
+  }
 
   function findProperties() {
     declarations = [];
-    forEach.call(document.styleSheets, function(sheet) {
+    forEachSafe(getStyleSheets(), function(sheet) {
       if (sheet.ownerNode.id === 'patched-viewport' || !sheet.cssRules || sheet.ownerNode.getAttribute('data-viewport-units-buggyfill') === 'ignore') {
         // skip entire sheet because no rules are present, it's supposed to be ignored or it's the target-element of the buggyfill
         return;
@@ -185,7 +201,7 @@
         return;
       }
 
-      forEach.call(sheet.cssRules, findDeclarations);
+      forEachSafe(sheet.cssRules, findDeclarations);
     });
 
     return declarations;
@@ -221,14 +237,14 @@
         return;
       }
 
-      forEach.call(rule.cssRules, function(_rule) {
+      forEachSafe(rule.cssRules, function(_rule) {
         findDeclarations(_rule);
       });
 
       return;
     }
 
-    forEach.call(rule.style, function(name) {
+    forEachSafe(rule.style, function(name) {
       var value = rule.style.getPropertyValue(name);
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {
@@ -246,7 +262,7 @@
     var open;
     var close;
 
-    declarations.forEach(function(item) {
+    forEachSafe(declarations, function(item) {
       var _item = overwriteDeclaration.apply(null, item);
       var _open = _item.selector.length ? (_item.selector.join(' {\n') + ' {\n') : '';
       var _close = new Array(_item.selector.length + 1).join('\n}');
@@ -347,7 +363,7 @@
       }
     };
 
-    forEach.call(document.styleSheets, function(sheet) {
+    forEachSafe(getStyleSheets(), function(sheet) {
       if (!sheet.href || origin(sheet.href) === origin(location.href)) {
         // skip <style> and <link> from same origin
         return;

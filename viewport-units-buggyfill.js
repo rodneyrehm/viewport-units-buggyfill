@@ -95,10 +95,15 @@
   }
   
   function forEachSafe(list, iterator) {
+    var current;
     for (var i = 0; i < list.length; i++) {
       try {
-        iterator(list[i]);
-      } catch (err) { }
+        current = list[i];
+      } catch (err) {
+        continue;
+      }
+      
+      iterator(current);
     }
   }
 

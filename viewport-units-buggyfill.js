@@ -1,4 +1,4 @@
-/*! 
+/*!
  * viewport-units-buggyfill v0.2.2
  * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
@@ -38,11 +38,11 @@
     initialized = true;
     styleNode = document.createElement('style');
     styleNode.id = 'patched-viewport';
-    document.head.appendChild(styleNode);
+    document.body.appendChild(styleNode);
 
     //window.addEventListener('orientationchange', updateStyles, true);
     // doing a full refresh rather than updateStyles because an orientationchange
-    // could activate different stylesheets 
+    // could activate different stylesheets
     window.addEventListener('orientationchange', refresh, true);
     refresh();
   }

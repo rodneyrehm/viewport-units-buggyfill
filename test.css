@@ -20,6 +20,10 @@
   filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=1vh, OffY=1vw, Color=#000000);
 }
 
+.priority-important-test {
+  height: 20.3vh !important;  
+}
+
 .use_css_content_hack-test {
   content: 'viewport-units-buggyfill; width: 80vmax; height: 80vmax;';
 }

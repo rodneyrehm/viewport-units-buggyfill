@@ -117,9 +117,10 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 
 ## Changelog
 
-### master (will become 0.5.1) ###
+### 0.5.1 (March 10th 2015) ###
 
 * fixing generated `<style>` element to maintain highest precedence ([#36](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/36))
+* fixing the preservation of !important rules ([#44](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/44), [#45](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/45) by [mderazon](https://github.com/mderazon))
 
 ### 0.5.0 (December 23rd 2014) ###
 

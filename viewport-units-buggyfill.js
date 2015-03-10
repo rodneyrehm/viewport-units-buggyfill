@@ -1,5 +1,5 @@
 /*!
- * viewport-units-buggyfill v0.5.0
+ * viewport-units-buggyfill v0.5.1
  * @web: https://github.com/rodneyrehm/viewport-units-buggyfill/
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
  */
@@ -402,7 +402,7 @@
   }
 
   return {
-    version: '0.5.0',
+    version: '0.5.1',
     findProperties: findProperties,
     getCss: getReplacedViewportUnits,
     init: initialize,

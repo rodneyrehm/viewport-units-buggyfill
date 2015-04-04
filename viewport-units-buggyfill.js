@@ -30,7 +30,8 @@
   var dimensions;
   var declarations;
   var styleNode;
-  var isOldInternetExplorer = false;
+  var isBuggyIE = false;
+  var isOldIE = false;
   var isOperaMini = userAgent.indexOf('Opera Mini') > -1;
 
   var isMobileSafari = /(iPhone|iPod|iPad).+AppleWebKit/i.test(userAgent) && (function() {
@@ -71,15 +72,20 @@
 
   /*@cc_on
 
-  @if (@_jscript_version <= 10)
-    isOldInternetExplorer = true;
+  @if (9 <= @_jscript_version && @_jscript_version <= 10)
+    isBuggyIE = true;
   @end
-
+  
+  @if (@_jscript_version < 9) {
+  	isOldIE = true;
+  }
+  @end
+  
   @*/
 
   // added check for IE11, since it *still* doesn't understand vmax!!!
-  if (!isOldInternetExplorer) {
-    isOldInternetExplorer = !!navigator.userAgent.match(/Trident.*rv[ :]*11\./);
+  if (!isBuggyIE) {
+    isBuggyIE = !!navigator.userAgent.match(/Trident.*rv[ :]*11\./);
   }
   function debounce(func, wait) {
     var timeout;
@@ -119,9 +125,15 @@
     options.isMobileSafari = isMobileSafari;
     options.isBadStockAndroid = isBadStockAndroid;
 
-    if (!options.force && !isMobileSafari && !isOldInternetExplorer && !isBadStockAndroid && !isOperaMini && (!options.hacks || !options.hacks.required(options))) {
+    if (isOldIE || (!options.force && !isMobileSafari && !isBuggyIE && !isBadStockAndroid && !isOperaMini && (!options.hacks || !options.hacks.required(options)))) {
       // this buggyfill only applies to mobile safari, IE9-10 and the Stock Android Browser.
-      return;
+      if (window.console) {
+	    console.info('This script will only work with browsers that have buggy implementations of viewport units and will not polyfill viewport units in older browsers (e.g. IE <= 8)');
+	  }
+      
+      return {
+      	init: function () {}
+      };
     }
 
     options.hacks && options.hacks.initialize(options);
@@ -141,7 +153,7 @@
       // orientationchange might have happened while in a different window
       window.addEventListener('pageshow', _refresh, true);
 
-      if (options.force || isOldInternetExplorer || inIframe()) {
+      if (options.force || isBuggyIE || inIframe()) {
         window.addEventListener('resize', _refresh, true);
         options._listeningToResize = true;
       }

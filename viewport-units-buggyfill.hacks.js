@@ -25,7 +25,8 @@
   var calcExpression = /calc\(/g;
   var quoteExpression = /[\"\']/g;
   var urlExpression = /url\([^\)]*\)/g;
-  var isOldInternetExplorer = false;
+  var isBuggyIE = false;
+  var isOldIE = false;
   var supportsVminmax = true;
   var supportsVminmaxCalc = true;
 
@@ -35,12 +36,17 @@
 
   /*@cc_on
 
-  @if (@_jscript_version <= 10)
-    isOldInternetExplorer = true;
+  @if (9 <= @_jscript_version && @_jscript_version <= 10)
+    isBuggyIE = true;
     supportsVminmaxCalc = false;
     supportsVminmax = false;
   @end
-
+  
+  @if (@_jscript_version < 9) {
+  	isOldIE = true;
+  }
+  @end
+  
   @*/
 
   // iOS SAFARI, IE9, or Stock Android: abuse "content" if "viewport-units-buggyfill" specified
@@ -73,7 +79,7 @@
 
   return {
     required: function(options) {
-      return options.isMobileSafari || isOldInternetExplorer;
+      return options.isMobileSafari || isBuggyIE;
     },
 
     initialize: function(initOptions) {
@@ -96,7 +102,7 @@
         return;
       }
 
-      if (isOldInternetExplorer && !options._listeningToResize) {
+      if (isBuggyIE && !options._listeningToResize) {
         window.addEventListener('resize', _refresh, true);
         options._listeningToResize = true;
       }
@@ -112,7 +118,7 @@
     },
 
     overwriteDeclaration: function(rule, name, _value) {
-      if (isOldInternetExplorer && name === 'filter') {
+      if (isBuggyIE && name === 'filter') {
         // remove unit "px" from complex value, e.g.:
         // filter: progid:DXImageTransform.Microsoft.DropShadow(OffX=5.4px, OffY=3.9px, Color=#000000);
         _value = _value.replace(/px/g, '');

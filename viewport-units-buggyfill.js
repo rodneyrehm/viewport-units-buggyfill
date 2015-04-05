@@ -77,7 +77,7 @@
   @end
   
   @if (@_jscript_version < 9) {
-  	isOldIE = true;
+    isOldIE = true;
   }
   @end
   
@@ -127,12 +127,12 @@
 
     if (isOldIE || (!options.force && !isMobileSafari && !isBuggyIE && !isBadStockAndroid && !isOperaMini && (!options.hacks || !options.hacks.required(options)))) {
       // this buggyfill only applies to mobile safari, IE9-10 and the Stock Android Browser.
-      if (window.console) {
-	    console.info('This script will only work with browsers that have buggy implementations of viewport units and will not polyfill viewport units in older browsers (e.g. IE <= 8)');
-	  }
-      
+      if (window.console && isOldIE) {
+        console.info('viewport-units-buggyfill requires a proper CSSOM and basic viewport unit support, which are not available in IE8 and below');
+      }
+
       return {
-      	init: function () {}
+        init: function () {}
       };
     }
 

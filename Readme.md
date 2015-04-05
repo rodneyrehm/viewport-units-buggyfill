@@ -117,6 +117,10 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 
 ## Changelog
 
+### 0.5.2 (April 5th 2015) ###
+
+* fixing init for IE8 and below to avoid exception due to bad CSSOM ([#46](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/46), [#47](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/47) by [zoltan-dulac](https://github.com/zoltan-dulac))
+
 ### 0.5.1 (March 10th 2015) ###
 
 * fixing generated `<style>` element to maintain highest precedence ([#36](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/36))

@@ -23,7 +23,7 @@ content: 'viewport-units-buggyfill; width: 50vmin; height: 50vmax; top: calc(50v
 
 > **Note:** This buggyfill only works on stylesheets! viewport units used in `style` attributes are *not* resolved.
 
-> **Note:** The buggyfill can easily trip over files host on different origins (requiring CORS) and relative URLs to images/fonts/… within style sheets. [#11](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/11)
+> **Note:** The buggyfill can easily trip over files host on different origins (requiring CORS) and relative URLs to images/fonts/… within stylesheets. [#11](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/11)
 
 
 ## Using viewport-units-buggyfill
@@ -48,6 +48,13 @@ var hacks = require('viewport-units-buggyfill.hacks');
 require('viewport-units-buggyfill').init({
   hacks: hacks
 });
+```
+
+To exempt certain stylesheets from being processed, the attribute `data-viewport-units-buggyfill="ignore"`:
+
+```html
+<link rel="stylesheet" src="file-to-ignore.css" data-viewport-units-buggyfill="ignore">
+<link rel="stylesheet" src="file-to-process.css">
 ```
 
 
@@ -112,10 +119,14 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 
 ## Cross Origin Stylesheets
 
-**Warning:** Including stylesheets from third party services, like Google WebFonts, requires those resources to be served with appropriate CORS headers. You may also need to be aware of the fact that relative URLs within those style sheets are NOT resolved, possibly leading to missing fonts and images.
+**Warning:** Including stylesheets from third party services, like Google WebFonts, requires those resources to be served with appropriate CORS headers. You may also need to be aware of the fact that relative URLs within those stylesheets are NOT resolved, possibly leading to missing fonts and images.
 
 
 ## Changelog
+
+### master (will become 0.5.3) ###
+
+* fixing CORS importer to respect `data-viewport-units-buggyfill="ignore"`  ([#48](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/48))
 
 ### 0.5.2 (April 5th 2015) ###
 
@@ -138,7 +149,7 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 * remove separate CSS content and behavior hacks and merge them into one. **This is a backward compatibility breaking change!** The only acceptable way to specify viewport-unit rules to a non-supporting browser now is `content: "viewport-units-buggyfill; width: 20vw;"` ([#20](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/20), [#25](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/25))
 * removing need for initialization options `behaviorHack` and `contentHack`, passing `hacks` will suffice ([#20](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/20), [#25](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/25))
 * adding IE11 to the list to fix its `vmax` support ([#31](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/31))
-* adding `<link rel="…" data-viewport-units-buggyfill="ignore">` to prevent specific style sheets from being processed (suggested in [#11](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/11))
+* adding `<link rel="…" data-viewport-units-buggyfill="ignore">` to prevent specific stylesheets from being processed (suggested in [#11](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/11))
 
 ### 0.4.1 (September 8th 2014) ###
 

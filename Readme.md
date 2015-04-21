@@ -124,7 +124,7 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 
 ## Changelog
 
-### master (will become 0.5.3) ###
+### 0.5.3 (April 21st 2015) ###
 
 * fixing CORS importer to respect `data-viewport-units-buggyfill="ignore"`  ([#48](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/48))
 

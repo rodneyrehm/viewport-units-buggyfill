@@ -25,29 +25,16 @@
   var calcExpression = /calc\(/g;
   var quoteExpression = /[\"\']/g;
   var urlExpression = /url\([^\)]*\)/g;
-  var isBuggyIE = false;
-  var isOldIE = false;
+  var userAgent = window.navigator.userAgent;
+  var isBuggyIE = /MSIE [0-9]\./i.test(userAgent);
+  var isOldIE = /MSIE [0-8]\./i.test(userAgent);
   var supportsVminmax = true;
   var supportsVminmaxCalc = true;
 
-  // WARNING!
-  // Do not remove the following conditional comment.
-  // It is required to identify the current version of IE
-
-  /*@cc_on
-
-  @if (9 <= @_jscript_version && @_jscript_version <= 10)
-    isBuggyIE = true;
+  if (isBuggyIE === true) {
     supportsVminmaxCalc = false;
     supportsVminmax = false;
-  @end
-  
-  @if (@_jscript_version < 9) {
-  	isOldIE = true;
   }
-  @end
-  
-  @*/
 
   // iOS SAFARI, IE9, or Stock Android: abuse "content" if "viewport-units-buggyfill" specified
   function checkHacks(declarations, rule, name, value) {

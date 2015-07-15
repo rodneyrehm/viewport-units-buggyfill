@@ -124,6 +124,10 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 
 ## Changelog
 
+### 0.5.4 (July 15th 2015) ###
+
+* changing Internet Explorer detection from Conditional Comments to UA sniffing - ([#57](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/57) by [dillonlucente](https://github.com/dillonlucente), [#43](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/43), [#40](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/40))
+
 ### 0.5.3 (April 21st 2015) ###
 
 * fixing CORS importer to respect `data-viewport-units-buggyfill="ignore"`  ([#48](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/48))

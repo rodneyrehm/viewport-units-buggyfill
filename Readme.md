@@ -116,6 +116,17 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 }
 ```
 
+The buggyfill emits the event `viewport-unit-buggyfill-init` before initializing and `viewport-unit-buggyfill-style` after applying the fixed styles to the document. The events are dispatched on `window` and may be used as follows:
+
+```js
+window.addEventListener('viewport-unit-buggyfill-init', function() {
+  console.log('getting lost in CSSOM');
+});
+window.addEventListener('viewport-unit-buggyfill-style', function() {
+  console.log('updated rules using viewport unit');
+});
+```
+
 
 ## Cross Origin Stylesheets
 
@@ -123,6 +134,10 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 
 
 ## Changelog
+
+### 0.5.5 (August 21st 2015) ###
+
+* adding events `viewport-unit-buggyfill-init` and `viewport-unit-buggyfill-style` ([#63](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/63) by [redaxmedia](https://github.com/redaxmedia), [#62](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/62))
 
 ### 0.5.4 (July 15th 2015) ###
 

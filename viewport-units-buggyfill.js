@@ -74,7 +74,7 @@
   // Polyfill for creating CustomEvents on IE9/10/11
   // from https://github.com/krambuhl/custom-event-polyfill
   try {
-    new CustomEvent("test");
+    new CustomEvent('test');
   } catch(e) {
     var CustomEvent = function(event, params) {
       var evt;
@@ -84,7 +84,7 @@
             detail: undefined
           };
 
-      evt = document.createEvent("CustomEvent");
+      evt = document.createEvent('CustomEvent');
       evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
       return evt;
     };

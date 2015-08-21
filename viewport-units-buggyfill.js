@@ -119,6 +119,9 @@
       };
     }
 
+    // fire a custom event that buggyfill was initialize
+    window.dispatchEvent(new CustomEvent('viewport-units-buggyfill-init'));
+
     options.hacks && options.hacks.initialize(options);
 
     initialized = true;
@@ -145,8 +148,6 @@
 
       refresh();
     });
-    // fire a custom event that buggyfill was initialize
-    window.dispatchEvent(new CustomEvent('viewport-units-buggyfill-init'));
   }
 
   function updateStyles() {

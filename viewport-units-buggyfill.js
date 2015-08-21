@@ -151,6 +151,8 @@
     styleNode.textContent = getReplacedViewportUnits();
     // move to the end in case inline <style>s were added dynamically
     styleNode.parentNode.appendChild(styleNode);
+    // fire a custom event that styles were updated
+    window.dispatchEvent(new CustomEvent('viewport-units-buggyfill-style'));
   }
 
   function refresh() {

@@ -1,7 +1,7 @@
 {
   "name": "viewport-units-buggyfill",
   "description": "Making viewport units (vh|vw|vmin|vmax) work properly in older WebKit and Trident",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "main": [
     "./viewport-units-buggyfill.js",
     "./viewport-units-buggyfill.hacks.js"

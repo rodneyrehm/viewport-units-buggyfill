@@ -1,6 +1,6 @@
 {
   "name": "viewport-units-buggyfill",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "title": "Viewport Units Buggyfill for Mobile Safari",
   "description": "Making viewport units (vh|vw|vmin|vmax) work properly in older WebKit and Trident",
   "homepage": "http://github.com/rodneyrehm/viewport-units-buggyfill/",

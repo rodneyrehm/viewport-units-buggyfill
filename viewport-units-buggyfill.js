@@ -197,7 +197,7 @@
   function findProperties() {
     declarations = [];
     forEach.call(document.styleSheets, function(sheet) {
-      if (sheet.ownerNode.id === 'patched-viewport' || !sheet.cssRules || sheet.ownerNode.getAttribute('data-viewport-units-buggyfill') === 'ignore') {
+      if (sheet.ownerNode.id === 'patched-viewport' || typeof sheet.cssRules !== 'object' || sheet.ownerNode.getAttribute('data-viewport-units-buggyfill') === 'ignore') {
         // skip entire sheet because no rules are present, it's supposed to be ignored or it's the target-element of the buggyfill
         return;
       }

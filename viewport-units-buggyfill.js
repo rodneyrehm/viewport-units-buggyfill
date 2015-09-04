@@ -193,11 +193,32 @@
       updateStyles();
     }, 1);
   }
+  
+  // http://stackoverflow.com/a/23613052
+  function processStylesheet(ss) {
+    // cssRules respects same-origin policy, as per
+    // https://code.google.com/p/chromium/issues/detail?id=49001#c10.
+    try {
+      if (!ss.cssRules) { return; }
+    } catch(e) {
+      if (e.name !== 'SecurityError') { throw e; }
+      return;
+    }
+    // ss.cssRules is available, so proceed with desired operations.
+    var rules = [];
+    for (var i = 0; i < ss.cssRules.length; i++) {
+      var rule = ss.cssRules[i];
+      rules.push(rule);
+    }
+    return rules;
+  }
 
   function findProperties() {
     declarations = [];
     forEach.call(document.styleSheets, function(sheet) {
-      if (sheet.ownerNode.id === 'patched-viewport' || !sheet.cssRules || sheet.ownerNode.getAttribute('data-viewport-units-buggyfill') === 'ignore') {
+      var cssRules = processStylesheet(sheet);
+
+      if (!cssRules || sheet.ownerNode.id === 'patched-viewport' || sheet.ownerNode.getAttribute('data-viewport-units-buggyfill') === 'ignore') {
         // skip entire sheet because no rules are present, it's supposed to be ignored or it's the target-element of the buggyfill
         return;
       }
@@ -207,7 +228,7 @@
         return;
       }
 
-      forEach.call(sheet.cssRules, findDeclarations);
+      forEach.call(cssRules, findDeclarations);
     });
 
     return declarations;

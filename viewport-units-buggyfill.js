@@ -194,7 +194,8 @@
     }, 1);
   }
   
-  // http://stackoverflow.com/a/23613052
+  // see https://github.com/rodneyrehm/viewport-units-buggyfill/issues/38
+  // see http://stackoverflow.com/a/23613052
   function processStylesheet(ss) {
     // cssRules respects same-origin policy, as per
     // https://code.google.com/p/chromium/issues/detail?id=49001#c10.
@@ -238,17 +239,6 @@
   function findDeclarations(rule) {
     if (rule.type === 7) {
       var value;
-
-      // there may be a case where accessing cssText throws an error.
-      // I could not reproduce this issue, but the worst that can happen
-      // this way is an animation not running properly.
-      // not awesome, but probably better than a script error
-      // see https://github.com/rodneyrehm/viewport-units-buggyfill/issues/21
-      try {
-        value = rule.cssText;
-      } catch(e) {
-        return;
-      }
 
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {

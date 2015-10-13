@@ -211,7 +211,6 @@
       var rule = ss.cssRules[i];
       rules.push(rule);
     }
-    console.log(rules);
     return rules;
   }
 

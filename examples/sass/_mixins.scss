@@ -1,9 +1,20 @@
 /* From https://coderwall.com/p/qac-og */
 
 @mixin calc($property, $expression, $x:"") {
-
-
   #{$property}: -moz-calc(#{$expression}) #{$x};
   #{$property}: -webkit-calc(#{$expression}) #{$x};
   #{$property}: calc(#{$expression}) #{$x};
+}
+
+// Mixin for simple using viewport units with buggyfill
+// Example include: @include viewport-unit((width: 23.5vw, height: 32vw, background-position: -47.8vw top));
+// Its work!)
+
+@mixin viewport-unit($prop-value){
+  $str:;
+  @each $prop, $value in $prop-value {
+    #{$prop}: #{$value};
+    $str: "#{$str} #{$prop}: #{$value};"
+  }
+  content: "viewport-units-buggyfill; #{$str}";
 }

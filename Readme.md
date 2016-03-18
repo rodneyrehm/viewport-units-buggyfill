@@ -21,6 +21,13 @@ The hacks use the `content` property to transport viewport-unit styles that need
 content: 'viewport-units-buggyfill; width: 50vmin; height: 50vmax; top: calc(50vh - 100px); left: calc(50vw - 100px);';
 ```
 
+> **Note:** The `content` hack may not work well on `<img>` and other replaced elements, even though it should [compute to `content: normal;` on regular elements](https://developer.mozilla.org/en-US/docs/Web/CSS/content). If you find yourself in such a situation, this may be a way out:
+> ```css
+> img {
+>   content: normal !important;
+> }
+> ```
+
 > **Note:** This buggyfill only works on stylesheets! viewport units used in `style` attributes are *not* resolved.
 
 > **Note:** The buggyfill can easily trip over files host on different origins (requiring CORS) and relative URLs to images/fonts/… within stylesheets. [#11](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/11)

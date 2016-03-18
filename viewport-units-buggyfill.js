@@ -193,11 +193,33 @@
       updateStyles();
     }, 1);
   }
+  
+  // see https://github.com/rodneyrehm/viewport-units-buggyfill/issues/38
+  // see http://stackoverflow.com/a/23613052
+  function processStylesheet(ss) {
+    // cssRules respects same-origin policy, as per
+    // https://code.google.com/p/chromium/issues/detail?id=49001#c10.
+    try {
+      if (!ss.cssRules) { return; }
+    } catch(e) {
+      if (e.name !== 'SecurityError') { throw e; }
+      return;
+    }
+    // ss.cssRules is available, so proceed with desired operations.
+    var rules = [];
+    for (var i = 0; i < ss.cssRules.length; i++) {
+      var rule = ss.cssRules[i];
+      rules.push(rule);
+    }
+    return rules;
+  }
 
   function findProperties() {
     declarations = [];
     forEach.call(document.styleSheets, function(sheet) {
-      if (sheet.ownerNode.id === 'patched-viewport' || !sheet.cssRules || sheet.ownerNode.getAttribute('data-viewport-units-buggyfill') === 'ignore') {
+      var cssRules = processStylesheet(sheet);
+
+      if (!cssRules || sheet.ownerNode.id === 'patched-viewport' || sheet.ownerNode.getAttribute('data-viewport-units-buggyfill') === 'ignore') {
         // skip entire sheet because no rules are present, it's supposed to be ignored or it's the target-element of the buggyfill
         return;
       }
@@ -207,7 +229,7 @@
         return;
       }
 
-      forEach.call(sheet.cssRules, findDeclarations);
+      forEach.call(cssRules, findDeclarations);
     });
 
     return declarations;
@@ -216,17 +238,6 @@
   function findDeclarations(rule) {
     if (rule.type === 7) {
       var value;
-
-      // there may be a case where accessing cssText throws an error.
-      // I could not reproduce this issue, but the worst that can happen
-      // this way is an animation not running properly.
-      // not awesome, but probably better than a script error
-      // see https://github.com/rodneyrehm/viewport-units-buggyfill/issues/21
-      try {
-        value = rule.cssText;
-      } catch(e) {
-        return;
-      }
 
       viewportUnitExpression.lastIndex = 0;
       if (viewportUnitExpression.test(value)) {

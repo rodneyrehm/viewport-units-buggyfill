@@ -142,6 +142,13 @@ window.addEventListener('viewport-unit-buggyfill-style', function() {
 
 ## Changelog
 
+### master ###
+
+* enabling the buggyfill for iOS 8 and iOS 9 - [#67](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/67), [#35](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/35)
+* enabling the buggyfill for Microsoft Edge, as it still does not understand `vmax` - [#60](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/60)
+* adding init option `ignoreVmax` to prevent IE9+ from engaging the hack - [#56](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/56)
+* fixing foreign origin access violation in Internet Explorer - [#61](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/61), [#38](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/38)
+
 ### 0.5.5 (August 21st 2015) ###
 
 * adding events `viewport-unit-buggyfill-init` and `viewport-unit-buggyfill-style` ([#63](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/63) by [redaxmedia](https://github.com/redaxmedia), [#62](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/62))

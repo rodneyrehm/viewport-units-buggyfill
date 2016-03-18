@@ -131,6 +131,14 @@
     options.isMobileSafari = isMobileSafari;
     options.isBadStockAndroid = isBadStockAndroid;
 
+    if (options.ignoreVmax && !options.force && !isOldIE) {
+      // modern IE (10 and up) do not support vmin/vmax,
+      // but chances are this unit is not even used, so
+      // allow overwriting the "hacktivation"
+      // https://github.com/rodneyrehm/viewport-units-buggyfill/issues/56
+      isBuggyIE = false;
+    }
+
     if (isOldIE || (!options.force && !isMobileSafari && !isBuggyIE && !isBadStockAndroid && !isOperaMini && (!options.hacks || !options.hacks.required(options)))) {
       // this buggyfill only applies to mobile safari, IE9-10 and the Stock Android Browser.
       if (window.console && isOldIE) {

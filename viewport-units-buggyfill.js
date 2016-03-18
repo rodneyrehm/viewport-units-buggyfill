@@ -20,7 +20,7 @@
   }
 }(this, function () {
   'use strict';
-  /*global document, window, navigator, location, XMLHttpRequest, XDomainRequest*/
+  /*global document, window, navigator, location, XMLHttpRequest, XDomainRequest, CustomEvent*/
 
   var initialized = false;
   var options;
@@ -80,10 +80,10 @@
     var CustomEvent = function(event, params) {
       var evt;
       params = params || {
-            bubbles: false,
-            cancelable: false,
-            detail: undefined
-          };
+        bubbles: false,
+        cancelable: false,
+        detail: undefined
+      };
 
       evt = document.createEvent('CustomEvent');
       evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);

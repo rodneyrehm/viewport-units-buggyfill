@@ -31,6 +31,12 @@
   var supportsVminmax = true;
   var supportsVminmaxCalc = true;
 
+  // added check for IE10, IE11 and Edge < 20, since it *still* doesn't understand vmax
+  // http://caniuse.com/#feat=viewport-units
+  if (!isBuggyIE) {
+    isBuggyIE = !!navigator.userAgent.match(/Trident.*rv[ :]*1[01]\.| Edge\/1\d\./);
+  }
+
   if (isBuggyIE === true) {
     supportsVminmaxCalc = false;
     supportsVminmax = false;

@@ -142,7 +142,7 @@ window.addEventListener('viewport-unit-buggyfill-style', function() {
 
 ## Changelog
 
-### master ###
+### 0.6.0 (March 19th 2016) ###
 
 * enabling the buggyfill for iOS 8 and iOS 9 - [#67](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/67), [#35](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/35)
 * enabling the buggyfill for Microsoft Edge, as it still does not understand `vmax` - [#60](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/60)

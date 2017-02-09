@@ -60,8 +60,8 @@ require('viewport-units-buggyfill').init({
 To exempt certain stylesheets from being processed, the attribute `data-viewport-units-buggyfill="ignore"`:
 
 ```html
-<link rel="stylesheet" src="file-to-ignore.css" data-viewport-units-buggyfill="ignore">
-<link rel="stylesheet" src="file-to-process.css">
+<link rel="stylesheet" href="file-to-ignore.css" data-viewport-units-buggyfill="ignore">
+<link rel="stylesheet" href="file-to-process.css">
 ```
 
 

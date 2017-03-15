@@ -367,7 +367,12 @@
 
     var _rule = rule.parentRule;
     while (_rule) {
-      _selectors.unshift('@media ' + _rule.media.mediaText);
+      if (_rule.media) {
+        _selectors.unshift('@media ' + _rule.media.mediaText);
+      } else if (_rule.conditionText) {
+        _selectors.unshift('@supports ' + _rule.conditionText);
+      }
+      
       _rule = _rule.parentRule;
     }
 

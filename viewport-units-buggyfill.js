@@ -367,8 +367,15 @@
 
     var _rule = rule.parentRule;
     while (_rule) {
-      _selectors.unshift('@media ' + _rule.media.mediaText);
-      _rule = _rule.parentRule;
+      if(_rule.media) { // check if _rule contain media-query 
+        _selectors.unshift('@media ' + _rule.media.mediaText);
+        _rule = _rule.parentRule;
+      } else { // check if _rule contain support-query
+        if (_rule.conditionText) {
+          _selectors.unshift('@supports ' + _rule.conditionText);
+          _rule = _rule.parentRule;
+        }
+      }
     }
 
     return {

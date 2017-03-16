@@ -202,7 +202,7 @@
       updateStyles();
     }, 1);
   }
-  
+
   // http://stackoverflow.com/a/23613052
   function processStylesheet(ss) {
     // cssRules respects same-origin policy, as per
@@ -372,7 +372,7 @@
       } else if (_rule.conditionText) {
         _selectors.unshift('@supports ' + _rule.conditionText);
       }
-      
+
       _rule = _rule.parentRule;
     }
 

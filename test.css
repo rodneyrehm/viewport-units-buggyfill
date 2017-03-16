@@ -21,11 +21,22 @@
 }
 
 .priority-important-test {
-  height: 20.3vh !important;  
+  height: 20.3vh !important;
 }
 
 .use_css_content_hack-test {
   content: 'viewport-units-buggyfill; width: 80vmax; height: 80vmax;';
+}
+
+@supports ( transform-origin: 5% 5% ) {
+  .some-selector {
+    padding: 20px 10vmin -10vmax 10px;
+    width: 0.5vw;
+    height: 50.3vh;
+  }
+  .some-other-selector {
+    height: 50.3vh;
+  }
 }
 
 @media only screen and (max-height: 400px), (max-width: 400px) {
@@ -41,6 +52,13 @@
 
 @media only screen and (max-height: 400px) {
   @media only screen and (max-width: 400px) {
+    .some-deeper-selector {
+      width: 20px;
+      height: 60vh;
+    }
+  }
+
+  @supports ( transform-origin: 5% 5% ) {
     .some-deeper-selector {
       width: 20px;
       height: 60vh;

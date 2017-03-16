@@ -142,7 +142,11 @@ window.addEventListener('viewport-unit-buggyfill-style', function() {
 
 ## Changelog
 
+### 0.6.1 (March 16th 2017) ###
+
 * fixing UA sniffing for IE10 - [#69](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/69), [#68](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/68)
+* adding support for [`@supports`](https://developer.mozilla.org/en/docs/Web/CSS/@supports) - [#76](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/76)
+* switching from jslint to [eslint](http://eslint.org/)
 
 ### 0.6.0 (March 19th 2016) ###
 
@@ -265,4 +269,3 @@ window.addEventListener('viewport-unit-buggyfill-style', function() {
 ## License
 
 viewport-unit-buggyfill is published under the [MIT License](http://opensource.org/licenses/mit-license).
-

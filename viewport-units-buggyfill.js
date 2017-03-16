@@ -4,7 +4,7 @@
  * @author: Rodney Rehm - http://rodneyrehm.de/en/
  */
 
-(function (root, factory) {
+(function(root, factory) {
   'use strict';
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -18,9 +18,9 @@
     // Browser globals (root is window)
     root.viewportUnitsBuggyfill = factory();
   }
-}(this, function () {
+}(this, function() {
   'use strict';
-  /*global document, window, navigator, location, XMLHttpRequest, XDomainRequest, CustomEvent*/
+  /* global document, window, navigator, location, XMLHttpRequest, XDomainRequest, CustomEvent */
 
   var initialized = false;
   var options;
@@ -44,7 +44,7 @@
     // * Safari iOS7: "Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A4449d Safari/9537.53"
     var iOSversion = userAgent.match(/OS (\d)/);
     // viewport units work fine in mobile Safari and webView on iOS 8+
-    return iOSversion && iOSversion.length>1 && parseInt(iOSversion[1]) < 10;
+    return iOSversion && iOSversion.length > 1 && parseInt(iOSversion[1]) < 10;
   })();
 
   var isBadStockAndroid = (function() {
@@ -75,14 +75,15 @@
   // Polyfill for creating CustomEvents on IE9/10/11
   // from https://github.com/krambuhl/custom-event-polyfill
   try {
+    // eslint-disable-next-line no-new, no-use-before-define
     new CustomEvent('test');
-  } catch(e) {
+  } catch (e) {
     var CustomEvent = function(event, params) {
       var evt;
       params = params || {
         bubbles: false,
         cancelable: false,
-        detail: undefined
+        detail: undefined,
       };
 
       evt = document.createEvent('CustomEvent');
@@ -123,7 +124,7 @@
 
     if (initOptions === true) {
       initOptions = {
-        force: true
+        force: true,
       };
     }
 
@@ -146,7 +147,7 @@
       }
 
       return {
-        init: function () {}
+        init: function() {},
       };
     }
 
@@ -209,7 +210,7 @@
     // https://code.google.com/p/chromium/issues/detail?id=49001#c10.
     try {
       if (!ss.cssRules) { return; }
-    } catch(e) {
+    } catch (e) {
       if (e.name !== 'SecurityError') { throw e; }
       return;
     }
@@ -254,7 +255,7 @@
       // see https://github.com/rodneyrehm/viewport-units-buggyfill/issues/21
       try {
         value = rule.cssText;
-      } catch(e) {
+      } catch (e) {
         return;
       }
 
@@ -378,7 +379,7 @@
 
     return {
       selector: _selectors,
-      content: _value
+      content: _value,
     };
   }
 
@@ -396,7 +397,7 @@
       vh: vh,
       vw: vw,
       vmax: Math.max(vw, vh),
-      vmin: Math.min(vw, vh)
+      vmin: Math.min(vw, vh),
     };
   }
 
@@ -463,7 +464,6 @@
     findProperties: findProperties,
     getCss: getReplacedViewportUnits,
     init: initialize,
-    refresh: refresh
+    refresh: refresh,
   };
-
 }));

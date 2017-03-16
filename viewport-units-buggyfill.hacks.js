@@ -4,7 +4,7 @@
  * @author: Zoltan Hawryluk - http://www.useragentman.com/
  */
 
-(function (root, factory) {
+(function(root, factory) {
   'use strict';
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
@@ -18,28 +18,18 @@
     // Browser globals (root is window)
     root.viewportUnitsBuggyfillHacks = factory();
   }
-}(this, function () {
+}(this, function() {
   'use strict';
 
-  var options;
   var calcExpression = /calc\(/g;
-  var quoteExpression = /[\"\']/g;
-  var urlExpression = /url\([^\)]*\)/g;
+  var quoteExpression = /["']/g;
   var userAgent = window.navigator.userAgent;
   var isBuggyIE = /MSIE [0-9]\./i.test(userAgent);
-  var isOldIE = /MSIE [0-8]\./i.test(userAgent);
-  var supportsVminmax = true;
-  var supportsVminmaxCalc = true;
 
   // added check for IE10, IE11 and Edge < 20, since it *still* doesn't understand vmax
   // http://caniuse.com/#feat=viewport-units
   if (!isBuggyIE) {
     isBuggyIE = !!navigator.userAgent.match(/MSIE 10\.|Trident.*rv[ :]*1[01]\.| Edge\/1\d\./);
-  }
-
-  if (isBuggyIE === true) {
-    supportsVminmaxCalc = false;
-    supportsVminmax = false;
   }
 
   // iOS SAFARI, IE9, or Stock Android: abuse "content" if "viewport-units-buggyfill" specified
@@ -75,20 +65,7 @@
       return options.isMobileSafari || isBuggyIE;
     },
 
-    initialize: function(initOptions) {
-      options = initOptions;
-
-      // Test viewport units support in calc() expressions
-      var div = document.createElement('div');
-      div.style.width = '1vmax';
-      supportsVminmax = div.style.width !== '';
-
-      // there is no accurate way to detect this programmatically.
-      if (options.isMobileSafari || options.isBadStockAndroid) {
-        supportsVminmaxCalc = false;
-      }
-
-    },
+    initialize: function() {},
 
     initializeEvents: function(options, refresh, _refresh) {
       if (options.force) {
@@ -118,7 +95,6 @@
       }
 
       return _value;
-    }
+    },
   };
-
 }));

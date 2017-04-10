@@ -26,6 +26,7 @@
   var options;
   var userAgent = window.navigator.userAgent;
   var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
+  var urlExpression = /(https?:)?\/\//
   var forEach = [].forEach;
   var dimensions;
   var declarations;
@@ -289,7 +290,7 @@
       }
 
       viewportUnitExpression.lastIndex = 0;
-      if (viewportUnitExpression.test(value)) {
+      if (viewportUnitExpression.test(value) && !urlExpression.test(value)) {
         declarations.push([rule, name, value]);
         options.hacks && options.hacks.findDeclarations(declarations, rule, name, value);
       }

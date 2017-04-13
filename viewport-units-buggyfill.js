@@ -27,6 +27,7 @@
     var options;
     var userAgent = window.navigator.userAgent;
     var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
+    var urlExpression = /(https?:)?\/\//
     var forEach = [].forEach;
     var dimensions;
     var declarations;
@@ -261,7 +262,7 @@
         }
 
         viewportUnitExpression.lastIndex = 0;
-        if (viewportUnitExpression.test(value)) {
+        if (viewportUnitExpression.test(value) && !urlExpression.test(value)) {
           // KeyframesRule does not have a CSS-PropertyName
           declarations.push([rule, null, value]);
           options.hacks && options.hacks.findDeclarations(declarations, rule, null, value);

@@ -23,7 +23,7 @@
   </style>
 </head>
 <body>
-  
+
   <p><strong>Note:</strong>	 this script will only work with browsers that have buggy implementations of viewport units and will not polyfill viewport units in older browsers (e.g. IE &lt;= 8)</p>
   <script src="viewport-units-buggyfill.js"></script>
   <script src="viewport-units-buggyfill.hacks.js"></script>
@@ -33,7 +33,14 @@
     // milliseconds to delay between updates of viewport-units
     // caused by orientationchange, pageshow, resize events
     refreshDebounceWait: 250,
-    hacks: window.viewportUnitsBuggyfillHacks
+    hacks: window.viewportUnitsBuggyfillHacks,
+		// append to body
+		appendToBody: true
   });</script>
+  <style>
+    .css-in-body {
+      width: 25vw;
+    }
+  </style>
 </body>
 </html>

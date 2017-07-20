@@ -99,6 +99,10 @@ viewportUnitsBuggyfill.init({refreshDebounceWait: 250});
 //
 viewportUnitsBuggyfill.init({hacks: window.viewportUnitsBuggyfillHacks});
 
+// customize the DOM element the patched stylesheet is appended to
+// takes a '.selector' string // default: 'head'
+viewportUnitsBuggyfill.init({append: 'body'});
+
 // update internal declarations cache and recalculate pixel styles
 // this is handy when you add styles after .init() was run
 viewportUnitsBuggyfill.refresh();

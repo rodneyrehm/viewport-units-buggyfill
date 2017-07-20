@@ -161,7 +161,7 @@
       initialized = true;
       styleNode = document.createElement('style');
       styleNode.id = 'patched-viewport';
-      document.querySelector(options.append ? options.append : 'head').appendChild(styleNode);
+      document[options.appendToBody ? 'body' : 'head'].appendChild(styleNode);
 
       // Issue #6: Cross Origin Stylesheets are not accessible through CSSOM,
       // therefore download and inject them as <style> to circumvent SOP.

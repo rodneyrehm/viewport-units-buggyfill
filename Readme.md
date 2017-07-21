@@ -145,6 +145,12 @@ window.addEventListener('viewport-unit-buggyfill-style', function() {
 
 ## Changelog
 
+### 0.6.2 (July 21st 2017) ###
+
+* allow appending generated CSS to `<body>` - [#84](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/84)
+* do not break URLs when replacing viewport units - [#78](https://github.com/rodneyrehm/viewport-units-buggyfill/pull/78)
+* wrapping everything in an IIFE - [#80](https://github.com/rodneyrehm/viewport-units-buggyfill/issues/80)
+
 ### 0.6.1 (March 16th 2017) ###
 
 * fixing UA sniffing for IE10 - [#69](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/69), [#68](https://github.com/rodneyrehm/viewport-units-buggyfill/issue/68)

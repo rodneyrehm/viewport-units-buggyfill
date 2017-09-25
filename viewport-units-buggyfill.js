@@ -26,7 +26,7 @@
     var initialized = false;
     var options;
     var userAgent = window.navigator.userAgent;
-    var viewportUnitExpression = /:(\s*)(calc\([\s\S]*)?([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
+    var viewportUnitExpression = /([+-]?[0-9.]+)(vh|vw|vmin|vmax)/g;
     var urlExpression = /url\(/;
     var forEach = [].forEach;
     var dimensions;

@@ -51,7 +51,7 @@ If you're - for whatever reason - not using a package manager, include the scrip
 To engage the buggyfill with hacks, pass them in at initialization:
 
 ```js
-var hacks = require('viewport-units-buggyfill.hacks');
+var hacks = require('viewport-units-buggyfill/viewport-units-buggyfill.hacks');
 require('viewport-units-buggyfill').init({
   hacks: hacks
 });

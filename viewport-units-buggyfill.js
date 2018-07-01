@@ -46,7 +46,7 @@
       // * Safari iOS7: "Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A4449d Safari/9537.53"
       var iOSversion = userAgent.match(/OS (\d+)/);
       // viewport units work fine in mobile Safari and webView on iOS 8+
-      return iOSversion && iOSversion.length > 1 && parseInt(iOSversion[1]) < 10;
+      return iOSversion && iOSversion.length > 1 && parseInt(iOSversion[1]) < 8;
     })();
 
     var isBadStockAndroid = (function() {

@@ -1,5 +1,8 @@
 # Viewport Units Buggyfill™
 
+> This is an form from Viewport Units Buggyfill
+> Because the package didnot works right on iOS
+
 This is a *buggyfill* (fixing bad behavior), not a *polyfill* (adding missing behavior). That said, it provides hacks for you to get viewport units working in old IE and Android Stock Browser as well. If the browser doesn't know how to deal with the [viewport units](http://www.w3.org/TR/css3-values/#viewport-relative-lengths) - `vw`, `vh`, `vmin` and `vmax` - this library will not improve the situation unless you're using the hacks detailed below. The buggyfill uses the [CSSOM](http://dev.w3.org/csswg/cssom/) to access the defined styles rather than ship its own CSS parser, that'S why the hacks abuse the CSS property `content` to get the values across.
 
 ---

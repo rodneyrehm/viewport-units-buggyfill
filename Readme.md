@@ -126,13 +126,13 @@ In CSS you can declare fallbacks to be used by the buggyfill's hacks:
 }
 ```
 
-The buggyfill emits the event `viewport-unit-buggyfill-init` before initializing and `viewport-unit-buggyfill-style` after applying the fixed styles to the document. The events are dispatched on `window` and may be used as follows:
+The buggyfill emits the event `viewport-units-buggyfill-init` before initializing and `viewport-units-buggyfill-style` after applying the fixed styles to the document. The events are dispatched on `window` and may be used as follows:
 
 ```js
-window.addEventListener('viewport-unit-buggyfill-init', function() {
+window.addEventListener('viewport-units-buggyfill-init', function() {
   console.log('getting lost in CSSOM');
 });
-window.addEventListener('viewport-unit-buggyfill-style', function() {
+window.addEventListener('viewport-units-buggyfill-style', function() {
   console.log('updated rules using viewport unit');
 });
 ```

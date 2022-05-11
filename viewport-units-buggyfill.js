@@ -78,7 +78,7 @@
     // from https://github.com/krambuhl/custom-event-polyfill
     try {
       // eslint-disable-next-line no-new, no-use-before-define
-      new CustomEvent('test');
+      new window.CustomEvent('test');
     } catch (e) {
       var CustomEvent = function(event, params) {
         var evt;
